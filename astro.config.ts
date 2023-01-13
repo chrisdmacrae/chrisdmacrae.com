@@ -8,8 +8,11 @@ import vercel from "@astrojs/vercel/serverless";
 import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
+import image from "@astrojs/image";
+
+// https://astro.build/config
 export default defineConfig({
-  integrations: [react(), tailwind()],
+  integrations: [react(), tailwind(), image({ serviceEntryPoint: '@astrojs/image/sharp' })],
   output: "server",
   adapter: vercel()
 });

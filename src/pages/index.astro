@@ -1,83 +1,149 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
-import Test from '../components/test.tsx';
+import Sidebar from '../layouts/Sidebar';
+import DotGrid from '../components/DotGrid';
+import Card from '../components/Card'
+import Heading from '../components/typography/Heading'
+import Text from '../components/typography/Text'
+import ToggleFAB from '../components/ToggleFAB'
+import { Picture } from '@astrojs/image/components'
+import { IconBrandApple, IconBrandMastercard, IconBuildingBank, IconNews, IconDisc, IconDots } from '@tabler/icons';
+
 ---
 
 <Layout title="Welcome to Astro.">
-	<main>
-		<Test />
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
-	</main>
-</Layout>
+	<Sidebar.Layout>
+		<Sidebar>
+      <Heading as="h1" size={3}>
+        <Text gradient='warning' as="span">
+          Chris D. Macrae
+        </Text>
+        </Heading>
+			<Sidebar.Link href="/engineering-management">
+        Engineering Management
+      </Sidebar.Link>
+      <Sidebar.Link href="/design-management">
+        Design Management
+      </Sidebar.Link>
+      <Sidebar.Link href="#">
+        Web Development
+      </Sidebar.Link>
+      <Sidebar.Link href="#">
+        Systems Thinking
+      </Sidebar.Link>
+      <div class="mt-auto flex flex-col gap-4">
+        <Card>
+          <div class="inline-block mr-2">
+            <span class="relative flex h-3 w-3">
+              <span class="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+            </span>
+          </div>
+          <Text as="span">
+            <strong>I'm available</strong>
+          </Text>
+          <Text>I'm currently available for freelance work. <a href="/contact">Get in touch</a></Text>
+        </Card>
+        <Sidebar.Link href="#">
+          More about Chris
+        </Sidebar.Link>
+      </div>
+		</Sidebar>
+		<Sidebar.Pane>
+      <div class="w-full">
+        <DotGrid>
+          <div class="w-full flex flex-row justify-end pb-4 -mt-10">
+            <ToggleFAB client:idle />
+          </div>
+          <div class="flex flex-col items-center justify-center gap-6 lg:py-[1.5rem]">
+            <div class="flex flex-col items-center text-center gap-2 lg:gap-6">
+              <Heading as='h1'>
+                Learn about <Text as='span' gradient='primary'>engineering</Text>, 
+                <Text as='span' gradient='success'>design</Text>,
+                <Text as='span' gradient='info'>web development</Text>, 
+                and much more.
+              </Heading>
+              <div class="flex flex-col items-center gap-2">
+                <Text color='muted'>
+                  Hi 👋, my name is Chris and I'm a fullstack engineer and designer.
+                </Text>
+                <Text color="muted">
+                  This site is all about teaching. Why don't you jump right in:
+                </Text>
+              </div>
+            </div>
+            <div class="w-full max-w-[40rem]">
+              <Card>
+                <Text as="span">
+                  <ul class="list-disc list-inside">
+                    <li>Engineering management</li>
+                    <li>Design management</li>
+                    <li>Web development</li>
+                    <li>Systems thinking</li>
+                  </ul>
+                </Text>
+              </Card>
+            </div>
+          </div>
+        </DotGrid>
 
-<style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		line-height: 1.6;
-		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
-	}
-	.instructions code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
-	}
-</style>
+        <div class="m-auto max-w-[60rem] flex flex-col lg:flex-row gap-6 lg:py-[7rem]">
+          <Picture 
+            src="/images/me.jpg" 
+            role="presentation" 
+            alt="" 
+            widths={[400, 500, 600, 700, 800, 900, 1000]}
+            sizes="100vw, (min-width: 768px) 500px"
+            aspectRatio="3:4"
+            class="hidden lg:block lg:max-w-sm xl:max-w-md rounded-md overflow-hidden shadow-md"
+          />
+          <Picture 
+            src="/images/me.jpg" 
+            role="presentation" 
+            alt="" 
+            widths={[400, 500, 600, 700, 800, 900, 1000]}
+            sizes="100vw"
+            aspectRatio="16:9"
+            class="box-content block lg:hidden w-[calc(100%+5rem)] max-w-[calc(100%+2.5rem)] -mx-5"
+          />
+          <div class="flex flex-col gap-4">
+            <Heading as="h2">
+              Learn from <em><Text gradient='warning' as='span'>who</Text></em>?
+            </Heading>
+            <Text>
+              Hi again 👋. I'm Chris D. MacRae, a fullstack engineer and designer whose been working with tech
+              for over <em>10 years</em>.
+            </Text>
+            <Text>
+              <Text gradient='info' as='span'><strong>Teaching and mentorship</strong></Text> has always been my passion, but doing it 1:1 doesn't scale. Thus, in 2023 my goal
+              is to use this site to start providing more mentorship, training, and tutorials as possible, to as wide
+              an audience as I possibly can.
+            </Text>
+            <Text>
+              I currently work at <a href="https://careguide.com" rel="noopener"><Text gradient='primary' as='span'><strong>Careguide</strong></Text></a> 
+              as Lead Engineer, where I coach a team of 8 engineers and 2 designers.
+            </Text>
+            <Text>
+              In my career I have had the privledge of working with 
+              <span class="inline-block"><IconBrandApple className="inline-block" /> Apple</span>, 
+              <IconBrandMastercard className="inline-block" /> Mastercard, 
+              <IconBuildingBank className="inline-block" /> Scotiabank, 
+              <IconNews className="inline-block" /> PostMedia, 
+              and many more.
+            </Text>
+            <Text>
+              <IconDisc className="inline-block motion-safe:animate-spin" /> 
+              I'm currently listening to:
+              <IconDots className="inline-block animate-bounce" /> 
+            </Text>
+          </div>
+        </div>
+        <footer class="pt-8 pb-4">
+          <Text color='muted'>
+            Copyleft &copy; {new Date().getFullYear()}
+          </Text>
+        </footer>
+      </div>
+    </Sidebar.Pane>
+	</Sidebar.Layout>
+</Layout>
