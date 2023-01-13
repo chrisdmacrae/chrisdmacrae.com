@@ -1,44 +1,40 @@
 import FAB from './FAB'
 import { IconMoon, IconSearch, IconSun, IconVolumeOff, IconVolume } from '@tabler/icons';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useButtonSound } from './hooks/useButtonSound';
+import { Theme, useTheme } from './hooks/useTheme';
+import { useVolume } from './hooks/useVolume';
 
-export const ToggleFAB = () => {
+export type ToggleFABProps = {
+  theme?: Theme
+}
+
+export const ToggleFAB: React.FC<ToggleFABProps> = ({ theme: initialTheme }) => {
   const [buttonClick] = useButtonSound()
-  const [sound, setSound] = useState(true)
+  const [volume, toggleVolume] = useVolume()
   const toggleSound = () => {
-      if (!sound) buttonClick()
+      if (!volume) buttonClick()
 
-      setSound(!sound)
-  }
-  
-  const [theme, setTheme] = useState<'light' | 'dark'>()
-  const toggleTheme = () => {
-    if (sound) buttonClick()
-    if (theme === 'dark') setTheme('light')
-    else setTheme('dark')
+      toggleVolume()
   }
 
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark')
-    } else if (theme === 'light') {
-      document.documentElement.classList.remove('dark')
-    } else if ((!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      setTheme('dark')
-    }
-  }, [theme])
+  const [theme, toggleTheme] = useTheme(initialTheme)
+  const toggleThemeWithSound = () => {
+    if (volume) buttonClick()
+
+    toggleTheme()
+  }
   
 
   return (
     <FAB>
-      <FAB.Button onClick={toggleTheme}>
+      <FAB.Button onClick={() => toggleThemeWithSound()}>
         {theme === 'dark' && <IconSun />}
         {theme !== 'dark' && <IconMoon />}
       </FAB.Button>
       <FAB.Button onClick={toggleSound}>
-        {sound && <IconVolumeOff />}
-        {!sound && <IconVolume />}
+        {volume && <IconVolumeOff />}
+        {!volume && <IconVolume />}
       </FAB.Button>
       <div className="hidden md:inline-block">
         <FAB.Button>

@@ -4,9 +4,9 @@ export type TextGradient = "primary" | "success" | "info" | "warning"
 export type TextColor = "light" | "dark" | "muted"
 
 export type TextProps = {
-    as: 'p' | 'span'
+    as?: 'p' | 'span'
     gradient?: TextGradient
-    color: TextColor
+    color?: TextColor
 } & PropsWithChildren
 
 export const Heading: React.FC<TextProps> = ({as = 'p', gradient, color = 'dark', children}) => {
@@ -32,7 +32,7 @@ function getGradient(gradient: TextGradient) {
         case 'warning':
           return 'text-transparent dark:text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-600'
         case 'info':
-            return 'text-transparent dark:text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-600'
+            return 'text-transparent dark:text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-600 dark:from-blue-300 dark:to-indigo-400'
     }
 }
 

@@ -4,7 +4,7 @@ export type HeadingSize = 1 | 2 | 3 | 4
 
 export type HeadingProps = {
     as: 'h1' | 'h2' | 'h3' | 'h4'
-    size: HeadingSize
+    size?: HeadingSize
 } & PropsWithChildren
 
 export const Heading: React.FC<HeadingProps> = ({as = 'h2', size = 1, children}) => {
