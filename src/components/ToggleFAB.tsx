@@ -28,7 +28,7 @@ export const ToggleFAB: React.FC<ToggleFABProps> = ({ theme: initialTheme }) => 
 
   return (
     <FAB>
-      <FAB.Button onClick={() => toggleThemeWithSound()}>
+      <FAB.Button onClick={toggleThemeWithSound}>
         {theme === 'dark' && <IconSun />}
         {theme !== 'dark' && <IconMoon />}
       </FAB.Button>
