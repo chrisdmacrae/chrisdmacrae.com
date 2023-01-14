@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useButtonSound } from './hooks/useButtonSound';
 import { Theme, useTheme } from './hooks/useTheme';
 import { useVolume } from './hooks/useVolume';
+import { useSearch } from './Search';
 
 export type ToggleFABProps = {
   theme?: Theme
@@ -24,8 +25,9 @@ export const ToggleFAB: React.FC<ToggleFABProps> = ({ theme: initialTheme }) => 
 
     toggleTheme()
   }
-  
 
+  const [toggleSearch] = useSearch()
+  
   return (
     <FAB>
       <FAB.Button onClick={toggleThemeWithSound}>
@@ -37,7 +39,7 @@ export const ToggleFAB: React.FC<ToggleFABProps> = ({ theme: initialTheme }) => 
         {!volume && <IconVolume />}
       </FAB.Button>
       <div className="hidden md:inline-block">
-        <FAB.Button>
+        <FAB.Button onClick={toggleSearch}>
           <IconSearch />
         </FAB.Button>
       </div>

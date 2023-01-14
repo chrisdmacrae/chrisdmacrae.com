@@ -15,7 +15,7 @@ const LayoutContext = createContext<Required<Omit<LayoutProps, 'children'>>>({
 export const useLayout = () => useContext(LayoutContext)
 
 export const Layout: React.FC<LayoutProps> = ({ sm = true, md = false, lg = false, children }) => {
-  let classes = ['']
+  let classes = ['relative z-0']
 
   classes.push(getBreakpoints(sm, md, lg))
 

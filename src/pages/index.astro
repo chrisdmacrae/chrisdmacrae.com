@@ -22,18 +22,22 @@ import {
 import type { Theme } from "../components/hooks/useTheme";
 import Gem from '../components/Gem'
 import TabBar from "../layouts/Tabbar";
+import Search from "../components/Search";
 
 const theme = Astro.cookies.get("theme").value as Theme | undefined;
 ---
 
 <Layout title="Welcome to Astro.">
   <TabBar.Layout sm>
+    <Search client:idle />
     <TabBar client:load />
     <Sidebar.Layout>
       <Sidebar>
-        <Heading as="h1" size={3}>
-          <Text gradient="warning" as="span">Chris D. Macrae</Text>
-        </Heading>
+        <a href="/">
+          <Heading as="h1" size={3}>
+            <Text gradient="warning" as="span">Chris D. Macrae</Text>
+          </Heading>
+        </a>
         <Sidebar.Link href="/engineering-management">
           <IconCode />
           Engineering Management
