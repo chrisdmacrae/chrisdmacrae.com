@@ -12,9 +12,9 @@ import mdx from "@astrojs/mdx";
 import readingTime from "remark-reading-time";
 import readingMdxTime from "remark-reading-time/mdx";
 
-
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://chrisdmacrae.com',
   integrations: [
     react(), 
     image({
