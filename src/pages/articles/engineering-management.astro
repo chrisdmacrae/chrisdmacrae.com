@@ -29,6 +29,8 @@ if (!category) {
 }
 
 const theme = Astro.cookies.get("theme").value as Theme | undefined;
+
+export const prerender = true
 ---
 <Layout title={`Learn about ${category.name}`}>
   <div slot="sidebar" class="flex flex-col gap-2">
