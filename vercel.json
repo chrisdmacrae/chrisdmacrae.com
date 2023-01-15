@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    { 
+      "source": "/articles",
+      "destination": "/articles/all", 
+      "permanent": true
+    }
+  ]
+}

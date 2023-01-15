@@ -11,7 +11,6 @@ import FAB from '../../../components/FAB'
 import ToggleFAB from '../../../components/ToggleFAB'
 import categories from '../../../content/articles/categories'
 import { prettyDate } from '../../../lib/prettyDate'
-import type { Theme } from '../../../components/hooks/useTheme'
 
 const articles = (await Astro.glob('../../../content/articles/*.mdx')).map(article => ({
   ...article,
@@ -67,7 +66,7 @@ const theme = Astro.cookies.get("theme").value as Theme | undefined;
             Subscribe
           </FAB.Button>
         </FAB>
-        <ToggleFAB theme={theme} client:idle />
+        <ToggleFAB client:idle />
       </div>
       <div class="flex flex-row gap-4">
         <nav class="relative hidden lg:block pt-8 pl-1">
