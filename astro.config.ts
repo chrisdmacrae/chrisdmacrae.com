@@ -5,14 +5,25 @@ import react from '@astrojs/react';
 import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
-import tailwind from "@astrojs/tailwind";
-
-// https://astro.build/config
 import image from "@astrojs/image";
 
 // https://astro.build/config
+import mdx from "@astrojs/mdx";
+import readingTime from "remark-reading-time";
+import readingMdxTime from "remark-reading-time/mdx";
+
+
+// https://astro.build/config
 export default defineConfig({
-  integrations: [react(), tailwind(), image({ serviceEntryPoint: '@astrojs/image/sharp' })],
+  integrations: [
+    react(), 
+    image({
+      serviceEntryPoint: '@astrojs/image/sharp'
+    }), 
+    mdx({
+      remarkPlugins: [readingTime, readingMdxTime]
+    })
+  ],
   output: "server",
   adapter: vercel()
 });

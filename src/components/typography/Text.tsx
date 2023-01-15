@@ -9,9 +9,9 @@ export type TextProps = {
     color?: TextColor
 } & PropsWithChildren
 
-export const Heading: React.FC<TextProps> = ({as = 'p', gradient, color = 'dark', children}) => {
+export const Text: React.FC<TextProps> = ({as = 'p', gradient, color = 'dark', children}) => {
     const El = as as any
-    let classes = ['max-w-[40rem]']
+    let classes = ['max-w-[40rem] align-top items-center']
 
     if (gradient) classes.push(getGradient(gradient))
     else classes.push(getColor(color))
@@ -47,4 +47,4 @@ function getColor(color: TextColor) {
     }
 }
 
-export default Heading
+export default Text

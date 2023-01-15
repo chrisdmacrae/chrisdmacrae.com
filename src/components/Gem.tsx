@@ -1,15 +1,16 @@
 import type { ReactElement, ReactNode } from "react"
+import { Icon, IconName } from "./Icon"
 import Text from './typography/Text'
 
 export type GemColor = 'primary' | 'success' | 'warning' | 'info'
 
 export type GemProps = {
   label: string
-  Icon: ({ className }: any) => ReactElement<any, any> | null
+  icon: IconName
   color?: GemColor
 }
 
-export const Gem: React.FC<GemProps> = ({ label, Icon, color = 'primary' }) => {
+export const Gem: React.FC<GemProps> = ({ label, icon, color = 'primary' }) => {
   let classes = ['text-white w-32 h-32 rounded-lg border drop-shadow-md ring-1  flex flex-row items-center justify-center']
 
   classes.push(getGradient(color))
@@ -19,7 +20,7 @@ export const Gem: React.FC<GemProps> = ({ label, Icon, color = 'primary' }) => {
     <div
       className={classes.join(' ')}
     >
-      <Icon className="w-12 h-12" />
+      <Icon name={icon} size="xl" />
     </div>
     <Text color="muted">
       {label}

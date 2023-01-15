@@ -1,4 +1,9 @@
 ---
+import Search from "../components/Search";
+import "./Layout.css"
+import Sidebar from "./Sidebar";
+import TabBar from "./Tabbar";
+
 export interface Props {
 	title: string;
 }
@@ -6,7 +11,6 @@ export interface Props {
 const { title } = Astro.props;
 const theme = Astro.cookies.get('theme').value
 ---
-
 <!DOCTYPE html>
 <html lang="en" class={theme === 'dark' ? 'dark bg-slate-900' : 'bg-slate-50'}>
 	<head>
@@ -17,6 +21,18 @@ const theme = Astro.cookies.get('theme').value
 		<title>{title}</title>
 	</head>
 	<body class="antialiased">
-		<slot />
+    <TabBar.Layout sm>
+      <Search client:idle />
+      <TabBar client:load />
+      <Sidebar.Layout>
+        <Sidebar>
+          <slot name="sidebar" />
+          <Sidebar.Footer />
+        </Sidebar>
+        <Sidebar.Pane>
+      		<slot />
+        </Sidebar.Pane>
+      </Sidebar.Layout>
+    </TabBar.Layout>
 	</body>
 </html>

@@ -1,37 +1,57 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Sidebar from "../layouts/Sidebar";
-import DotGrid from "../components/DotGrid";
-import Heading from "../components/typography/Heading";
-import Text from "../components/typography/Text";
-import ToggleFAB from "../components/ToggleFAB";
+import { basename } from 'path'
+import Layout from "../../layouts/Layout.astro";
+import Sidebar from "../../layouts/Sidebar";
+import DotGrid from "../../components/DotGrid";
+import Heading from "../../components/typography/Heading";
+import Text from "../../components/typography/Text";
+import ToggleFAB from "../../components/ToggleFAB";
 import { Picture } from "@astrojs/image/components";
-import Icon from "../components/Icon";
-import type { Theme } from "../components/hooks/useTheme";
-import categories from "../content/articles/categories";
-import Gem from "../components/Gem";
+import Icon from "../../components/Icon";
+import type { Theme } from "../../components/hooks/useTheme";
+import TabBar from "../../layouts/Tabbar";
+import Search from "../../components/Search";
+import { categories } from "../../content/articles/categories";
+import { CardArticle } from '../../components/CardArticle';
+
+const articles = (await Astro.glob('../../content/articles/*.mdx')).map(article => ({
+  ...article,
+  slug: basename(article.file).split('.')[0]
+}))
+const category = categories.find(category => category.slug === 'engineering-management')
+const categoryArticles = articles.filter(article => article.frontmatter.category === category?.slug)
+
+if (!category) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Not found'
+  })
+}
 
 const theme = Astro.cookies.get("theme").value as Theme | undefined;
 ---
-<Layout title="Welcome to Astro.">
+<Layout title={`Learn about ${category.name}`}>
   <div slot="sidebar" class="flex flex-col gap-2">
-    <a href="/">
-      <Heading as="h1" size={3}>
-        <Text gradient="warning" as="span">Chris D. Macrae</Text>
-      </Heading>
-    </a>
+    <Sidebar.Header>
+      <a href={`/articles`}>
+        <Text>
+          <Icon name="chevron-left" size='sm' />
+          All articles
+        </Text>
+      </a>
+    </Sidebar.Header>
+    <Text color='muted'>
+      <strong>Featured Categories</strong>
+    </Text>
     {categories
       .filter(category => category?.featured)
+      .filter(c => c !== category)
       .map(category => (
         <Sidebar.Link href={`/articles/${category.slug}`}>
           <Icon name={category.icon} />
           {category.name}
         </Sidebar.Link>
     ))}
-    <Sidebar.Link href="/articles">
-      <Icon name='article' />
-      All Articles
-    </Sidebar.Link>
   </div>
   <div class="w-full">
     <DotGrid size="screen">
@@ -43,43 +63,27 @@ const theme = Astro.cookies.get("theme").value as Theme | undefined;
       >
         <div class="flex flex-col items-center text-center gap-2 lg:gap-6">
           <Heading as="h1">
-            Learn about <Text as="span" gradient="primary">
-              engineering
-            </Text>,
-            <Text as="span" gradient="success">design</Text>,
-            <Text as="span" gradient="info">web development</Text>, and much
-            more.
+            Learn about <Text as="span" gradient="primary">engineering management</Text>.
           </Heading>
           <div class="flex flex-col items-center gap-2">
             <Text color="muted">
               Hi 👋, my name is Chris and I'm a fullstack engineer and
-              designer. This site is all about sharing what I've learned.
+              designer. This site is all about sharing what I've learned about engineering management.
             </Text>
           </div>
         </div>
-        <Text><strong>What do you want to learn?</strong></Text>
-        <div class="flex flex-row items-center justify-center md:-mx-[6rem]">
-          <div
-            class="flex flex-row overflow-scroll w-full max-w-[100vw] md:max-w-[calc(100vw-18rem)]"
-          >
-            <div class="w-[min-content] flex flex-row gap-2 px-4">
-              {categories
-                .filter(category => category.featured)
-                .map(category => (
-                  <a href={`/articles/${category.slug}`}>
-                    <Gem
-                      icon={category.icon}
-                      label={category.name}
-                      color={category.color}
-                    />
-                  </a>
-                ))}
-            </div>
-          </div>
-        </div>
+        <div />
       </div>
       <div />
     </DotGrid>
+
+    <div class="flex flex-col gap-4 max-w-[60rem] m-auto">
+      <Heading as='h2' size={4}>All Articles</Heading>
+      <hr class="border-b border-slate-200 dark:border-slate-800" />
+      {categoryArticles.map(article => (
+        <CardArticle article={article} category={category} />
+      ))}
+    </div>
 
     <div
       class="m-auto max-w-[60rem] flex flex-col items-center lg:flex-row gap-6 lg:py-[7rem]"

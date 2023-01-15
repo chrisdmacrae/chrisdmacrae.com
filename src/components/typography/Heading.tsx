@@ -3,7 +3,7 @@ import type { PropsWithChildren } from "react";
 export type HeadingSize = 1 | 2 | 3 | 4
 
 export type HeadingProps = {
-    as: 'h1' | 'h2' | 'h3' | 'h4'
+    as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
     size?: HeadingSize
 } & PropsWithChildren
 

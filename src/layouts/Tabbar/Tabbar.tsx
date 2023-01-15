@@ -10,11 +10,11 @@ export const TabBar: React.FC = () => {
   return (
     <Container>
       <a href="/">
-        <Button Icon={IconHome}>
+        <Button icon='home'>
           Home
         </Button>
       </a>
-      <Button Icon={IconSearch} onClick={toggleSearch}>
+      <Button icon='search' onClick={toggleSearch}>
         Search
       </Button>
     </Container>

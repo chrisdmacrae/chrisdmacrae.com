@@ -4,7 +4,7 @@ export type PaneProps = {} & PropsWithChildren
 
 export const Pane: React.FC<PaneProps> = ({children}) => {
     return (
-        <main className="w-full flex flex-grow p-5">
+        <main className="w-full flex flex-col flex-grow p-5">
             {children}
         </main>
     )
