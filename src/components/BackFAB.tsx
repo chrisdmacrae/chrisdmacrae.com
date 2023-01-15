@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import FAB from "./FAB"
+import { useButtonSound } from "./hooks/useButtonSound"
 import Icon from "./Icon"
 
 export type BackFABProps = {
@@ -7,11 +8,14 @@ export type BackFABProps = {
 }
 
 export const BackFAB: React.FC<BackFABProps> = ({ defaultHref }) => {
+  const [play] = useButtonSound()
   const [canGoBack, setCanGoBack] = useState(defaultHref !== undefined)
   const goBack = () => {
     if (document.referrer.includes(window.location.host)) {
+      play()
       history.back()
     } else if (defaultHref) {
+      play()
       window.location.href = defaultHref
     }
   }
