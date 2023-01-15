@@ -85,7 +85,7 @@ const isAll = category?.slug === 'all'
   </div>
   <div class="flex flex-col gap-4">
     {categoryArticles.map(article => (
-      <CardArticle article={article} category={category!} />
+      <CardArticle article={article} />
     ))}
   </div>
 </Layout>
