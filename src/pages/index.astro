@@ -7,22 +7,24 @@ import Text from "../components/typography/Text";
 import ToggleFAB from "../components/ToggleFAB";
 import { Picture } from "@astrojs/image/components";
 import Icon from "../components/Icon";
-import categories from "../content/articles/categories";
+import categories from "../content/articles/_categories";
 import Gem from "../components/Gem";
 
 export const prerender = true
 ---
 <Layout title="Learn about engineering , design, web development, and much more.">
   <div slot="sidebar" class="flex flex-col gap-2">
-    <a href="/">
-      <Heading as="h1" size={3}>
-        <Text gradient="warning" as="span">Chris D. Macrae</Text>
-      </Heading>
-    </a>
+    <Sidebar.Header>
+      <a href="/">
+        <Heading as="h1" size={3}>
+          <Text gradient="warning" as="span">Chris D. Macrae</Text>
+        </Heading>
+      </a>
+    </Sidebar.Header>
     {categories
       .filter(category => category?.featured)
       .map(category => (
-        <Sidebar.Link href={`/articles/${category.slug}`}>
+        <Sidebar.Link href={category.featuredHref ? category.featuredHref : `/articles/${category.slug}`}>
           <Icon name={category.icon} />
           {category.name}
         </Sidebar.Link>
@@ -65,7 +67,7 @@ export const prerender = true
               {categories
                 .filter(category => category.featured)
                 .map(category => (
-                  <a href={`/articles/${category.slug}`}>
+                  <a href={category.featuredHref ? category.featuredHref : `/articles/${category.slug}`} rel="prefetch">
                     <Gem
                       icon={category.icon}
                       label={category.name}

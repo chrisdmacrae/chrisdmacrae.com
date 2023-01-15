@@ -13,6 +13,9 @@ import readingTime from "remark-reading-time";
 import readingMdxTime from "remark-reading-time/mdx";
 
 // https://astro.build/config
+import prefetch from "@astrojs/prefetch";
+
+// https://astro.build/config
 export default defineConfig({
   site: 'https://chrisdmacrae.com',
   output: 'server',

@@ -4,7 +4,7 @@ import Icon from '../../../components/Icon'
 import Text from '../../../components/typography/Text'
 import Layout from '../../../layouts/Layout.astro'
 import Sidebar from '../../../layouts/Sidebar'
-import categories from '../../../content/articles/categories'
+import categories from '../../../content/articles/_categories'
 import Heading from '../../../components/typography/Heading'
 import FAB from '../../../components/FAB'
 import ToggleFAB from '../../../components/ToggleFAB'
@@ -14,6 +14,7 @@ const articles = (await Astro.glob('../../../content/articles/*.mdx')).map(artic
   ...article,
   slug: basename(article.file).split('.')[0]
 }))
+  .sort((a, b) => Date.parse(b.frontmatter.created) - Date.parse(a.frontmatter.created))
 const category = categories.find(category => category.slug === Astro.params.category)
 const categoryArticles = category?.slug === 'all'
   ? articles 
@@ -73,7 +74,7 @@ const isAll = category?.slug === 'all'
 
         return (
           <a href={`/articles/${c.slug}`} class="shrink-0 grow">
-            <FAB.Button color='muted' fluid>
+            <FAB.Button color={isCurrent ? 'dark' : 'muted'} fluid>
               <Icon name={c.icon} />
               {isCurrent && (<h1 class="shrink-0 grow"><strong>{c.name}</strong></h1>)}
               {!isCurrent && (<p class="shrink-0 grow">{c.name}</p>)}

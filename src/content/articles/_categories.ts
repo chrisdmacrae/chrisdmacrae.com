@@ -4,6 +4,7 @@ export type Category = {
   icon: string
   color: 'primary' | 'success' | 'warning' | 'info'
   featured?: boolean
+  featuredHref?: string
 }
 
 export const categories: Category[] = [
@@ -12,14 +13,16 @@ export const categories: Category[] = [
     slug: "engineering-management",
     icon: "code",
     color: 'primary',
-    featured: true
+    featured: true,
+    featuredHref: "/engineering-management"
   },
   {
     name: "Design Management",
     slug: "design-management",
     icon: "box-align-bottom-left",
     color: 'success',
-    featured: true
+    featured: true,
+    featuredHref: "/design-management"
   },
   {
     name: "Web Development",

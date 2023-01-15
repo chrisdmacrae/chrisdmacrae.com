@@ -28,7 +28,7 @@ function getColor(color: ButtonColor) {
     case 'light':
       return 'bg-slate-100 text-slate-600 disabled:text-slate-400 dark:disabled:text-slate-700 dark:text-slate-500 hover:bg-slate-50 active:bg-white dark:bg-slate-800 dark:hover:bg-slate-700 dark:active:bg-slate-600'
     case 'dark':
-      return 'bg-slate-800 dark:bg-slate-100 text-slate-500 disabled:text-slate-700 dark:disabled:text-slate-400 dark:text-slate-600 hover:bg-slate-700 dark:hover:bg-slate-50 active:bg-slate-600 dark:active:bg-white'
+      return 'bg-slate-600 dark:bg-slate-100 text-slate-50 disabled:text-slate-700 dark:disabled:text-slate-400 dark:text-slate-600 hover:bg-slate-700 dark:hover:bg-slate-50 active:bg-slate-600 dark:active:bg-white'
     case 'primary':
       return 'bg-purple-500 text-slate-50 disabled:text-slate-purple-50 hover:bg-purple-400 active:bg-purple-400'
     case 'muted':
