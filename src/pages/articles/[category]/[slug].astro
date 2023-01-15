@@ -12,6 +12,7 @@ import ToggleFAB from '../../../components/ToggleFAB'
 import categories from '../../../content/articles/categories'
 import { prettyDate } from '../../../lib/prettyDate'
 import { BackFAB } from '../../../components/BackFAB'
+import { Pagination } from '../../../components/Pagination'
 
 const articles = (await Astro.glob('../../../content/articles/*.mdx')).map(article => ({
   ...article,
@@ -74,18 +75,11 @@ export async function getStaticPaths() {
       </div>
       <div class="flex flex-row gap-4">
         <nav class="relative hidden lg:block pt-8 pl-1">
-          <FAB direction='vertical' stick='top'>
-            <a href={prevArticle ? `/articles/${prevArticle.frontmatter.category}/${prevArticle?.slug}` : '#'}>
-              <FAB.Button disabled={!prevArticle}>
-                <Icon name="chevron-up" size='md' />
-              </FAB.Button>
-            </a>
-            <a href={nextArticle ? `/articles/${nextArticle.frontmatter.category}/${nextArticle?.slug}` : '#'}>
-              <FAB.Button disabled={!nextArticle}>
-                <Icon name="chevron-down" size='md' />
-              </FAB.Button>
-            </a>
-          </FAB>
+          <Pagination 
+            prevHref={prevArticle ? `/articles/${prevArticle.frontmatter.category}/${prevArticle?.slug}` : undefined}
+            nextHref={nextArticle ? `/articles/${nextArticle.frontmatter.category}/${nextArticle?.slug}` : undefined}
+            client:idle
+          />
         </nav>
         <div class="shrink-0 grow max-w-full items-center relative flex flex-col gap-4 -mb-4 h-[calc(100vh-11.5rem)] ios:h-[calc(100vh-16rem)] ios:lg:h-[calc(100vh-9rem)] lg:h-[calc(100vh-7.25rem)] overflow-scroll">
           <article class="flex flex-col gap-4 w-full max-w-[40rem] pt-8">
