@@ -4,7 +4,7 @@ import Icon from "./Icon"
 
 export type PaginationProps = {
   prevHref?: string
-  nextHref: string
+  nextHref?: string
 }
 
 export const Pagination: React.FC<PaginationProps> = ({ prevHref, nextHref }) => {
