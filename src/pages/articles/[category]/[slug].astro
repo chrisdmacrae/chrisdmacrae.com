@@ -9,9 +9,9 @@ import Heading from '../../../components/typography/Heading'
 import Card from '../../../components/Card'
 import FAB from '../../../components/FAB'
 import ToggleFAB from '../../../components/ToggleFAB'
-import categories from '../../../content/articles/_categories'
 import { prettyDate } from '../../../lib/prettyDate'
 import { BackFAB } from '../../../components/BackFAB'
+import categories from '../../../content/articles/_categories'
 import { Pagination } from '../../../components/Pagination'
 
 const articles = (await Astro.glob('../../../content/articles/*.mdx')).map(article => ({
@@ -24,10 +24,6 @@ const index = articles.findIndex(article => article.slug === Astro.params.slug)
 const article = articles[index]
 const prevArticle = articles[index - 1]
 const nextArticle = articles[index + 1]
-
-const { title, description, created: rawCreated } = article!.frontmatter
-const created = new Date(rawCreated)
-const { Content } = article!
 const category = categories.find(category => category.slug === Astro.params.category)
 
 if (!article || article.frontmatter.category !== category?.slug) {
@@ -36,6 +32,10 @@ if (!article || article.frontmatter.category !== category?.slug) {
     statusText: 'Not found'
   })
 }
+
+const { title, description, created: rawCreated } = article!.frontmatter
+const created = new Date(rawCreated)
+const { Content } = article!
 ---
 <Layout title={title} tabs={false}>
   <div slot="sidebar" class="flex flex-col gap-2">
