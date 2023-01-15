@@ -9,7 +9,6 @@ import Heading from '../../../components/typography/Heading'
 import FAB from '../../../components/FAB'
 import ToggleFAB from '../../../components/ToggleFAB'
 import { CardArticle } from '../../../components/CardArticle'
-import type { Theme } from '../../../components/hooks/useTheme'
 
 const articles = (await Astro.glob('../../../content/articles/*.mdx')).map(article => ({
   ...article,
@@ -21,7 +20,6 @@ const categoryArticles = category?.slug === 'all'
   : articles.filter(article => article.frontmatter.category === Astro.params.category)
 
 const isAll = category?.slug === 'all'
-const theme = Astro.cookies.get("theme").value as Theme | undefined;
 
 export async function getStaticPaths() {
   return categories.map(category => ({
@@ -63,7 +61,7 @@ export async function getStaticPaths() {
   </div>
   <div class="sticky top-0 flex flex-row justify-between pb-4 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
     <Heading as='h2' size={4}>Browse</Heading>
-    <ToggleFAB theme={theme} client:idle />
+    <ToggleFAB client:idle />
   </div>
   <div
     class="flex flex-row overflow-scroll w-full max-w-[100vw] md:max-w-[calc(100vw-19rem)]"

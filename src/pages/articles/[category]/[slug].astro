@@ -11,7 +11,6 @@ import FAB from '../../../components/FAB'
 import ToggleFAB from '../../../components/ToggleFAB'
 import categories from '../../../content/articles/categories'
 import { prettyDate } from '../../../lib/prettyDate'
-import type { Theme } from '../../../components/hooks/useTheme'
 
 const articles = (await Astro.glob('../../../content/articles/*.mdx')).map(article => ({
   ...article,
@@ -23,7 +22,6 @@ const { title, description, created: rawCreated } = article!.frontmatter
 const created = new Date(rawCreated)
 const { Content } = article!
 const category = categories.find(category => category.slug === Astro.params.category)
-const theme = Astro.cookies.get("theme").value as Theme | undefined;
 
 export async function getStaticPaths() {
   const articles = (await Astro.glob('../../../content/articles/*.mdx')).map(article => ({
@@ -71,7 +69,7 @@ export async function getStaticPaths() {
             Subscribe
           </FAB.Button>
         </FAB>
-        <ToggleFAB theme={theme} client:idle />
+        <ToggleFAB client:idle />
       </div>
       <div class="flex flex-row gap-4">
         <nav class="relative hidden lg:block pt-8 pl-1">

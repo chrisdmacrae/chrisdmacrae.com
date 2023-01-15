@@ -8,9 +8,6 @@ import Text from "../../components/typography/Text";
 import ToggleFAB from "../../components/ToggleFAB";
 import { Picture } from "@astrojs/image/components";
 import Icon from "../../components/Icon";
-import type { Theme } from "../../components/hooks/useTheme";
-import TabBar from "../../layouts/Tabbar";
-import Search from "../../components/Search";
 import { categories } from "../../content/articles/categories";
 import { CardArticle } from '../../components/CardArticle';
 
@@ -20,17 +17,8 @@ const articles = (await Astro.glob('../../content/articles/*.mdx')).map(article 
 }))
 const category = categories.find(category => category.slug === 'engineering-management')
 const categoryArticles = articles.filter(article => article.frontmatter.category === category?.slug)
-
-if (!category) {
-  return new Response(null, {
-    status: 404,
-    statusText: 'Not found'
-  })
-}
-
-const theme = Astro.cookies.get("theme").value as Theme | undefined;
 ---
-<Layout title={`Learn about ${category.name}`}>
+<Layout title={`Learn about ${category!.name}`}>
   <div slot="sidebar" class="flex flex-col gap-2">
     <Sidebar.Header>
       <a href={`/articles`}>
@@ -56,7 +44,7 @@ const theme = Astro.cookies.get("theme").value as Theme | undefined;
   <div class="w-full">
     <DotGrid size="screen">
       <div class="w-full flex flex-row justify-end pb-4 -mt-10">
-        <ToggleFAB theme={theme} client:idle />
+        <ToggleFAB client:idle />
       </div>
       <div
         class="flex flex-col items-center justify-center gap-6 lg:py-[1.5rem]"
@@ -81,7 +69,7 @@ const theme = Astro.cookies.get("theme").value as Theme | undefined;
       <Heading as='h2' size={4}>All Articles</Heading>
       <hr class="border-b border-slate-200 dark:border-slate-800" />
       {categoryArticles.map(article => (
-        <CardArticle article={article} category={category} />
+        <CardArticle article={article} category={category!} />
       ))}
     </div>
 

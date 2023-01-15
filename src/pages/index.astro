@@ -7,13 +7,8 @@ import Text from "../components/typography/Text";
 import ToggleFAB from "../components/ToggleFAB";
 import { Picture } from "@astrojs/image/components";
 import Icon from "../components/Icon";
-import type { Theme } from "../components/hooks/useTheme";
 import categories from "../content/articles/categories";
 import Gem from "../components/Gem";
-
-const theme = Astro.cookies.get("theme").value as Theme | undefined;
-
-export const prerender = true
 ---
 <Layout title="Learn about engineering , design, web development, and much more.">
   <div slot="sidebar" class="flex flex-col gap-2">
@@ -38,7 +33,7 @@ export const prerender = true
   <div class="w-full">
     <DotGrid size="screen">
       <div class="w-full flex flex-row justify-end pb-4 -mt-10">
-        <ToggleFAB theme={theme} client:idle />
+        <ToggleFAB client:idle />
       </div>
       <div
         class="flex flex-col items-center justify-center gap-6 lg:py-[1.5rem]"
