@@ -23,5 +23,10 @@ export default defineConfig({
     mdx({
       remarkPlugins: [readingTime, readingMdxTime]
     })
-  ]
+  ],
+  vite: {
+    ssr: {
+      noExternal: ['@react-aria/overlays']
+    }
+  }
 });
