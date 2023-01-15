@@ -20,14 +20,15 @@ const categoryArticles = category?.slug === 'all'
   ? articles 
   : articles.filter(article => article.frontmatter.category === Astro.params.category)
 
+if (!category || categoryArticles.length === 0) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Not found'
+  })
+}
+
 const isAll = category?.slug === 'all'
 const theme = Astro.cookies.get("theme").value as Theme | undefined;
-
-export async function getStaticPaths() {
-  return categories.map(category => ({
-    params: { category: category.slug }
-  }))
-}
 ---
 <Layout title='Article about engineering, design, web development, and more'>
   <div slot="sidebar" class="flex flex-col gap-2">

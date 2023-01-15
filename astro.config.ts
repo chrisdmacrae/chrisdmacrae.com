@@ -15,6 +15,8 @@ import readingMdxTime from "remark-reading-time/mdx";
 // https://astro.build/config
 export default defineConfig({
   site: 'https://chrisdmacrae.com',
+  output: 'server',
+  adapter: vercel(),
   integrations: [
     react(), 
     image({
