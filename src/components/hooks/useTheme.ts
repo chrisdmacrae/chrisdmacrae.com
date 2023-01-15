@@ -5,7 +5,7 @@ export const THEME_COOKIE = 'theme'
 
 export type Theme = 'light' | 'dark' | 'system'
 
-export const useTheme = (initialTheme: Theme = 'system') => {
+export const useTheme = (initialTheme: Theme) => {
   const [theme, setTheme] = useState<Theme | undefined>(initialTheme)
   const toggleTheme = () => {
     if (theme === 'dark') setTheme('light')
@@ -13,7 +13,7 @@ export const useTheme = (initialTheme: Theme = 'system') => {
   }
 
   useEffect(() => {
-    setTheme(initialTheme)
+    if(initialTheme) setTheme(initialTheme)
   }, [initialTheme])
 
   useEffect(() => {

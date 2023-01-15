@@ -1,31 +1,30 @@
 ---
 import { basename } from 'path'
-import Layout from "../../layouts/Layout.astro";
-import Sidebar from "../../layouts/Sidebar";
-import DotGrid from "../../components/DotGrid";
-import Heading from "../../components/typography/Heading";
-import Text from "../../components/typography/Text";
-import ToggleFAB from "../../components/ToggleFAB";
+import Layout from "../layouts/Layout.astro";
+import Sidebar from "../layouts/Sidebar";
+import DotGrid from "../components/DotGrid";
+import Heading from "../components/typography/Heading";
+import Text from "../components/typography/Text";
+import ToggleFAB from "../components/ToggleFAB";
 import { Picture } from "@astrojs/image/components";
-import Icon from "../../components/Icon";
-import { categories } from "../../content/articles/categories";
-import { CardArticle } from '../../components/CardArticle';
+import Icon from "../components/Icon";
+import { categories } from "../content/articles/_categories";
+import { CardArticle } from '../components/CardArticle';
 
-const articles = (await Astro.glob('../../content/articles/*.mdx')).map(article => ({
+const articles = (await Astro.glob('../content/articles/*.mdx')).map(article => ({
   ...article,
   slug: basename(article.file).split('.')[0]
 }))
-const category = categories.find(category => category.slug === 'engineering-management')
+const category = categories.find(category => category.slug === 'design-management')
 const categoryArticles = articles.filter(article => article.frontmatter.category === category?.slug)
 ---
 <Layout title={`Learn about ${category!.name}`}>
   <div slot="sidebar" class="flex flex-col gap-2">
     <Sidebar.Header>
-      <a href={`/articles`}>
-        <Text>
-          <Icon name="chevron-left" size='sm' />
-          All articles
-        </Text>
+      <a href="/">
+        <Heading as="h1" size={3}>
+          <Text gradient="warning" as="span">Chris D. Macrae</Text>
+        </Heading>
       </a>
     </Sidebar.Header>
     <Text color='muted'>
@@ -51,12 +50,12 @@ const categoryArticles = articles.filter(article => article.frontmatter.category
       >
         <div class="flex flex-col items-center text-center gap-2 lg:gap-6">
           <Heading as="h1">
-            Learn about <Text as="span" gradient="primary">engineering management</Text>.
+            Learn about <Text as="span" gradient="success">design management</Text>.
           </Heading>
           <div class="flex flex-col items-center gap-2">
             <Text color="muted">
               Hi 👋, my name is Chris and I'm a fullstack engineer and
-              designer. This site is all about sharing what I've learned about engineering management.
+              designer. This site is all about sharing what I've learned about design management.
             </Text>
           </div>
         </div>
@@ -68,9 +67,11 @@ const categoryArticles = articles.filter(article => article.frontmatter.category
     <div class="flex flex-col gap-4 max-w-[60rem] m-auto">
       <Heading as='h2' size={4}>All Articles</Heading>
       <hr class="border-b border-slate-200 dark:border-slate-800" />
-      {categoryArticles.map(article => (
-        <CardArticle article={article} />
-      ))}
+      <div class="lg:-ml-6">
+        {categoryArticles.map(article => (
+          <CardArticle article={article} />
+        ))}
+      </div>
     </div>
 
     <div

@@ -13,17 +13,16 @@ import readingTime from "remark-reading-time";
 import readingMdxTime from "remark-reading-time/mdx";
 
 // https://astro.build/config
+import prefetch from "@astrojs/prefetch";
+
+// https://astro.build/config
 export default defineConfig({
   site: 'https://chrisdmacrae.com',
-  integrations: [
-    react(), 
-    image({
-      serviceEntryPoint: '@astrojs/image/sharp'
-    }), 
-    mdx({
-      remarkPlugins: [readingTime, readingMdxTime]
-    })
-  ],
+  integrations: [react(), image({
+    serviceEntryPoint: '@astrojs/image/sharp'
+  }), mdx({
+    remarkPlugins: [readingTime, readingMdxTime]
+  }), prefetch()],
   vite: {
     ssr: {
       noExternal: ['@react-aria/overlays']

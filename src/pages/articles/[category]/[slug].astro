@@ -9,7 +9,7 @@ import Heading from '../../../components/typography/Heading'
 import Card from '../../../components/Card'
 import FAB from '../../../components/FAB'
 import ToggleFAB from '../../../components/ToggleFAB'
-import categories from '../../../content/articles/categories'
+import categories from '../../../content/articles/_categories'
 import { prettyDate } from '../../../lib/prettyDate'
 import { BackFAB } from '../../../components/BackFAB'
 import { Pagination } from '../../../components/Pagination'
@@ -19,6 +19,7 @@ const articles = (await Astro.glob('../../../content/articles/*.mdx')).map(artic
   slug: basename(article.file).split('.')[0]
 }))
   .filter(article => article.frontmatter.category === Astro.params.category)
+  .sort((a, b) => Date.parse(b.frontmatter.created) - Date.parse(a.frontmatter.created))
 const index = articles.findIndex(article => article.slug === Astro.params.slug)
 const article = articles[index]
 const prevArticle = articles[index - 1]

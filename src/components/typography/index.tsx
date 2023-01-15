@@ -9,7 +9,12 @@ export const components = {
   h5: (props: any) => <span className="pt-2"><Heading as='h6' size={4} {...props} /></span>,
   h6: (props: any) => <span className="pt-2"><Heading as='h6' size={4} {...props} /></span>,
   p: (props: any) => <Text as='p' {...props} />,
-  span: (props: any) => <Text as='span' {...props} />
+  span: (props: any) => <Text as='span' {...props} />,
+  blockquote: (props: any) => (
+    <div className="border-l-4 pl-4 py-6 border-slate-200 dark:border-slate-700">
+      <Heading as="h2" size={3} {...props} />
+    </div>
+  )
 }
 
 export default components
