@@ -1,9 +1,7 @@
 ---
 import { basename } from 'path'
 import Icon from '../../../components/Icon'
-import Search from '../../../components/Search'
 import Text from '../../../components/typography/Text'
-import TabBar from '../../../layouts/Tabbar'
 import Layout from '../../../layouts/Layout.astro'
 import Sidebar from '../../../layouts/Sidebar'
 import typography from '../../../components/typography'
@@ -13,6 +11,7 @@ import FAB from '../../../components/FAB'
 import ToggleFAB from '../../../components/ToggleFAB'
 import categories from '../../../content/articles/categories'
 import { prettyDate } from '../../../lib/prettyDate'
+import type { Theme } from '../../../components/hooks/useTheme'
 
 const articles = (await Astro.glob('../../../content/articles/*.mdx')).map(article => ({
   ...article,
@@ -20,18 +19,22 @@ const articles = (await Astro.glob('../../../content/articles/*.mdx')).map(artic
 }))
 const article = articles.find(article => article.slug === Astro.params.slug && article.frontmatter.category === Astro.params.category)
 
-if (!article) {
-  return new Response(null, {
-    status: 404,
-    statusText: 'Not found'
-  })
-}
-
-const { title, description, created: rawCreated } = article.frontmatter
+const { title, description, created: rawCreated } = article!.frontmatter
 const created = new Date(rawCreated)
-const { Content } = article
+const { Content } = article!
 const category = categories.find(category => category.slug === Astro.params.category)
 const theme = Astro.cookies.get("theme").value as Theme | undefined;
+
+export async function getStaticPaths() {
+  const articles = (await Astro.glob('../../../content/articles/*.mdx')).map(article => ({
+    ...article,
+    slug: basename(article.file).split('.')[0]
+  }))
+
+  return articles.map(article => ({
+    params: { slug: article.slug, category: article.frontmatter.category }
+  }))
+}
 ---
 <Layout title={title}>
   <div slot="sidebar" class="flex flex-col gap-2">

@@ -23,7 +23,5 @@ export default defineConfig({
     mdx({
       remarkPlugins: [readingTime, readingMdxTime]
     })
-  ],
-  output: "server",
-  adapter: vercel()
+  ]
 });
