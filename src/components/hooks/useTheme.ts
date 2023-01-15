@@ -25,7 +25,10 @@ export const useTheme = (initialTheme: Theme = 'system') => {
       setTheme('dark')
     }
 
-    if (theme) Cookies.set(THEME_COOKIE, theme, { sameSite: 'strict' })
+    if (theme) {
+      Cookies.set(THEME_COOKIE, theme, { sameSite: 'strict' })
+      localStorage.setItem(THEME_COOKIE, theme)
+    }
   }, [theme])
 
   useEffect(() => {
