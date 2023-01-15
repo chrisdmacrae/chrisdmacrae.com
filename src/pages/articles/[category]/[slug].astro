@@ -11,12 +11,17 @@ import FAB from '../../../components/FAB'
 import ToggleFAB from '../../../components/ToggleFAB'
 import categories from '../../../content/articles/categories'
 import { prettyDate } from '../../../lib/prettyDate'
+import { BackFAB } from '../../../components/BackFAB'
 
 const articles = (await Astro.glob('../../../content/articles/*.mdx')).map(article => ({
   ...article,
   slug: basename(article.file).split('.')[0]
 }))
-const article = articles.find(article => article.slug === Astro.params.slug && article.frontmatter.category === Astro.params.category)
+  .filter(article => article.frontmatter.category === Astro.params.category)
+const index = articles.findIndex(article => article.slug === Astro.params.slug)
+const article = articles[index]
+const prevArticle = articles[index - 1]
+const nextArticle = articles[index + 1]
 
 const { title, description, created: rawCreated } = article!.frontmatter
 const created = new Date(rawCreated)
@@ -58,11 +63,7 @@ export async function getStaticPaths() {
   <div class="w-full">
     <Card>
       <div class="sticky top-0 flex flex-row justify-between pb-4 border-b border-slate-200 dark:border-slate-700">
-        <FAB direction='horizontal'>
-          <FAB.Button>
-            <Icon name="chevron-left" size='md' />
-          </FAB.Button>
-        </FAB>
+        <BackFAB defaultHref={`/articles/${category!.slug}`} client:idle />
         <FAB direction='horizontal'>
           <FAB.Button color='primary' fluid>
             <Icon name="inbox" size='md' />
@@ -74,12 +75,16 @@ export async function getStaticPaths() {
       <div class="flex flex-row gap-4">
         <nav class="relative hidden lg:block pt-8 pl-1">
           <FAB direction='vertical' stick='top'>
-            <FAB.Button>
-              <Icon name="chevron-up" size='md' />
-            </FAB.Button>
-            <FAB.Button>
-              <Icon name="chevron-down" size='md' />
-            </FAB.Button>
+            <a href={prevArticle ? `/articles/${prevArticle.frontmatter.category}/${prevArticle?.slug}` : '#'}>
+              <FAB.Button disabled={!prevArticle}>
+                <Icon name="chevron-up" size='md' />
+              </FAB.Button>
+            </a>
+            <a href={nextArticle ? `/articles/${nextArticle.frontmatter.category}/${nextArticle?.slug}` : '#'}>
+              <FAB.Button disabled={!nextArticle}>
+                <Icon name="chevron-down" size='md' />
+              </FAB.Button>
+            </a>
           </FAB>
         </nav>
         <div class="shrink-0 grow max-w-full items-center relative flex flex-col gap-4 -mb-4 h-[calc(100vh-11.5rem)] ios:h-[calc(100vh-16rem)] ios:lg:h-[calc(100vh-9rem)] lg:h-[calc(100vh-7.25rem)] overflow-scroll">
