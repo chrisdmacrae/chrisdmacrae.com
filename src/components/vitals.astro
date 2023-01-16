@@ -1,11 +1,4 @@
----
-export interface Props {
-  id: string
-}
-
-const {id} = Astro.props
----
-<script define:vars={{ id }}>
+<script>
   import { getCLS, getFCP, getFID, getLCP, getTTFB } from 'web-vitals';
 
   const vitalsUrl = 'https://vitals.vercel-analytics.com/v1/vitals';
@@ -65,6 +58,7 @@ const {id} = Astro.props
     }
   }
 
+  const id = import.meta.VERCEL_ANALYTICS_ID
   if (id) {
     document.addEventListener('DOMContentLoaded', () => {
       webVitals({ analyticsId: id, params: {} })
