@@ -5,7 +5,7 @@ export interface Props {
 
 const {id} = Astro.props
 ---
-<script>
+<script define:vars={{ id }}>
   import { getCLS, getFCP, getFID, getLCP, getTTFB } from 'web-vitals';
 
   const vitalsUrl = 'https://vitals.vercel-analytics.com/v1/vitals';
