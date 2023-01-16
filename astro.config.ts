@@ -36,6 +36,16 @@ export default defineConfig({
   vite: {
     ssr: {
       noExternal: ['@react-aria/overlays']
+    },
+    build: {
+      // workaround bug "index" file
+      // @link https://github.com/withastro/astro/issues/3805
+      rollupOptions: {
+          output: {
+              entryFileNames: "entry.[hash].js",
+              chunkFileNames: "chunks/chunk.[hash].js",
+          }
+      }
     }
   }
 });
