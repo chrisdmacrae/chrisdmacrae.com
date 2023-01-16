@@ -18,18 +18,11 @@ import prefetch from "@astrojs/prefetch";
 // https://astro.build/config
 export default defineConfig({
   site: 'https://chrisdmacrae.com',
-  output: 'server',
-  adapter: vercel(),
-  integrations: [
-    react(), 
-    image({
-      serviceEntryPoint: '@astrojs/image/sharp'
-    }), 
-    mdx({
-      remarkPlugins: [readingTime, readingMdxTime]
-    }),
-    prefetch()
-  ],
+  integrations: [react(), image({
+    serviceEntryPoint: '@astrojs/image/sharp'
+  }), mdx({
+    remarkPlugins: [readingTime, readingMdxTime]
+  }), prefetch()],
   markdown: {
     syntaxHighlight: 'prism'
   },

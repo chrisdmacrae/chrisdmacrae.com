@@ -9,9 +9,9 @@ import Heading from '../../../components/typography/Heading'
 import Card from '../../../components/Card'
 import FAB from '../../../components/FAB'
 import ToggleFAB from '../../../components/ToggleFAB'
+import categories from '../../../content/articles/_categories'
 import { prettyDate } from '../../../lib/prettyDate'
 import { BackFAB } from '../../../components/BackFAB'
-import categories from '../../../content/articles/_categories'
 import { Pagination } from '../../../components/Pagination'
 
 const articles = (await Astro.glob('../../../content/articles/*.mdx')).map(article => ({
