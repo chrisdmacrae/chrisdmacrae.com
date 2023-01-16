@@ -33,7 +33,7 @@ export const BackFAB: React.FC<BackFABProps> = ({ defaultHref }) => {
 
   return (
     <FAB direction='horizontal'>
-      <FAB.Button onClick={goBack}>
+      <FAB.Button label="Go back" onClick={goBack}>
         <Icon name="chevron-left" size='md' />
       </FAB.Button>
     </FAB>

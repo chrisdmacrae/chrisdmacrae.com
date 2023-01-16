@@ -95,14 +95,12 @@ const { Content } = article!
             <Content components={typography} />
           </article>
           <nav class="relative w-fit lg:hidden m-auto">
-            <FAB direction='horizontal'>
-              <FAB.Button>
-                <Icon name="chevron-up" size='md' />
-              </FAB.Button>
-              <FAB.Button>
-                <Icon name="chevron-down" size='md' />
-              </FAB.Button>
-            </FAB>
+            <Pagination 
+              direction='horizontal'
+              prevHref={prevArticle ? `/articles/${prevArticle.frontmatter.category}/${prevArticle?.slug}` : undefined}
+              nextHref={nextArticle ? `/articles/${nextArticle.frontmatter.category}/${nextArticle?.slug}` : undefined}
+              client:idle
+            />
           </nav>
           <div />
         </div>

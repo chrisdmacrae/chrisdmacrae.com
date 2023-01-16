@@ -20,7 +20,7 @@ export const ToggleFAB: React.FC<ToggleFABProps> = ({ theme: initialTheme }) => 
       toggleVolume()
   }
 
-  const [theme, toggleTheme] = useTheme(initialTheme)
+  const [theme, toggleTheme] = useTheme(initialTheme || 'system')
   const toggleThemeWithSound = () => {
     if (volume) buttonClick()
 
@@ -31,18 +31,18 @@ export const ToggleFAB: React.FC<ToggleFABProps> = ({ theme: initialTheme }) => 
   
   return (
     <FAB>
-      <FAB.Button onClick={toggleThemeWithSound}>
+      <FAB.Button label="Toggle theme" onClick={toggleThemeWithSound}>
         {theme === 'dark' && <Icon name='sun' />}
         {theme !== 'dark' && <Icon name='moon' />}
       </FAB.Button>
-      <FAB.Button onClick={toggleSound}>
+      <FAB.Button label="Toggle sound" onClick={toggleSound}>
         {volume && <Icon name='volume-off' />}
         {!volume && <Icon name='volume' />}
       </FAB.Button>
       <div className="hidden md:inline-block">
-        <FAB.Button onClick={toggleSearch}>
+        <FAB.Button label="Open search" onClick={toggleSearch}>
           <Icon name='search' />
-        </FAB.Button>
+=        </FAB.Button>
       </div>
   </FAB>
   )
