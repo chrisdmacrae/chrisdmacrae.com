@@ -29,7 +29,10 @@ if (!category || categoryArticles.length === 0) {
 
 const isAll = category?.slug === 'all'
 ---
-<Layout title='Article about engineering, design, web development, and more'>
+<Layout 
+  title={`${category.name} Articles`}
+  description={`Learn about ${category.name} from Chris D. MacRae`}
+>
   <div slot="sidebar" class="flex flex-col gap-2">
     <Sidebar.Header>
       {isAll && (

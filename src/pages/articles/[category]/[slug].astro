@@ -37,7 +37,11 @@ const { title, description, created: rawCreated } = article!.frontmatter
 const created = new Date(rawCreated)
 const { Content } = article!
 ---
-<Layout title={title} tabs={false}>
+<Layout 
+  title={title}
+  description={description}
+  tabs={false}
+>
   <div slot="sidebar" class="flex flex-col gap-2">
     {category && (
       <Sidebar.Header>

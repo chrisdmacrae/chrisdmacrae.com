@@ -7,10 +7,11 @@ import { THEME_COOKIE } from "../components/hooks/useTheme";
 
 export interface Props {
 	title: string
+  description: string
   tabs?: boolean
 }
 
-const { title, tabs = true } = Astro.props;
+const { title, description, tabs = true } = Astro.props;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -20,6 +21,7 @@ const { title, tabs = true } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title} | chrisdmacrae.com</title>
+    <meta name="description" content={description} />
 
     <link rel="stylesheet" href="/css/prism.css" />
     <script is:inline define:vars={{ THEME_COOKIE }}>
