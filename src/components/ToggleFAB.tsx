@@ -42,7 +42,7 @@ export const ToggleFAB: React.FC<ToggleFABProps> = ({ theme: initialTheme }) => 
       <div className="hidden md:inline-block">
         <FAB.Button label="Open search" onClick={toggleSearch}>
           <Icon name='search' />
-=        </FAB.Button>
+        </FAB.Button>
       </div>
   </FAB>
   )
