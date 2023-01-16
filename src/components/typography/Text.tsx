@@ -7,9 +7,10 @@ export type TextProps = {
     as?: 'p' | 'span'
     gradient?: TextGradient
     color?: TextColor
+    className?: string
 } & PropsWithChildren
 
-export const Text: React.FC<TextProps> = ({as = 'p', gradient, color = 'dark', children}) => {
+export const Text: React.FC<TextProps> = ({as = 'p', gradient, color = 'dark', children, ...props}) => {
     const El = as as any
     let classes = ['max-w-[40rem] align-top items-center']
 
@@ -17,7 +18,7 @@ export const Text: React.FC<TextProps> = ({as = 'p', gradient, color = 'dark', c
     else classes.push(getColor(color))
 
     return (
-        <El className={classes.join(" ")}>
+        <El className={classes.join(" ")} {...props}>
             {children}
         </El>        
     )

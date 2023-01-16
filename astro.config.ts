@@ -23,6 +23,9 @@ export default defineConfig({
   }), mdx({
     remarkPlugins: [readingTime, readingMdxTime]
   }), prefetch()],
+  markdown: {
+    syntaxHighlight: 'prism'
+  },
   vite: {
     ssr: {
       noExternal: ['@react-aria/overlays']
