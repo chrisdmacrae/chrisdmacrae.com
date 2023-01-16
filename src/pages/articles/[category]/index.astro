@@ -68,15 +68,13 @@ const isAll = category?.slug === 'all'
     <Heading as='h2' size={4}>Browse</Heading>
     <ToggleFAB client:idle />
   </div>
-  <div
-    class="flex flex-row overflow-scroll w-full max-w-[100vw] md:max-w-[calc(100vw-19rem)]"
-  >
+  <div class="relative flex flex-row overflow-scroll w-[100vw] -mx-5 pr-4 md:max-w-[calc(100vw-19rem)]">
     <div class="w-full flex flex-row gap-2 p-4">
       {categories.map(c => {
         const isCurrent = c.slug === category?.slug
 
         return (
-          <a href={`/articles/${c.slug}`} class="shrink-0 grow">
+          <a href={`/articles/${c.slug}`} class="shrink-0 grow-0">
             <FAB.Button color={isCurrent ? 'dark' : 'muted'} fluid>
               <Icon name={c.icon} />
               {isCurrent && (<h1 class="shrink-0 grow"><strong>{c.name}</strong></h1>)}

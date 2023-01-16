@@ -25,7 +25,7 @@ function getSize(size: DotGridSize) {
     case 'full':
       return 'w-full h-full'
     case 'screen':
-      return 'w-auto min-h-[calc(100vh-2.25rem)]'
+      return 'w-auto min-h-[calc(100vh-6.25rem)]'
   }
 }
 
