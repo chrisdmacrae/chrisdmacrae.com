@@ -13,6 +13,7 @@ export interface Props {
 }
 
 const { title, description, tabs = true } = Astro.props;
+const analyticsId = import.meta.env.VERCEL_ANALYTICS_ID
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -52,6 +53,6 @@ const { title, description, tabs = true } = Astro.props;
         </Sidebar.Pane>
       </Sidebar.Layout>
     </TabBar.Layout>
-    <WebVitals />
+    <WebVitals id={analyticsId} />
 	</body>
 </html>
