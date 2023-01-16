@@ -17,6 +17,8 @@ import prefetch from "@astrojs/prefetch";
 
 // https://astro.build/config
 export default defineConfig({
+  output: 'server',
+  adapter: vercel(),
   site: 'https://chrisdmacrae.com',
   integrations: [react(), image({
     serviceEntryPoint: '@astrojs/image/sharp'
@@ -29,6 +31,16 @@ export default defineConfig({
   vite: {
     ssr: {
       noExternal: ['@react-aria/overlays']
+    },
+    build: {
+      // workaround bug "index" file
+      // @link https://github.com/withastro/astro/issues/3805
+      rollupOptions: {
+          output: {
+              entryFileNames: "entry.[hash].js",
+              chunkFileNames: "chunks/chunk.[hash].js",
+          }
+      }
     }
   }
 });

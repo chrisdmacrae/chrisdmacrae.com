@@ -20,13 +20,14 @@ const categoryArticles = category?.slug === 'all'
   ? articles 
   : articles.filter(article => article.frontmatter.category === Astro.params.category)
 
-const isAll = category?.slug === 'all'
-
-export async function getStaticPaths() {
-  return categories.map(category => ({
-    params: { category: category.slug }
-  }))
+if (!category || categoryArticles.length === 0) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Not found'
+  })
 }
+
+const isAll = category?.slug === 'all'
 ---
 <Layout title='Article about engineering, design, web development, and more'>
   <div slot="sidebar" class="flex flex-col gap-2">

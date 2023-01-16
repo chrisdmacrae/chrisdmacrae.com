@@ -17,6 +17,13 @@ const articles = (await Astro.glob('../content/articles/*.mdx')).map(article => 
 }))
 const category = categories.find(category => category.slug === 'engineering-management')
 const categoryArticles = articles.filter(article => article.frontmatter.category === category?.slug)
+
+if (!category) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Not found'
+  })
+}
 ---
 <Layout title={`Learn about ${category!.name}`}>
   <div slot="sidebar" class="flex flex-col gap-2">
