@@ -17,6 +17,8 @@ import prefetch from "@astrojs/prefetch";
 
 // https://astro.build/config
 export default defineConfig({
+  output: 'server',
+  adapter: vercel(),
   site: 'https://chrisdmacrae.com',
   integrations: [react(), image({
     serviceEntryPoint: '@astrojs/image/sharp'
