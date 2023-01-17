@@ -1,22 +1,23 @@
 ---
-title: 'How To Do Dark Mode With Static Pages'
+title: 'How To Do Dark Mode With Server Rendered Pages'
 description: | 
-  When you don't have server rendered pages that let you send down a page
-  ready for the user's selected color scheme, it might seem hard. Believe me, it's not!
+  When you you have server rendered pages, you can use cookies to send down a page
+  that's ready for the user's selected color scheme.
 created: 2023-01-15
 category: web-development
 ---
+import Code from '../../components/Code'
 import Canvas from '../../components/Canvas'
 import Disclaimer from '../../components/Disclaimer'
 
 This website has a light and dark mode, and responds to the user's preferred color scheme out of the box.
 
-Getting this to work with my fully static website proved to be a real chore, and ended in a ridiculously simple solution.
+Getting this to work with my partially static website proved to be a real chore, and ended in a ridiculously simple solution.
 
 So for this tutorial, I'll walk you through setting up a simple light and dark theme, with a button to toggle in on and off.
 
 <Disclaimer>
-  Building a server-rendered website? Learn how to [use cookies to server-render the user's theme](./how-to-do-dark-mode-with-ssr)
+  Building a statically-rendered website? Save the bytes of JavaScript and [use scripts to client-render the user's theme](./how-to-do-dark-mode-with-ssg)
 </Disclaimer>
 
 ## What we need to do
@@ -122,7 +123,7 @@ Right now, our button doesn't do _anything_. Let's fix that by adding an `onclic
 
 Finally, we'll use `localStorage` so we can persist the override between page views, and use the override if it's present.
 
-```html
+```html file=src/components/button.js
 <script>
   const override = window.localStorage.getItem("theme");
   const prefersDark =

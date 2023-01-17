@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from "react";
 
 export type TextGradient = "primary" | "success" | "info" | "warning"
-export type TextColor = "light" | "dark" | "muted"
+export type TextColor = "light" | "dark" | "muted" | "inherit"
 
 export type TextProps = {
     as?: 'p' | 'span'
@@ -45,6 +45,8 @@ function getColor(color: TextColor) {
             return 'text-slate-900 dark:text-slate-50'
         case 'muted':
           return 'text-slate-600 dark:text-slate-400'
+        case 'inherit':
+          return ''
     }
 }
 

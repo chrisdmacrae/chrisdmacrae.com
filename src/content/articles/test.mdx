@@ -5,12 +5,38 @@ description: |
 created: 2021-06-18
 category: web-development
 ---
+import Code from '../../components/Code'
 import Canvas from '../../components/Canvas'
 import ToggleFAB from '../../components/ToggleFAB'
 
 <Canvas>
   <ToggleFAB />
 </Canvas>
+
 ---
+
+<Code tabs={['X', 'Y', 'Z']} id="test" client:idle>
+  <Code.Block id="X" slot="panels" active client:idle>
+    <Fragment slot="code">
+    ```js
+    let a = "hello world"
+    ```
+    </Fragment>
+  </Code.Block>
+  <Code.Block id="Y" title="xyz.tsx" slot="panels" client:idle>
+    <Fragment slot="code">
+    ```js
+    let b = "I'm alive"
+    ```
+    </Fragment>
+  </Code.Block>
+    <Code.Block id="Z" title="xyz.tsx" slot="panels" client:idle>
+    <Fragment slot="code">
+    ```js
+    let c = "and I shouldn't be"
+    ```
+    </Fragment>
+  </Code.Block>
+</Code>
 
 dsfkjghfsdjghfdasgjh

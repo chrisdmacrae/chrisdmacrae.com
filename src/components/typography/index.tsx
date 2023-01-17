@@ -9,7 +9,6 @@ export const components = {
   h5: (props: any) => <span className="pt-2"><Heading as='h6' size={4} {...props} /></span>,
   h6: (props: any) => <span className="pt-2"><Heading as='h6' size={4} {...props} /></span>,
   p: (props: any) => <Text as='p' {...props} />,
-  span: (props: any) => <Text as='span' {...props} />,
   ul: (props: any) => <ul className="list-disc list-outside text-slate-900 dark:text-slate-50 pl-6 pt-2 mb-4" {...props} />,
   ol: (props: any) => <ol className="list-decimal list-outside text-slate-900 dark:text-slate-50 pl-6 pt-2 mb-4" {...props} />,
   li: ({children, ...props}: any) => <li {...props}><Text>{children}</Text></li>,
