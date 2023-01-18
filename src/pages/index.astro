@@ -9,8 +9,6 @@ import { Picture } from "@astrojs/image/components";
 import Icon from "../components/Icon";
 import categories from "../content/articles/_categories";
 import Gem from "../components/Gem";
-
-export const prerender = true
 ---
 <Layout 
   title="Home"
@@ -24,6 +22,9 @@ export const prerender = true
         </Heading>
       </a>
     </Sidebar.Header>
+    <Text color='muted'>
+      <strong>Categories</strong>
+    </Text>
     {categories
       .map(category => (
         <Sidebar.Link href={category.featuredHref ? category.featuredHref : `/articles/${category.slug}`}>
