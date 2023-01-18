@@ -3,14 +3,14 @@ import type { HTMLAttributes, PropsWithChildren } from "react";
 export type ButtonColor = 'primary' | 'light' | 'dark' | 'muted'
 
 export type ButtonProps = Omit<HTMLAttributes<HTMLButtonElement>, 'className'> & PropsWithChildren & {
-  label: string
+  label?: string
   color?: ButtonColor
   fluid?: boolean
   disabled?: boolean
 }
 
 export const Button: React.FC<ButtonProps> = ({label, color = 'light', fluid = false, disabled, children, ...props}) => {
-  let classes = ['flex flex-row shrink-0 grow-0 justify-center items-center rounded-full h-[2.5rem] md:h-[3rem] p-2 overflow-hidden']
+  let classes = ['flex flex-row shrink-0 grow-0 gap-2 justify-center items-center rounded-full h-[2.5rem] md:h-[3rem] p-2 overflow-hidden']
 
   classes.push(getColor(color))
 
@@ -20,7 +20,7 @@ export const Button: React.FC<ButtonProps> = ({label, color = 'light', fluid = f
   return (
     <button className={classes.join(" ")}  disabled={disabled} {...props}>
       {children}
-      <span className="sr-only">{label}</span>
+      {label && (<span className="sr-only">{label}</span>)}
     </button>
   )
 }

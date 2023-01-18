@@ -3,8 +3,8 @@ export type Category = {
   slug: string
   icon: string
   color: 'primary' | 'success' | 'warning' | 'info'
-  featured?: boolean
   featuredHref?: string
+  homepage?: boolean
 }
 
 export const categories: Category[] = [
@@ -13,36 +13,32 @@ export const categories: Category[] = [
     slug: "engineering-management",
     icon: "code",
     color: 'primary',
-    featured: true,
-    featuredHref: "/engineering-management"
+    featuredHref: "/engineering-management",
+    homepage: true
   },
   {
     name: "Design Management",
     slug: "design-management",
     icon: "box-align-bottom-left",
     color: 'success',
-    featured: true,
-    featuredHref: "/design-management"
+    featuredHref: "/design-management",
+    homepage: true
+
   },
   {
     name: "Web Development",
     slug: "web-development",
     icon: "box-model-2",
     color: 'info',
-    featured: true
+    homepage: true
+
   },
   {
     name: "Systems Thinking",
     slug: "systems-thinking",
     icon: "schema",
     color: 'warning',
-    featured: true
-  },
-  {
-    name: "Opinions",
-    slug: "opinions",
-    icon: "bulb",
-    color: 'warning'
+    homepage: true
   },
   {
     name: "All",

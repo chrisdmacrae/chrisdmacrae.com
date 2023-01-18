@@ -9,7 +9,6 @@ import image from "@astrojs/image";
 
 // https://astro.build/config
 import mdx from "@astrojs/mdx";
-import remarkMdxCodeMeta from 'remark-mdx-code-meta';
 import readingTime from "remark-reading-time";
 import readingMdxTime from "remark-reading-time/mdx";
 
@@ -24,7 +23,7 @@ export default defineConfig({
   integrations: [react(), image({
     serviceEntryPoint: '@astrojs/image/sharp'
   }), mdx({
-    remarkPlugins: [remarkMdxCodeMeta, readingTime, readingMdxTime]
+    remarkPlugins: [readingTime, readingMdxTime]
   }), prefetch()],
   markdown: {
     syntaxHighlight: 'prism',

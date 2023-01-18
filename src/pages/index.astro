@@ -25,17 +25,12 @@ export const prerender = true
       </a>
     </Sidebar.Header>
     {categories
-      .filter(category => category?.featured)
       .map(category => (
         <Sidebar.Link href={category.featuredHref ? category.featuredHref : `/articles/${category.slug}`}>
           <Icon name={category.icon} />
           {category.name}
         </Sidebar.Link>
     ))}
-    <Sidebar.Link href="/articles">
-      <Icon name='article' />
-      All Articles
-    </Sidebar.Link>
   </div>
   <div class="w-full">
     <DotGrid size="screen">
@@ -68,7 +63,7 @@ export const prerender = true
           >
             <div class="w-[min-content] flex flex-row gap-2 px-4">
               {categories
-                .filter(category => category.featured)
+                .filter(category => category.homepage)
                 .map(category => (
                   <a href={category.featuredHref ? category.featuredHref : `/articles/${category.slug}`} rel="prefetch">
                     <Gem
