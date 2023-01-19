@@ -1,5 +1,4 @@
 ---
-import { basename } from 'path'
 import Icon from '../../../components/Icon'
 import Text from '../../../components/typography/Text'
 import Layout from '../../../layouts/Layout.astro'
@@ -7,19 +6,16 @@ import Sidebar from '../../../layouts/Sidebar'
 import typography from '../../../components/typography'
 import Heading from '../../../components/typography/Heading'
 import Card from '../../../components/Card'
-import FAB from '../../../components/FAB'
 import ToggleFAB from '../../../components/ToggleFAB'
 import categories from '../../../content/articles/_categories'
 import { prettyDate } from '../../../lib/prettyDate'
 import { BackFAB } from '../../../components/BackFAB'
 import { Pagination } from '../../../components/Pagination'
+import { Article, getArticles } from '../../../content/articles'
 
-const articles = (await Astro.glob('../../../content/articles/*.mdx')).map(article => ({
-  ...article,
-  slug: basename(article.file).split('.')[0]
-}))
-  .filter(article => article.frontmatter.category === Astro.params.category)
-  .sort((a, b) => Date.parse(b.frontmatter.created) - Date.parse(a.frontmatter.created))
+const articles = await getArticles(() => Astro.glob<Article>('../../../content/articles/*.mdx'), {
+  category: Astro.params.category
+})
 const index = articles.findIndex(article => article.slug === Astro.params.slug)
 const article = articles[index]
 const prevArticle = articles[index - 1]

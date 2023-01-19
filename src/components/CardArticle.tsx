@@ -1,12 +1,12 @@
+import type { MDXInstance } from "astro"
+import type { Article } from "../content/articles"
 import { categories } from "../content/articles/_categories"
 import { prettyDate } from "../lib/prettyDate"
 import Heading from "./typography/Heading"
 import Text from "./typography/Text"
 
-export type Article = any
-
 export type CardArticleProps = {
-  article: Article
+  article: MDXInstance<Article>
 }
 
 export const CardArticle: React.FC<CardArticleProps> =({ article }) => {

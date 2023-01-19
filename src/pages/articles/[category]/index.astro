@@ -1,5 +1,4 @@
 ---
-import { basename } from 'path'
 import Icon from '../../../components/Icon'
 import Text from '../../../components/typography/Text'
 import Layout from '../../../layouts/Layout.astro'
@@ -9,18 +8,14 @@ import Heading from '../../../components/typography/Heading'
 import FAB from '../../../components/FAB'
 import ToggleFAB from '../../../components/ToggleFAB'
 import { CardArticle } from '../../../components/CardArticle'
+import { Article, getArticles } from '../../../content/articles'
 
-const articles = (await Astro.glob('../../../content/articles/*.mdx')).map(article => ({
-  ...article,
-  slug: basename(article.file).split('.')[0]
-}))
-  .sort((a, b) => Date.parse(b.frontmatter.created) - Date.parse(a.frontmatter.created))
+const articles = await getArticles(() => Astro.glob<Article>('../../../content/articles/*.mdx'), {
+  category: Astro.params.category
+})
 const category = categories.find(category => category.slug === Astro.params.category)
-const categoryArticles = category?.slug === 'all'
-  ? articles 
-  : articles.filter(article => article.frontmatter.category === Astro.params.category)
 
-if (!category || categoryArticles.length === 0) {
+if (!category) {
   return new Response(null, {
     status: 404,
     statusText: 'Not found'
@@ -89,8 +84,14 @@ const isAll = category?.slug === 'all'
     </div>
   </div>
   <div class="flex flex-col gap-4">
-    {categoryArticles.map(article => (
+    {articles.map(article => (
       <CardArticle article={article} />
     ))}
+    {articles.length === 0 && (
+      <div class="p-6">
+        <Heading as='h2' size={4}>I'm still working on this content</Heading>
+        <Text>Check back soon!</Text>
+      </div>
+    )}
   </div>
 </Layout>
