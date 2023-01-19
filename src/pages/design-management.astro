@@ -1,5 +1,4 @@
 ---
-import { basename } from 'path'
 import Layout from "../layouts/Layout.astro";
 import Sidebar from "../layouts/Sidebar";
 import DotGrid from "../components/DotGrid";
@@ -12,8 +11,9 @@ import { categories } from "../content/articles/_categories";
 import { CardArticle } from '../components/CardArticle';
 import { Article, getArticles } from '../content/articles';
 
-const articles = await getArticles(() => Astro.glob<Article>('../../../content/articles/*.mdx'), {
-  category: Astro.params.category
+const articles = await getArticles(() => Astro.glob<Article>('..//content/articles/*.mdx'), {
+  category: Astro.params.category,
+  drafts: import.meta.env.DEV
 })
 const category = categories.find(category => category.slug === 'design-management')
 

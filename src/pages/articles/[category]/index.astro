@@ -11,7 +11,8 @@ import { CardArticle } from '../../../components/CardArticle'
 import { Article, getArticles } from '../../../content/articles'
 
 const articles = await getArticles(() => Astro.glob<Article>('../../../content/articles/*.mdx'), {
-  category: Astro.params.category
+  category: Astro.params.category !== 'all' ? Astro.params.category : undefined,
+  drafts: import.meta.env.DEV
 })
 const category = categories.find(category => category.slug === Astro.params.category)
 

@@ -14,7 +14,8 @@ import { Pagination } from '../../../components/Pagination'
 import { Article, getArticles } from '../../../content/articles'
 
 const articles = await getArticles(() => Astro.glob<Article>('../../../content/articles/*.mdx'), {
-  category: Astro.params.category
+  category: Astro.params.category,
+  drafts: import.meta.env.DEV
 })
 const index = articles.findIndex(article => article.slug === Astro.params.slug)
 const article = articles[index]
