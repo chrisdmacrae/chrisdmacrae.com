@@ -81,7 +81,7 @@ const { Content } = article!
           />
         </nav>
         <div class="shrink-0 grow max-w-full items-center relative flex flex-col gap-4 -mb-4 h-[calc(100vh-6.5rem)] ios:h-[calc(100vh-12rem)] ios:lg:h-[calc(100vh-9rem)] lg:h-[calc(100vh-7.25rem)] overflow-scroll">
-          <article class="flex flex-col gap-4 w-full max-w-[40rem] pt-4 lg:pt-8">
+          <article class="flex flex-col gap-4 w-full max-w-[40rem] py-4 lg:py-8">
             <section class="flex flex-col gap-2 pt-2 pb-8">
               <Text>
                 <span class="leading-10 break-keep">{prettyDate(created)} · {(article as any).readingTime.text} · <a href={`/articles/${category?.slug}`}><span class="rounded-full bg-slate-200 dark:bg-slate-800 p-2 whitespace-nowrap">{category?.name}</span></a></span>
