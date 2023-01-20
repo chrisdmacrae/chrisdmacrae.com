@@ -20,7 +20,7 @@ export const ToggleFAB: React.FC<ToggleFABProps> = ({ theme: initialTheme }) => 
       toggleVolume()
   }
 
-  const [theme, toggleTheme] = useTheme(initialTheme || 'system')
+  const [theme, toggleTheme] = useTheme(initialTheme)
   const toggleThemeWithSound = () => {
     if (volume) buttonClick()
 

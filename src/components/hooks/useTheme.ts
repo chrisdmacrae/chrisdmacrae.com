@@ -13,10 +13,6 @@ export const useTheme = (initialTheme: Theme) => {
   }
 
   useEffect(() => {
-    if(initialTheme) setTheme(initialTheme)
-  }, [initialTheme])
-
-  useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark')
     } else if (theme === 'light') {
