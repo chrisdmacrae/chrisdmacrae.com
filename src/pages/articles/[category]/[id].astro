@@ -12,27 +12,41 @@ import { prettyDate } from '../../../lib/prettyDate'
 import { BackFAB } from '../../../components/BackFAB'
 import { Pagination } from '../../../components/Pagination'
 import { getArticles } from '../../../content/articles'
+import type { CollectionEntry } from "astro:content"
 
-const articles = await getArticles({
-  category: Astro.params.category,
-  drafts: import.meta.env.DEV
-})
-const index = articles.findIndex(article => article.slug === Astro.params.slug)
-const article = articles[index]
-const prevArticle = articles[index - 1]
-const nextArticle = articles[index + 1]
-const category = categories.find(category => category.slug === Astro.params.category)
+export const prerender = true
+export const getStaticPaths = async () => {
+  const allArticles = await getArticles({
+    drafts: import.meta.env.DEV
+  })
 
-if (!article || article.frontmatter.category !== category?.slug) {
-  return new Response(null, {
-    status: 404,
-    statusText: 'Not found'
+  return allArticles.map((article, index) => {
+    const prevArticle = allArticles[index - 1]
+    const nextArticle = allArticles[index + 1]
+    const id = article.slug.split("/").pop()
+    const category = article.data.category
+    const articles = allArticles.filter(article => article.data.category === category)
+
+    return {
+      params: { id, category },
+      props: { article, prevArticle, nextArticle, articles }
+    }
   })
 }
 
-const { title, description, created: rawCreated } = article!.frontmatter
+export interface Props {
+  category: string
+  article: CollectionEntry<"articles">
+  prevArticle: CollectionEntry<"articles">
+  nextArticle: CollectionEntry<"articles">
+  articles: CollectionEntry<"articles">[]
+}
+
+const { article, prevArticle, nextArticle, articles } = Astro.props
+const category = categories.find(category => category.slug === article.data.category)!
+const { title, description, created: rawCreated } = article!.data
 const created = new Date(rawCreated)
-const { Content } = article!
+const { Content } = await article.render()
 ---
 <Layout 
   title={title}
@@ -52,9 +66,9 @@ const { Content } = article!
     )}
     <div class="h-[calc(100vh-16rem)] overflow-scroll w-full">
       {articles.map(article => (
-        <Sidebar.Link href={`/articles/${article.frontmatter.category}/${article.slug}`}>
+        <Sidebar.Link href={article.slug}>
           <Icon name='article' />
-          {article.frontmatter.title}
+          {article.data.title}
         </Sidebar.Link>
       ))}
     </div>
@@ -62,7 +76,7 @@ const { Content } = article!
   <div class="w-full">
     <Card>
       <div class="sticky top-0 flex flex-row justify-between pb-4 border-b border-slate-200 dark:border-slate-700">
-        <BackFAB defaultHref={`/articles/${category!.slug}`} client:idle />
+        <BackFAB defaultHref={`/articles/${category.slug}`} client:idle />
         <a href="/" class="inline-block ml-6 mt-2" rel="preload">
           <Heading as='h2' size={4}>
             <Text gradient='warning'>
@@ -75,8 +89,8 @@ const { Content } = article!
       <div class="flex flex-row gap-4">
         <nav class="relative hidden lg:block pt-8 pl-1">
           <Pagination 
-            prevHref={prevArticle ? `/articles/${prevArticle.frontmatter.category}/${prevArticle?.slug}` : undefined}
-            nextHref={nextArticle ? `/articles/${nextArticle.frontmatter.category}/${nextArticle?.slug}` : undefined}
+            prevHref={prevArticle ? prevArticle?.slug : undefined}
+            nextHref={nextArticle ? nextArticle?.slug : undefined}
             client:idle
           />
         </nav>
@@ -84,7 +98,7 @@ const { Content } = article!
           <article class="flex flex-col gap-4 w-full max-w-[40rem] py-4 lg:py-8">
             <section class="flex flex-col gap-2 pt-2 pb-8">
               <Text>
-                <span class="leading-10 break-keep">{prettyDate(created)} · {(article as any).readingTime.text} · <a href={`/articles/${category?.slug}`}><span class="rounded-full bg-slate-200 dark:bg-slate-800 p-2 whitespace-nowrap">{category?.name}</span></a></span>
+                <span class="leading-10 break-keep">{prettyDate(created)} · {(article as any).readingTime?.text} · <a href={`/articles/${category.slug}`}><span class="rounded-full bg-slate-200 dark:bg-slate-800 p-2 whitespace-nowrap">{category?.name}</span></a></span>
               </Text>
               <Heading as='h1' size={1}>
                 {title}
@@ -98,8 +112,8 @@ const { Content } = article!
           <nav class="relative w-fit lg:hidden m-auto">
             <Pagination 
               direction='horizontal'
-              prevHref={prevArticle ? `/articles/${prevArticle.frontmatter.category}/${prevArticle?.slug}` : undefined}
-              nextHref={nextArticle ? `/articles/${nextArticle.frontmatter.category}/${nextArticle?.slug}` : undefined}
+              prevHref={prevArticle ? prevArticle?.slug : undefined}
+              nextHref={nextArticle ? nextArticle?.slug : undefined}
               client:idle
             />
           </nav>

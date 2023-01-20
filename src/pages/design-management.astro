@@ -11,18 +11,14 @@ import { categories } from "../content/articles/_categories";
 import { CardArticle } from '../components/CardArticle';
 import { getArticles } from '../content/articles';
 
+export const prerender = true
+
+const category = categories.find(category => category.slug === 'design-management')!
 const articles = await getArticles({
-  category: Astro.params.category,
+  category: category.slug,
   drafts: import.meta.env.DEV
 })
-const category = categories.find(category => category.slug === 'design-management')
 
-if (!category) {
-  return new Response(null, {
-    status: 404,
-    statusText: 'Not found'
-  })
-}
 ---
 <Layout title={`Learn about ${category!.name}`} description="">
   <div slot="sidebar" class="flex flex-col gap-2">
@@ -78,7 +74,7 @@ if (!category) {
       <hr class="border-b border-slate-200 dark:border-slate-800" />
       <div class="lg:-ml-6">
         {articles.map(article => (
-          <CardArticle article={article} />
+          <CardArticle article={article} readingTime={article.readingTime} />
         ))}
       </div>
     </div>

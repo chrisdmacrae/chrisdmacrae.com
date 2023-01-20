@@ -11,27 +11,20 @@ import { categories } from "../content/articles/_categories";
 import { CardArticle } from '../components/CardArticle';
 import { getArticles } from '../content/articles';
 
+export const prerender = true
+
+const category = categories.find(category => category.slug === 'engineering-management')!
 const articles = await getArticles({
-  category: Astro.params.category,
+  category: category.slug,
   drafts: import.meta.env.DEV
 })
-const category = categories.find(category => category.slug === 'engineering-management')
-
-if (!category) {
-  return new Response(null, {
-    status: 404,
-    statusText: 'Not found'
-  })
-}
-
-const butts = Astro.cookies.get('butts').boolean()
 ---
 <Layout title={`Learn about ${category!.name}`} description={``}>
   <div slot="sidebar" class="flex flex-col gap-2">
     <Sidebar.Header>
       <a href="/">
         <Heading as="h1" size={3}>
-          <Text gradient="warning" as="span">{butts ? 'BUTTS' : 'Chris D. Macrae'}</Text>
+          <Text gradient="warning" as="span">Chris D. Macrae</Text>
         </Heading>
       </a>
     </Sidebar.Header>
@@ -82,7 +75,7 @@ const butts = Astro.cookies.get('butts').boolean()
       </div>
       <div class="-mx-2 lg:-mx-6">
         {articles.map(article => (
-          <CardArticle article={article} />
+          <CardArticle article={article} readingTime={article.readingTime} />
         ))}
       </div>
     </div>

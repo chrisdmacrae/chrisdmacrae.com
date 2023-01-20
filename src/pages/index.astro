@@ -10,8 +10,6 @@ import Icon from "../components/Icon";
 import categories from "../content/articles/_categories";
 import Gem from "../components/Gem";
 
-const butts = Astro.cookies.get('butts').boolean()
-
 export const prerender = true
 ---
 <Layout 
@@ -22,7 +20,7 @@ export const prerender = true
     <Sidebar.Header>
       <a href="/">
         <Heading as="h1" size={3}>
-          <Text gradient="warning" as="span">{butts ? 'BUTTS' : 'Chris D. Macrae'}</Text>
+          <Text gradient="warning" as="span">Chris D. Macrae</Text>
         </Heading>
       </a>
     </Sidebar.Header>

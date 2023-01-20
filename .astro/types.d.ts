@@ -106,15 +106,6 @@ declare module 'astro:content' {
   data: InferEntrySchema<"articles">
 },
 },
-"test": {
-"test.md": {
-  id: "test.md",
-  slug: "test",
-  body: string,
-  collection: "test",
-  data: any
-},
-},
 
 	};
 
