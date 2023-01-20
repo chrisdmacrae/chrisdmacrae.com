@@ -13,6 +13,7 @@ export interface Props {
 }
 
 const { title, description, tabs = true } = Astro.props;
+const ogImageUrl = new URL(`/api/og?title=${title}`, Astro.site)
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +23,7 @@ const { title, description, tabs = true } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title} | chrisdmacrae.com</title>
+    <meta name="og:image" content={ogImageUrl.toString()} />
     <meta name="description" content={description} />
 
     <link rel="stylesheet" href="/css/prism.css" />

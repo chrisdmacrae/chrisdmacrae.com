@@ -22,7 +22,7 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   output: 'server',
   adapter: vercel(),
-  site: 'https://chrisdmacrae.com',
+  site: import.meta.env.DEV ? 'http://localhost:3000' : 'https://chrisdmacrae.com',
   integrations: [react(), image({
     serviceEntryPoint: '@astrojs/image/sharp'
   }), mdx({
