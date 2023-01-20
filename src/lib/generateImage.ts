@@ -14,14 +14,14 @@ export type ImageOptions = {
   debug?: boolean
 }
 
-export async function generateImage(Component: any, props: Record<string, any>, { width, height, debug }: ImageOptions) {
-  const roboto400 = await fetch(new URL('/fonts/Roboto/Roboto-Medium.ttf', 'http://localhost:3000')).then(
+export async function generateImage(Component: any, props: Record<string, any>, { site, width, height, debug }: ImageOptions) {
+  const roboto400 = await fetch(new URL('/fonts/Roboto/Roboto-Medium.ttf', site)).then(
     (res) => res.arrayBuffer()
   )
-  const roboto700 = await fetch(new URL('/fonts/Roboto/Roboto-Bold.ttf', 'http://localhost:3000')).then(
+  const roboto700 = await fetch(new URL('/fonts/Roboto/Roboto-Bold.ttf', site)).then(
     (res) => res.arrayBuffer()
   )
-  const roboto900 = await fetch(new URL('/fonts/Roboto/Roboto-Black.ttf', 'http://localhost:3000')).then(
+  const roboto900 = await fetch(new URL('/fonts/Roboto/Roboto-Black.ttf', site)).then(
     (res) => res.arrayBuffer()
   )
   const svg = await satori(
