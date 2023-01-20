@@ -17,7 +17,7 @@ export const OgImage: React.FC<OgImageProps> = ({title, url}) => {
       backgroundSize: '100% 100%'
     }}>
       <h1 style={{
-        fontSize: '72px',
+        fontSize: '84px',
         fontWeight: 900,
         color: 'rgb(15, 23, 42)'
       }}
