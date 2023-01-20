@@ -14,6 +14,7 @@ export type getArticlesOptions = {
 }
 
 export const getArticles = async (options?: getArticlesOptions) => {
+  const importedArticles = import.meta.glob<Record<string, any>>('./articles/*.mdx', { eager: false })
   const articlesCollection = await getCollection('articles', ({ data }) => {
     if (!options?.drafts && data.draft === true) {
       return false
@@ -26,13 +27,11 @@ export const getArticles = async (options?: getArticlesOptions) => {
     return true
   })
   let articles = await Promise.all(articlesCollection.map(async (article) => {
-    const {remarkPluginFrontmatter} = await article.render()
-
-    console.log({ remarkPluginFrontmatter })
+    const importedArticle = await importedArticles[`./articles/${article.id}`]()
 
     return {
       ...article,
-      readingTime: remarkPluginFrontmatter?.readingTime
+      readingTime: importedArticle.readingTime
     } as const
   }))
 

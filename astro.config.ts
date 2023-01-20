@@ -26,7 +26,8 @@ export default defineConfig({
   integrations: [react(), image({
     serviceEntryPoint: '@astrojs/image/sharp'
   }), mdx({
-    remarkPlugins: [readingTime, readingMdxTime]
+    remarkPlugins: [readingTime, readingMdxTime],
+    extendMarkdownConfig: true
   }), prefetch(), sitemap()],
   markdown: {
     syntaxHighlight: 'prism',

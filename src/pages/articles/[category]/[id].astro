@@ -44,8 +44,7 @@ export interface Props {
 
 const { article, prevArticle, nextArticle, articles } = Astro.props
 const category = categories.find(category => category.slug === article.data.category)!
-const { title, description, created: rawCreated } = article!.data
-const created = new Date(rawCreated)
+const { title, description, pubDate } = article!.data
 const { Content } = await article.render()
 ---
 <Layout 
@@ -98,7 +97,7 @@ const { Content } = await article.render()
           <article class="flex flex-col gap-4 w-full max-w-[40rem] py-4 lg:py-8">
             <section class="flex flex-col gap-2 pt-2 pb-8">
               <Text>
-                <span class="leading-10 break-keep">{prettyDate(created)} · {(article as any).readingTime?.text} · <a href={`/articles/${category.slug}`}><span class="rounded-full bg-slate-200 dark:bg-slate-800 p-2 whitespace-nowrap">{category?.name}</span></a></span>
+                <span class="leading-10 break-keep">{prettyDate(pubDate)} · {(article as any).readingTime?.text} · <a href={`/articles/${category.slug}`}><span class="rounded-full bg-slate-200 dark:bg-slate-800 p-2 whitespace-nowrap">{category?.name}</span></a></span>
               </Text>
               <Heading as='h1' size={1}>
                 {title}

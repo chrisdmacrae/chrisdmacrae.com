@@ -24,7 +24,7 @@ export const CardArticle: React.FC<CardArticleProps> = ({ article, readingTime }
             {article.data.description}
           </Text>
           <Text color='muted'>
-            <span className="leading-10 break-keep">{prettyDate(article.data.created)} · {readingTime?.text} min read · <span className="rounded-full bg-slate-200 dark:bg-slate-800 p-2 whitespace-nowrap">{category?.name}</span></span>
+            <span className="leading-10 break-keep">{prettyDate(article.data.pubDate)} · {readingTime?.text} min read · <span className="rounded-full bg-slate-200 dark:bg-slate-800 p-2 whitespace-nowrap">{category?.name}</span></span>
           </Text>
         </span>
       </article>
