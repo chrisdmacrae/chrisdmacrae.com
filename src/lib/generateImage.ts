@@ -8,6 +8,7 @@ const YOGA = initYoga()
 initSatori(YOGA)
 
 export type ImageOptions = {
+  site: string,
   width: number
   height: number,
   debug?: boolean

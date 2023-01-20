@@ -2,13 +2,20 @@ import type { APIRoute } from 'astro'
 import { generateImage } from '../../lib/generateImage'
 import { OgImage } from '../../components/OgImage' 
 
-export const get: APIRoute = async ({ url }) => {
+export const get: APIRoute = async ({ url, site }) => {
   const debug = Boolean(url.searchParams.get('debug'))
   const title = url.searchParams.get('title')
   const rawWidth = url.searchParams.get('w')
   const width = rawWidth ? parseInt(rawWidth) : 1200
   const rawHeight = url.searchParams.get('h')
   const height = rawHeight ? parseInt(rawHeight) : 630
+
+  if (!site) {
+    return new Response(null, {
+      status: 500,
+      statusText: "Site missing"
+    })
+  }
 
   if (!title) {
     return new Response(null, {
@@ -18,7 +25,7 @@ export const get: APIRoute = async ({ url }) => {
   }
 
   const props = { url, title }
-  const imageOptions = { width, height, debug }
+  const imageOptions = { site: site.toString(), width, height, debug }
   const buffer = await generateImage(OgImage, props, imageOptions)
 
   return new Response(buffer, {
