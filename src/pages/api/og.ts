@@ -3,6 +3,7 @@ import { generateImage } from '../../lib/generateImage'
 import { OgImage } from '../../components/OgImage' 
 
 export const get: APIRoute = async ({ url, site }) => {
+  console.log({ site })
   const debug = Boolean(url.searchParams.get('debug'))
   const title = url.searchParams.get('title')
   const rawWidth = url.searchParams.get('w')
