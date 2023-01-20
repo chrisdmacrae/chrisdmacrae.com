@@ -21,7 +21,10 @@ export const useTheme = (initialTheme: Theme) => {
       setTheme('dark')
     }
 
-    if (theme) {
+    if (theme === 'system') {
+      localStorage.removeItem(THEME_COOKIE)
+    }
+    else if (theme) {
       Cookies.set(THEME_COOKIE, theme, { sameSite: 'strict' })
       localStorage.setItem(THEME_COOKIE, theme)
     }
