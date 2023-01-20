@@ -8,12 +8,10 @@ import Heading from '../../../components/typography/Heading'
 import FAB from '../../../components/FAB'
 import ToggleFAB from '../../../components/ToggleFAB'
 import { CardArticle } from '../../../components/CardArticle'
-import { Article, getArticles } from '../../../content/articles'
+import { getArticles } from '../../../content/articles'
+import { getCollection } from 'astro:content';
 
-const articles = await getArticles(() => Astro.glob<Article>('../../../content/articles/*.mdx'), {
-  category: Astro.params.category !== 'all' ? Astro.params.category : undefined,
-  drafts: import.meta.env.DEV
-})
+const allArticles = await getCollection('articles')
 const category = categories.find(category => category.slug === Astro.params.category)
 
 if (!category) {

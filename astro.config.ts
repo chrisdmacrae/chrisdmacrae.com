@@ -16,6 +16,9 @@ import readingMdxTime from "remark-reading-time/mdx";
 import prefetch from "@astrojs/prefetch";
 
 // https://astro.build/config
+import sitemap from "@astrojs/sitemap";
+
+// https://astro.build/config
 export default defineConfig({
   output: 'server',
   adapter: vercel(),
@@ -24,7 +27,7 @@ export default defineConfig({
     serviceEntryPoint: '@astrojs/image/sharp'
   }), mdx({
     remarkPlugins: [readingTime, readingMdxTime]
-  }), prefetch()],
+  }), prefetch(), sitemap()],
   markdown: {
     syntaxHighlight: 'prism',
     remarkPlugins: []
@@ -37,10 +40,10 @@ export default defineConfig({
       // workaround bug "index" file
       // @link https://github.com/withastro/astro/issues/3805
       rollupOptions: {
-          output: {
-              entryFileNames: "entry.[hash].js",
-              chunkFileNames: "chunks/chunk.[hash].js",
-          }
+        output: {
+          entryFileNames: "entry.[hash].js",
+          chunkFileNames: "chunks/chunk.[hash].js"
+        }
       }
     }
   }

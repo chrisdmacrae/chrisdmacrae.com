@@ -11,9 +11,9 @@ import categories from '../../../content/articles/_categories'
 import { prettyDate } from '../../../lib/prettyDate'
 import { BackFAB } from '../../../components/BackFAB'
 import { Pagination } from '../../../components/Pagination'
-import { Article, getArticles } from '../../../content/articles'
+import { getArticles } from '../../../content/articles'
 
-const articles = await getArticles(() => Astro.glob<Article>('../../../content/articles/*.mdx'), {
+const articles = await getArticles({
   category: Astro.params.category,
   drafts: import.meta.env.DEV
 })

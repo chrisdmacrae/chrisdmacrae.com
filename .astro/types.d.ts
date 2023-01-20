@@ -30,17 +30,24 @@ declare module 'astro:content' {
 		input: BaseCollectionConfig<S>
 	): BaseCollectionConfig<S>;
 
-	export function getEntry<C extends keyof typeof entryMap, E extends keyof (typeof entryMap)[C]>(
-		collection: C,
-		entryKey: E
-	): Promise<(typeof entryMap)[C][E] & Render>;
-	export function getCollection<
+	type EntryMapKeys = keyof typeof entryMap;
+	type AllValuesOf<T> = T extends any ? T[keyof T] : never;
+	type ValidEntrySlug<C extends EntryMapKeys> = AllValuesOf<(typeof entryMap)[C]>['slug'];
+
+	export function getEntryBySlug<
 		C extends keyof typeof entryMap,
-		E extends keyof (typeof entryMap)[C]
+		E extends ValidEntrySlug<C> | (string & {})
 	>(
 		collection: C,
-		filter?: (data: (typeof entryMap)[C][E]) => boolean
-	): Promise<((typeof entryMap)[C][E] & Render)[]>;
+		// Note that this has to accept a regular string too, for SSR
+		entrySlug: E
+	): E extends ValidEntrySlug<C>
+		? Promise<CollectionEntry<C>>
+		: Promise<CollectionEntry<C> | undefined>;
+	export function getCollection<C extends keyof typeof entryMap>(
+		collection: C,
+		filter?: (data: CollectionEntry<C>) => boolean
+	): Promise<CollectionEntry<C>[]>;
 
 	type InferEntrySchema<C extends keyof typeof entryMap> = import('astro/zod').infer<
 		Required<ContentConfig['collections'][C]>['schema']
@@ -58,42 +65,58 @@ declare module 'astro:content' {
 		"articles": {
 "choosing-the-right-amount-of-design-scope.mdx": {
   id: "choosing-the-right-amount-of-design-scope.mdx",
-  slug: "choosing-the-right-amount-of-design-scope",
+  slug: string,
   body: string,
   collection: "articles",
-  data: any
+  data: InferEntrySchema<"articles">
+},
+"how-to-do-dark-mode-with-ssg.mdx": {
+  id: "how-to-do-dark-mode-with-ssg.mdx",
+  slug: string,
+  body: string,
+  collection: "articles",
+  data: InferEntrySchema<"articles">
 },
 "reading-is-neccessary-but-not-sufficient copy.mdx": {
   id: "reading-is-neccessary-but-not-sufficient copy.mdx",
-  slug: "reading-is-neccessary-but-not-sufficient-copy",
+  slug: string,
   body: string,
   collection: "articles",
-  data: any
+  data: InferEntrySchema<"articles">
 },
 "test.mdx": {
   id: "test.mdx",
-  slug: "test",
+  slug: string,
   body: string,
   collection: "articles",
-  data: any
+  data: InferEntrySchema<"articles">
 },
 "the-myth-of-the-story-point.mdx": {
   id: "the-myth-of-the-story-point.mdx",
-  slug: "the-myth-of-the-story-point",
+  slug: string,
   body: string,
   collection: "articles",
-  data: any
+  data: InferEntrySchema<"articles">
 },
 "why-interface-designers-should-pair-by-default.mdx": {
   id: "why-interface-designers-should-pair-by-default.mdx",
-  slug: "why-interface-designers-should-pair-by-default",
+  slug: string,
   body: string,
   collection: "articles",
+  data: InferEntrySchema<"articles">
+},
+},
+"test": {
+"test.md": {
+  id: "test.md",
+  slug: "test",
+  body: string,
+  collection: "test",
   data: any
 },
 },
 
 	};
 
-	type ContentConfig = never;
+	type ContentConfig = typeof import("../src/content/config");
 }

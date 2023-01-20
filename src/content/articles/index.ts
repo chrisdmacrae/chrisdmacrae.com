@@ -14,8 +14,9 @@ export type getArticlesOptions = {
   drafts?: boolean
 }
 
-export const getArticles = async (cb: () => Promise<MDXInstance<Article>[]>, options?: getArticlesOptions) => {
-  let articles = (await cb())
+export const getArticles = async (options?: getArticlesOptions) => {
+  let articlesByPath = import.meta.glob<MDXInstance<Article>>("./*.mdx", { eager: true })
+  let articles = Object.values(articlesByPath)
     .map(article => ({
       ...article,
       slug: basename(article.file).split('.')[0]
