@@ -24,8 +24,8 @@ export const get: APIRoute = async ({ params }) => {
     site: import.meta.env.SITE,
     items: articles.map((article) => ({
       link: `/articles/${category.slug}/${article.slug}`,
-      title: article.frontmatter.title,
-      pubDate: new Date(article.frontmatter.created),
+      title: article.data.title,
+      pubDate: new Date(article.data.created),
     }))
   })
 }

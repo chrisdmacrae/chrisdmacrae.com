@@ -1,13 +1,15 @@
 import { z, defineCollection } from 'astro:content'
+import { rssSchema } from '@astrojs/rss';
+
 
 const articles = defineCollection({
-  schema: z.object({
+  schema: rssSchema.merge(z.object({
     title: z.string(),
     description: z.string(),
     category: z.string(),
     created: z.date(),
     draft: z.boolean().optional()
-  }),
+  })),
   slug: ({ defaultSlug, data }) => {
     if (!data.category) throw new Error('Missing a category')
 
