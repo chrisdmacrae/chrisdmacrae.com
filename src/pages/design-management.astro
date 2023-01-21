@@ -10,17 +10,34 @@ import Icon from "../components/Icon";
 import { categories } from "../content/articles/_categories";
 import { CardArticle } from '../components/CardArticle';
 import { getArticles } from '../content/articles';
+import { generateUrl } from "./api/og.png";
 
 export const prerender = true
 
 const category = categories.find(category => category.slug === 'design-management')!
+const title = `Learn about ${category!.name}`
+const description = ""
+const ogImageUrl = generateUrl({ title, color: category!.color })
 const articles = await getArticles({
   category: category.slug,
   drafts: import.meta.env.DEV
 })
 
 ---
-<Layout title={`Learn about ${category!.name}`} description="">
+<Layout 
+  title={title} 
+  description={description}
+  graph={{
+    og: {
+      type: 'website',
+      title: title,
+      site_name: Astro.site!.origin,
+      description: description,
+      url: Astro.url.toString(),
+      image: ogImageUrl.toString()
+    }
+  }}
+>
   <div slot="sidebar" class="flex flex-col gap-2">
     <Sidebar.Header>
       <a href="/">
@@ -83,6 +100,7 @@ const articles = await getArticles({
       class="m-auto max-w-[60rem] flex flex-col items-center lg:flex-row gap-6 lg:py-[7rem]"
     >
       <Picture
+        background="white"
         src="/images/me.jpeg"
         role="presentation"
         alt=""
@@ -92,6 +110,7 @@ const articles = await getArticles({
         class="hidden lg:block lg:max-w-sm xl:max-w-md rounded-md overflow-hidden shadow-md"
       />
       <Picture
+        background="white"
         src="/images/me.jpeg"
         role="presentation"
         alt=""

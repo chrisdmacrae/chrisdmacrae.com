@@ -13,6 +13,7 @@ import { BackFAB } from '../../../components/BackFAB'
 import { Pagination } from '../../../components/Pagination'
 import { getArticles } from '../../../content/articles'
 import type { CollectionEntry } from "astro:content"
+import { generateUrl } from '../../api/og.png'
 
 export const prerender = true
 export const getStaticPaths = async () => {
@@ -45,12 +46,22 @@ export interface Props {
 const { article, prevArticle, nextArticle, articles } = Astro.props
 const category = categories.find(category => category.slug === article.data.category)!
 const { title, description, pubDate } = article!.data
+const ogImageUrl = generateUrl({ title, category: category.name, color: category!.color })
 const { Content } = await article.render()
 ---
 <Layout 
-  title={title}
+  title={title} 
   description={description}
-  tabs={false}
+  graph={{
+    og: {
+      type: 'website',
+      title: title,
+      site_name: Astro.site!.origin,
+      description: description,
+      url: Astro.url.toString(),
+      image: ogImageUrl.toString()
+    }
+  }}
 >
   <div slot="sidebar" class="flex flex-col gap-2">
     {category && (

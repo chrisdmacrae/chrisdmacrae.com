@@ -14,7 +14,7 @@ export const TabBar: React.FC = () => {
         </Button>
       </a>
       <a href="/articles/all">
-        <Button icon='article' onClick={toggleSearch}>
+        <Button icon='article'>
           Articles
         </Button>
       </a>

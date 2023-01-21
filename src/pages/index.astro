@@ -9,12 +9,27 @@ import { Picture } from "@astrojs/image/components";
 import Icon from "../components/Icon";
 import categories from "../content/articles/_categories";
 import Gem from "../components/Gem";
+import { generateUrl } from "./api/og.png";
+
+const title = "Home"
+const description = "Learn about engineering , design, web development, and much more."
+const ogImageUrl = generateUrl({ title })
 
 export const prerender = true
 ---
 <Layout 
-  title="Home"
-  description="Learn about engineering , design, web development, and much more."
+  title={title}
+  description={description}
+  graph={{
+    og: {
+      type: 'website',
+      title: title,
+      site_name: Astro.site!.host,
+      description: description,
+      url: Astro.url.toString(),
+      image: ogImageUrl.toString()
+    }
+  }}
 >
   <div slot="sidebar" class="flex flex-col gap-2">
     <Sidebar.Header>
@@ -87,6 +102,7 @@ export const prerender = true
       class="m-auto max-w-[60rem] flex flex-col items-center lg:flex-row gap-6 lg:py-[7rem]"
     >
       <Picture
+        background="white"
         src="/images/me.jpeg"
         role="presentation"
         alt=""
@@ -96,6 +112,7 @@ export const prerender = true
         class="hidden lg:block lg:max-w-sm xl:max-w-md rounded-md overflow-hidden shadow-md"
       />
       <Picture
+        background="white"
         src="/images/me.jpeg"
         role="presentation"
         alt=""

@@ -5,28 +5,33 @@ import "./Layout.css"
 import Sidebar from "./Sidebar";
 import TabBar from "./Tabbar";
 import { THEME_COOKIE } from "../components/hooks/useTheme";
+import Seo from '../components/seo.astro';
 
 export interface Props {
 	title: string
   description: string
   tabs?: boolean
+  graph: any
 }
 
-const { title, description, tabs = true } = Astro.props;
-const ogImageUrl = new URL(`/api/og?title=${title}`, Astro.site)
+const { title, description, tabs = true, graph } = Astro.props;
 ---
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/x-icon" href="/api/favicon.ico?v=3" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title} | chrisdmacrae.com</title>
-    <meta name="og:image" content={ogImageUrl.toString()} />
-    <meta name="description" content={description} />
+    <Seo
+      title={title}
+      description={description}
+      graph={graph}
+    />
 
     <link rel="stylesheet" href="/css/prism.css" />
+    <slot name="stylesheets" />
+
     <script is:inline define:vars={{ THEME_COOKIE }}>
       const override = window.localStorage.getItem(THEME_COOKIE)
       const prefersDark = override === 'dark' || !override && window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -39,6 +44,7 @@ const ogImageUrl = new URL(`/api/og?title=${title}`, Astro.site)
         root.classList.remove('dark')
       }
     </script>
+    <slot name="scripts:head" />
 	</head>
 	<body class="antialiased">
     <TabBar.Layout sm={tabs} noBottomSpace={!tabs}>

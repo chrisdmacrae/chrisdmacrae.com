@@ -9,6 +9,7 @@ import FAB from '../../../components/FAB'
 import ToggleFAB from '../../../components/ToggleFAB'
 import { CardArticle } from '../../../components/CardArticle'
 import { getArticles } from '../../../content/articles'
+import { generateUrl } from '../../api/og.png'
 
 export const prerender = true
 export const getStaticPaths = async () => categories.map(category => ({
@@ -17,15 +18,28 @@ export const getStaticPaths = async () => categories.map(category => ({
 }))
 
 const {category} = Astro.props
+const title = `${category!.name} Articles`
+const description = `Learn about ${category!.name} from Chris D. MacRae`
+const ogImageUrl = generateUrl({ title, color: category!.color })
 const isAll = category?.slug === 'all'
 const articles = await getArticles({
-  category: !isAll ? category.slug : undefined,
+  category: !isAll ? category!.slug : undefined,
   drafts: import.meta.env.DEV
 })
 ---
 <Layout 
-  title={`${category.name} Articles`}
-  description={`Learn about ${category.name} from Chris D. MacRae`}
+  title={title} 
+  description={description}
+  graph={{
+    og: {
+      type: 'website',
+      title: title,
+      site_name: Astro.site!.origin,
+      description: description,
+      url: Astro.url.toString(),
+      image: ogImageUrl.toString()
+    }
+  }}
 >
   <div slot="sidebar" class="flex flex-col gap-2">
     <Sidebar.Header>
@@ -51,7 +65,7 @@ const articles = await getArticles({
     {categories
       .filter(category => category?.featuredHref)
       .map(c => {
-        const active = c.slug === category.slug
+        const active = c.slug === category!.slug
 
         return (
         <Sidebar.Link href={c.featuredHref ? c.featuredHref : `/articles/${c.slug}`} active={active}>

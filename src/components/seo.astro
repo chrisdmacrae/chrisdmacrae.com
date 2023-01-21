@@ -1,0 +1,26 @@
+---
+export interface Props {
+  title: string
+  description: string
+  graph: any
+}
+
+const { title, description, graph } = Astro.props
+
+function parseOGValue(key: string, values: Record<string, any>, parentKey?: string): Record<string, string>[] {
+  const value = values[key]
+
+  if (typeof value === 'object') {
+    const pkey = parentKey === undefined ? key : parentKey
+
+    return Object.keys(value).flatMap(key => parseOGValue(key, value, pkey))
+  }
+
+  return [{ 
+    key: parentKey !== undefined ? `${parentKey}:${key}` : key, 
+    value 
+  }]
+}
+---
+<title>{title} | chrisdmacrae.com</title>
+<meta name="description" content={description} />

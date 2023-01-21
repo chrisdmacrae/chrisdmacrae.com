@@ -2,6 +2,22 @@ import type { APIRoute } from 'astro'
 import { generateImage } from '../../lib/generateImage'
 import { OgImage } from '../../components/OgImage' 
 
+export type generateUrlOptions = Record<string, any> & {
+  title: string
+}
+
+export const generateUrl = ({ title, ...args }: generateUrlOptions) => {
+  const url = new URL('/api/og.png', 'http://example.com')
+
+  url.searchParams.append('title', title)
+
+  Object.keys(args).forEach(arg => {
+    url.searchParams.append(arg, args[arg])
+  })
+
+  return url.pathname + url.search
+}
+
 export const get: APIRoute = async ({ url, site }) => {
   const debug = Boolean(url.searchParams.get('debug'))
   const title = url.searchParams.get('title')
@@ -24,7 +40,8 @@ export const get: APIRoute = async ({ url, site }) => {
     })
   }
 
-  const props = { url, title }
+  const args = Object.fromEntries(url.searchParams)
+  const props = { url, ...args }
   const imageOptions = { site: site.href, width, height, debug }
   const buffer = await generateImage(OgImage, props, imageOptions)
 

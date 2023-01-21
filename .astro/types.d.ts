@@ -70,6 +70,13 @@ declare module 'astro:content' {
   collection: "articles",
   data: InferEntrySchema<"articles">
 },
+"generating-social-images-with-astro.mdx": {
+  id: "generating-social-images-with-astro.mdx",
+  slug: string,
+  body: string,
+  collection: "articles",
+  data: InferEntrySchema<"articles">
+},
 "how-to-do-dark-mode-with-ssg.mdx": {
   id: "how-to-do-dark-mode-with-ssg.mdx",
   slug: string,
