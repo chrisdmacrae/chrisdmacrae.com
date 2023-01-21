@@ -1,0 +1,90 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Sidebar from "../layouts/Sidebar";
+import DotGrid from "../components/DotGrid";
+import Heading from "../components/typography/Heading";
+import Text from "../components/typography/Text";
+import ToggleFAB from "../components/ToggleFAB";
+import { Picture } from "@astrojs/image/components";
+import Icon from "../components/Icon";
+import categories from "../content/articles/_categories";
+import Gem from "../components/Gem";
+import { generateUrl } from "./api/og.png";
+import FAB from "../components/FAB";
+
+const title = "Home"
+const description = "Learn about engineering , design, web development, and much more."
+const ogImageUrl = generateUrl({ title })
+
+export const prerender = true
+---
+<Layout 
+  title={title}
+  description={description}
+  graph={{
+    og: {
+      type: 'website',
+      title: title,
+      site_name: Astro.site!.host,
+      description: description,
+      url: Astro.url.toString(),
+      image: ogImageUrl.toString()
+    }
+  }}
+>
+  <div slot="sidebar" class="flex flex-col gap-2">
+    <Sidebar.Header>
+      <a href="/">
+        <Heading as="h1" size={3}>
+          <Text gradient="warning" as="span">Chris D. Macrae</Text>
+        </Heading>
+      </a>
+    </Sidebar.Header>
+    <Text color='muted'>
+      <strong>Categories</strong>
+    </Text>
+    {categories
+      .map(category => (
+        <Sidebar.Link href={category.featuredHref ? category.featuredHref : `/articles/${category.slug}`}>
+          <Icon name={category.icon} />
+          {category.name}
+        </Sidebar.Link>
+    ))}
+  </div>
+  <div class="w-full">
+    <DotGrid size="screen">
+      <div class="w-full flex flex-row justify-end pb-4 -mt-10">
+        <ToggleFAB client:idle />
+      </div>
+      <div
+        class="flex flex-col items-center justify-center gap-6 lg:py-[1.5rem]"
+      >
+        <div class="flex flex-col items-center text-center gap-2">
+          <Heading as="h1" size={3}>
+            What you <Text as='span' gradient='primary'>seek</Text> can't be found <Text as="span" gradient="info">here</Text>
+          </Heading>
+          <div class="flex flex-col items-center gap-6">
+            <Text color="muted">
+              Maybe it used to be here. Maybe it's somewhere else on the site. Maybe it was inside of you all along...
+            </Text>
+
+            <a href="/">
+              <FAB direction="horizontal">
+                <FAB.Button fluid>
+                  In any case, go home
+                </FAB.Button>
+              </FAB>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div />
+    </DotGrid>
+
+    <footer class="pt-8 pb-4">
+      <Text color="muted">
+        Copyleft &copy; {new Date().getFullYear()}
+      </Text>
+    </footer>
+  </div>
+</Layout>
