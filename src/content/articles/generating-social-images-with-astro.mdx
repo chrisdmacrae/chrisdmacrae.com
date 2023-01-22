@@ -7,6 +7,7 @@ category: web-development
 ---
 import Canvas from '../../lib/@ui/Canvas'
 import Disclaimer from '../../lib/@ui/Disclaimer'
+import Code from '../../lib/@ui/Code'
 import { Picture } from '@astrojs/image/components'
 import { generateUrl } from '../../pages/api/og.png'
 
@@ -116,13 +117,11 @@ The first step to generating social images is enabling SSR (server-side renderin
 
 We do this, because generating these images at build time would be slow and, honestly, very frustrating to support.
 
-<Disclaimer>
-  I will be posting a follow up on how to generate social images with SSG, however!
-</Disclaimer>
+_I will be posting a follow up on how to generate social images with SSG, however!_
 
 We enable SSR by editing our Astro config, found at `astro.config.{js,cjs,mjs,ts}`:
 
-```
+```ts
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
@@ -137,7 +136,7 @@ We'll also need to enable an adaptor (essentially a plugin that builds our site 
 <Disclaimer>
   **Note:** my site is hosted on Vercel, using the serverless adaptor:
 
-  ```
+  ```ts
   import { defineConfig } from 'astro/config';
   import vercel from "@astrojs/vercel/serverless";
 
@@ -150,7 +149,7 @@ We'll also need to enable an adaptor (essentially a plugin that builds our site 
 
 Then, for _all_ of your existing pages, you need to opt-back into SSG. You can do this by adding the following to the frontmatter of your page:
 
-```
+```astro
 ---
 export const prerender = true
 ---
@@ -172,6 +171,482 @@ export const prerender = true
 
 To set up the image generator, we need to do 3 things:
 
-1. We need to setup an API endpoint to do the image generation
-2. We need to setup the React component (or raw HTML) for rendering the image content
+1. We need to setup the React component (or raw HTML) for rendering the image content
+2. We need to setup an API endpoint to do the image generation
 3. We need to add the OG image meta tag to our pages
+
+The result will look like this:
+
+<Canvas>
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'white', width: '100%', height: '268px' }}>
+    <h1 style={{color: 'black', fontSize: '48px', fontweight: '500' }}>jkhfdsjhdfhjk</h1>
+  </div>
+</Canvas>
+
+### Generating the Social Image
+
+To generate the social image, we can either:
+
+- [Using an Astro component](#using-an-astro-component)
+- [Using a React or Preact component](#using-a-react-or-preact-component)
+
+I'll take you through doing _both_.
+
+#### Using an Astro component
+
+To generate a component with Astro, we're going to need to install the dependency `satori-html`:
+
+<Code id="satori-html" tabs={['npm', 'yarn']} client:idle>
+  <Fragment slot="panels">
+  ```bash
+  npm install satori-html
+  ```
+  </Fragment>
+  <Fragment slot="panels">
+  ```bash
+  yarn add satori-html
+  ```
+  </Fragment>
+</Code>
+
+<Disclaimer>
+  This package takes an HTML template and prepares it for image generation by the library `satori`, 
+  which we'll install later.
+</Disclaimer>
+
+Now, we create the component. We'll create a simple component that renders a white background with your page's title:
+
+<Code id="astro-component" tabs={['components/OgImage.astro']}>
+  ```astro
+  ---
+  interface Props {
+    title: string
+  }
+
+  const { title } = Astro.props
+  ---
+  <div class="container">
+    <h1>{title}</h1>
+  </div>
+  <style>
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    h1 {
+      color: black;
+      font-size: 48px;
+      font-weight: 500;
+    }
+  </style>
+  ```
+</Code>
+
+<Disclaimer>
+  **Note:** the `display: flex;` is _extremely_ important. The library we use to convert HTML to an image only supports flexbox display. For a full list of CSS supported, [see the documentation](https://github.com/vercel/satori#css).
+</Disclaimer>
+
+#### Using a React or Preact component
+
+To generate a component with React or Preact, we're going to need to add the relevant Astro integration:
+
+<Code id="react-or-preact" tabs={['react', 'preact']} client:idle>
+  <Fragment slot="panels">
+  ```bash
+  npx astro add react
+  ```
+  </Fragment>
+  <Fragment slot="panels">
+  ```bash
+  npx astro add preact
+  ```
+  </Fragment>
+</Code>
+
+<Disclaimer>
+  This will install React or Preact accordingly, adding the node dependencies and updating your Astro config
+  for you.
+</Disclaimer>
+
+
+Now, we create the component. We'll create a simple component that renders a white background with your page's title:
+
+<Code id="react-or-preact-component" tabs={['components/OgImage.tsx']}>
+  ```tsx
+  export interface OgImageProps {
+    title: string
+  }
+
+  export const OgImage = ({ title }: OgImageProps) => (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100%',
+      height: '100%'
+    }}>
+      <h1 style={{
+        color: 'black',
+        fontSize: '48px',
+        fontweight: '500'
+      }}>
+        {title}
+      </h1>
+    </div>
+  )
+  ```
+</Code>
+
+## Setting up the API endpoint
+
+Now that we have a basic component that you can customize to generate your social images, we need
+to setup an API endpoint that will convert the component to a PNG and serve it to the browser.
+
+We'll do this in a few steps. To start, we'll create a basic API endpoint that takes `title` as an argument
+via query params and returns a 404 if it's not provided.
+
+<Code tabs={['pages/api/og.png.ts']}>
+  ```tsx
+  import type { APIRoute } from 'astro'
+
+  export const get: APIRoute = async () => {
+    const title = url.searchParams.get('title')
+
+    if (!title) {
+      return new Response(null, {
+        status: 500,
+        statusText: "Title missing"
+      })
+    }
+
+    return new Response(null, {
+      status: 200,
+      headers: {
+        'Content-Type': 'image/png',
+      },
+    })
+  }
+  ```
+</Code>
+
+Next, we'll create a function to generate our image! To do so, we'll need to install a few dependencies:
+
+- `satori`: the image generation library that converts our HTML to a valid SVG
+- `sharp`: the image generation library that converts the aforemtnioned SVG to a PNG
+- `yoga-wasm-esm`: a library that allows loading WASM (web assembly) in Nodejs
+
+<Code id="satori-sharp" tabs={['npm', 'yarn']} client:idle>
+  <Fragment slot="panels">
+  ```bash
+  npm install satori sharp yoga-wasm-esm
+  ```
+  </Fragment>
+  <Fragment slot="panels">
+  ```bash
+  yarn add satori sharp yoga-wasm-esm
+  ```
+  </Fragment>
+</Code>
+
+Now, let's create our function by adding the following to our API endpoint:
+
+<Code tabs={['pages/api/og.png.ts']}>
+  ```ts
+  import sharp from 'sharp'
+  // @ts-ignore: no types
+  import initYoga from 'yoga-wasm-web/asm'
+  // @ts-ignore: no types
+  import satori, { init as initSatori } from 'satori/wasm'
+
+  const YOGA = initYoga()
+  initSatori(YOGA)
+
+  type ImageOptions = {
+    site: string,
+    width: number
+    height: number,
+    debug?: boolean
+  }
+
+  async function generateImage(jsx: any, { width, height, debug }: ImageOptions) {
+    const roboto500 = await fetch("https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fAZ9hjp-Ek-_EeA.woff").then(
+      (res) => res.arrayBuffer()
+    )
+    const svg = await satori(
+      jsx,
+      {
+        debug: debug,
+        width: width,
+        height: height,
+        fonts: [
+          {
+            name: 'Roboto',
+            data: roboto400,
+            weight: 500,
+            style: 'normal',
+          }
+        ]
+      }
+    )
+
+    return await sharp(Buffer.from(svg)).png().toBuffer()
+  }
+  ```
+</Code>
+
+<Disclaimer>
+  By default we are loading the "Inter" google webfont to render any text to SVG paths.
+
+  If you'd like to customize the font, you must fetch it inside your `generateImage` function, and provide
+  it to the `fonts` array with a valid `name`, font `weight`, and style of `normal`.
+
+  Any webfont from google can be used, either by downloading it and including it in your site,
+  or referencing from the `fonts.gstatic.com` CDN.
+</Disclaimer>
+
+Now, we can use the `generateImage` function with our component to return an image from our endpoint:
+
+<Code tabs={['react', 'preact', 'astro']} client:idle>
+  <Fragment slot="panels">
+  ```tsx
+  import sharp from 'sharp'
+  // @ts-ignore: no types
+  import initYoga from 'yoga-wasm-web/asm'
+  // @ts-ignore: no types
+  import satori, { init as initSatori } from 'satori/wasm'
+  import Component from '../../components/OgImage.tsx'
+
+  const YOGA = initYoga()
+  initSatori(YOGA)
+
+  export const get: APIRoute = async () => {
+    const title = url.searchParams.get('title')
+
+    if (!title) {
+      return new Response(null, {
+        status: 500,
+        statusText: "Title missing"
+      })
+    }
+
+    const args = Object.fromEntries(url.searchParams)
+    const imageOptions = { site: site.href, width, height, debug }
+    const jsx = Component(args)
+    const buffer = await generateImage(jsx, imageOptions)
+
+    return new Response(buffer, {
+      status: 200,
+      headers: {
+        'Content-Type': 'image/png',
+        'Cache-Control': 'max-age=31536000, immutable',
+      },
+    })
+  }
+
+  type ImageOptions = {
+    site: string,
+    width: number
+    height: number,
+    debug?: boolean
+  }
+
+  async function generateImage(jsx: any, { width, height, debug }: ImageOptions) {
+    const roboto500 = await fetch("https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fAZ9hjp-Ek-_EeA.woff").then(
+      (res) => res.arrayBuffer()
+    )
+    const svg = await satori(
+      jsx,
+      {
+        debug: debug,
+        width: width,
+        height: height,
+        fonts: [
+          {
+            name: 'Roboto',
+            data: roboto400,
+            weight: 500,
+            style: 'normal',
+          }
+        ]
+      }
+    )
+
+    return await sharp(Buffer.from(svg)).png().toBuffer()
+  }
+  ```
+  </Fragment>
+  <Fragment slot="panels">
+  ```tsx
+  import sharp from 'sharp'
+  // @ts-ignore: no types
+  import initYoga from 'yoga-wasm-web/asm'
+  // @ts-ignore: no types
+  import satori, { init as initSatori } from 'satori/wasm'
+  import Component from '../../components/OgImage.tsx'
+
+  const YOGA = initYoga()
+  initSatori(YOGA)
+
+  export const get: APIRoute = async () => {
+    const title = url.searchParams.get('title')
+
+    if (!title) {
+      return new Response(null, {
+        status: 500,
+        statusText: "Title missing"
+      })
+    }
+
+    const args = Object.fromEntries(url.searchParams)
+    const imageOptions = { site: site.href, width, height, debug }
+    const jsx = Component(args)
+    const buffer = await generateImage(jsx, imageOptions)
+
+    return new Response(buffer, {
+      status: 200,
+      headers: {
+        'Content-Type': 'image/png',
+        'Cache-Control': 'max-age=31536000, immutable',
+      },
+    })
+  }
+
+  type ImageOptions = {
+    site: string,
+    width: number
+    height: number,
+    debug?: boolean
+  }
+
+  async function generateImage(jsx: any, { width, height, debug }: ImageOptions) {
+    const roboto500 = await fetch("https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fAZ9hjp-Ek-_EeA.woff").then(
+      (res) => res.arrayBuffer()
+    )
+    const svg = await satori(
+      jsx,
+      {
+        debug: debug,
+        width: width,
+        height: height,
+        fonts: [
+          {
+            name: 'Roboto',
+            data: roboto400,
+            weight: 500,
+            style: 'normal',
+          }
+        ]
+      }
+    )
+
+    return await sharp(Buffer.from(svg)).png().toBuffer()
+  }
+
+  type ImageOptions = {
+    site: string,
+    width: number
+    height: number,
+    debug?: boolean
+  }
+
+  async function generateImage(jsx: any, { width, height, debug }: ImageOptions) {
+    const roboto500 = await fetch("https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fAZ9hjp-Ek-_EeA.woff").then(
+      (res) => res.arrayBuffer()
+    )
+    const svg = await satori(
+      jsx,
+      {
+        debug: debug,
+        width: width,
+        height: height,
+        fonts: [
+          {
+            name: 'Roboto',
+            data: roboto400,
+            weight: 500,
+            style: 'normal',
+          }
+        ]
+      }
+    )
+
+    return await sharp(Buffer.from(svg)).png().toBuffer()
+  }
+  ```
+  </Fragment>
+    <Fragment slot="panels">
+  ```tsx
+  import sharp from 'sharp'
+  // @ts-ignore: no types
+  import initYoga from 'yoga-wasm-web/asm'
+  // @ts-ignore: no types
+  import satori, { init as initSatori } from 'satori/wasm'
+  import { html } from 'satori-html'
+  import Component from '../../components/OgImage.astro'
+
+  const YOGA = initYoga()
+  initSatori(YOGA)
+
+  export const get: APIRoute = async () => {
+    const title = url.searchParams.get('title')
+
+    if (!title) {
+      return new Response(null, {
+        status: 500,
+        statusText: "Title missing"
+      })
+    }
+
+    const args = Object.fromEntries(url.searchParams)
+    const imageOptions = { site: site.href, width, height, debug }
+    const jsx = html(Component(args))
+    const buffer = await generateImage(jsx, imageOptions)
+
+    return new Response(buffer, {
+      status: 200,
+      headers: {
+        'Content-Type': 'image/png',
+        'Cache-Control': 'max-age=31536000, immutable',
+      },
+    })
+  }
+  
+  type ImageOptions = {
+    site: string,
+    width: number
+    height: number,
+    debug?: boolean
+  }
+
+  async function generateImage(jsx: any, { width, height, debug }: ImageOptions) {
+    const roboto500 = await fetch("https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fAZ9hjp-Ek-_EeA.woff").then(
+      (res) => res.arrayBuffer()
+    )
+    const svg = await satori(
+      jsx,
+      {
+        debug: debug,
+        width: width,
+        height: height,
+        fonts: [
+          {
+            name: 'Roboto',
+            data: roboto400,
+            weight: 500,
+            style: 'normal',
+          }
+        ]
+      }
+    )
+
+    return await sharp(Buffer.from(svg)).png().toBuffer()
+  }
+  ```
+  </Fragment>
+</Code>
+
+Now go forth, customize your component, and start generating your own social images!

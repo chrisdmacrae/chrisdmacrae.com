@@ -1,3 +1,4 @@
+import Code from "../Code";
 import Heading from "./Heading";
 import Text from "./Text";
 
@@ -21,7 +22,8 @@ export const components = {
         <strong>{children}</strong>
       </Text>
     </div>
-  )
+  ),
+  pre: (props: any) => <pre {...props} />
 }
 
 export default components

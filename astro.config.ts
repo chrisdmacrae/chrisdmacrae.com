@@ -11,6 +11,8 @@ import image from "@astrojs/image";
 import mdx from "@astrojs/mdx";
 import readingTime from "remark-reading-time";
 import readingMdxTime from "remark-reading-time/mdx";
+import headingSlugs from 'rehype-slug';
+import autolinkHeadings from 'rehype-autolink-headings';
 
 // https://astro.build/config
 import prefetch from "@astrojs/prefetch";
@@ -31,7 +33,7 @@ export default defineConfig({
   }), prefetch(), sitemap()],
   markdown: {
     syntaxHighlight: 'prism',
-    remarkPlugins: []
+    rehypePlugins: [headingSlugs, autolinkHeadings]
   },
   vite: {
     ssr: {

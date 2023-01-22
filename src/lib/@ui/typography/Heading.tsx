@@ -5,16 +5,17 @@ export type HeadingSize = 1 | 2 | 3 | 4 | 5 | 6
 export type HeadingProps = {
     as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
     size?: HeadingSize
+    id?: string
 } & PropsWithChildren
 
-export const Heading: React.FC<HeadingProps> = ({as = 'h2', size = 1, children}) => {
+export const Heading: React.FC<HeadingProps> = ({as = 'h2', size = 1, children, ...props}) => {
     const El = as as any
     let classes = ["w-full text-slate-900 tracking-tight dark:text-white"]
 
     classes.push(getSize(size))
 
     return (
-        <El className={classes.join(" ")}>
+        <El className={classes.join(" ")} {...props}>
             {children}
         </El>        
     )

@@ -1,0 +1,31 @@
+---
+export interface Props {}
+---
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const codeBlocks = document.querySelectorAll('pre')
+    
+    codeBlocks.forEach(pre => {
+      const wrapper = document.createElement('div')
+      const copyButton = document.createElement('button')
+      const code = pre.querySelector('code')
+
+      wrapper.classList.add("relative")
+      pre.parentNode?.insertBefore(wrapper, pre)
+      wrapper.appendChild(pre)
+      pre.classList.add('my-[0_!important]')
+      copyButton.textContent = 'Copy'
+      copyButton.className = "absolute top-1 right-1 bg-[#030314] text-white text-xs rounded-md p-2"
+      copyButton.onclick = () => {
+        if ('clipboard' in window.navigator && code?.textContent) {
+          window.navigator.clipboard.writeText(code?.textContent)
+          copyButton.textContent = 'Copied'
+
+          setTimeout(() => copyButton.textContent = 'Copy', 3000)
+        }
+      }
+
+      pre.appendChild(copyButton)
+    })
+  })
+</script>

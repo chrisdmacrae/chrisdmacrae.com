@@ -7,7 +7,7 @@ export type DisclaimerProps = PropsWithChildren & {
 }
 
 export const Disclaimer: React.FC<DisclaimerProps> = ({ children, type = 'info' }) => {
-  let classes = ["rounded-md p-4 border-l-4 border bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700"]
+  let classes = ["flex flex-col gap-2 rounded-md p-4 border-l-4 border bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700"]
 
   classes.push(getType(type))
 
