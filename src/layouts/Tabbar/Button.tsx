@@ -20,7 +20,7 @@ export const Button: React.FC<ButtonProps> = ({ icon, children, onClick: propOnC
     <button 
       {...props}
       onClick={onClick}
-      className="flex flex-col justify-center items-center w-32 h-32 text-slate-500 hover:text-slate-400 active:text-slate-500 dark:text-slate-200 dark:hover:text-slate-50 dark:active:text-slate-50"
+      className="flex flex-col justify-center items-center w-24 h-24 sm:w-32 sm:h-32 text-slate-500 hover:text-slate-400 active:text-slate-500 dark:text-slate-200 dark:hover:text-slate-50 dark:active:text-slate-50"
     >
       <Icon name={icon} size='md' />
       {children}
