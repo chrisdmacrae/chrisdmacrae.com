@@ -11,7 +11,7 @@ export const Canvas: React.FC<CanvasProps> = ({children}) => {
   return (
     <figure>
       <div className={classes.join(' ')}>
-        <div className="w-full flex flex-col justify-center items-center p-16">
+        <div className="w-full flex flex-col justify-center items-center p-6 md:p-16">
           {children}
         </div>
       </div>
