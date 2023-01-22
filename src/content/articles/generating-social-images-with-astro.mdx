@@ -650,3 +650,20 @@ Now, we can use the `generateImage` function with our component to return an ima
 </Code>
 
 Now go forth, customize your component, and start generating your own social images!
+
+## Include social images in your pages
+
+Now that your endpoint is working, you need to actually put the images on your pages.
+
+In the `<head>` of your page, add the following meta tags:
+
+```
+<meta property="og:image" content={/api/og.png?title=${title}`}/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+```
+
+<Disclaimer>
+  The variable `title` should store the title of your page, or whatever text you wish to inject into your
+  social image.
+</Disclaimer>
