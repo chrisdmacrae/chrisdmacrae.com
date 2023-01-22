@@ -11,9 +11,9 @@ import Code from '../../lib/@ui/Code'
 import { Picture } from '@astrojs/image/components'
 import { generateUrl } from '../../pages/api/og.png'
 
-We all want our content to be the best possible experience for our visitors as possible.
+We all want our content to be the best possible experience for our visitors.
 
-When a web page is shared on social media networks like Twtitter or Mastodon, or in tools like Slack or Notion,
+When a web page is shared on social media networks like Twitter or Mastodon, or in tools like Slack or Notion,
 a rich preview is displayed if the web page has the necessary metadata to show the image.
 
 I wanted to ensure all of my pages had the best possible preview, so I built a URL-based generator to do just that.
@@ -115,9 +115,9 @@ const dotGrid = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABLAAAAJ2CAYAAABPQ
 
 The first step to generating social images is enabling SSR (server-side rendering) for your Astro site.
 
-We do this, because generating these images at build time would be slow and, honestly, very frustrating to support.
+We do this because generating these images at build time would be slow and, honestly, very frustrating to support.
 
-_I will be posting a follow up on how to generate social images with SSG, however!_
+_I will be posting a follow-up on how to generate social images with SSG, however!_
 
 We enable SSR by editing our Astro config, found at `astro.config.{js,cjs,mjs,ts}`:
 
@@ -131,7 +131,7 @@ export default defineConfig({
 
 We'll also need to enable an adaptor (essentially a plugin that builds our site for a specific hosting provider) for our hosting provider.
 
-[Astro supports a wide variety](https://docs.astro.build/en/guides/server-side-rendering/#adding-an-adapter), so do your homework and pick the one the best suits you.
+[Astro supports a wide variety](https://docs.astro.build/en/guides/server-side-rendering/#adding-an-adapter), so do your homework and pick the one that best suits you.
 
 <Disclaimer>
   **Note:** my site is hosted on Vercel, using the serverless adaptor:
@@ -147,7 +147,7 @@ We'll also need to enable an adaptor (essentially a plugin that builds our site 
   ```
 </Disclaimer>
 
-Then, for _all_ of your existing pages, you need to opt-back into SSG. You can do this by adding the following to the frontmatter of your page:
+Then, for _all_ of your existing pages, you need to opt back into SSG (static site generation). You can do this by adding the following to the frontmatter of your page:
 
 ```astro
 ---
@@ -336,7 +336,7 @@ via query params and returns a 404 if it's not provided.
 Next, we'll create a function to generate our image! To do so, we'll need to install a few dependencies:
 
 - `satori`: the image generation library that converts our HTML to a valid SVG
-- `sharp`: the image generation library that converts the aforemtnioned SVG to a PNG
+- `sharp`: the image generation library that converts the aforementioned SVG to a PNG
 - `yoga-wasm-esm`: a library that allows loading WASM (web assembly) in Nodejs
 
 <Code id="satori-sharp" tabs={['npm', 'yarn']} client:idle>
@@ -399,13 +399,13 @@ Now, let's create our function by adding the following to our API endpoint:
 </Code>
 
 <Disclaimer>
-  By default we are loading the "Inter" google webfont to render any text to SVG paths.
+  By default, we are loading the "Inter" google web font to render any text to SVG paths.
 
   If you'd like to customize the font, you must fetch it inside your `generateImage` function, and provide
   it to the `fonts` array with a valid `name`, font `weight`, and style of `normal`.
 
-  Any webfont from google can be used, either by downloading it and including it in your site,
-  or referencing from the `fonts.gstatic.com` CDN.
+  Any web font from google can be used, either by downloading it and including it in your site,
+  or by referencing it from the `fonts.gstatic.com` CDN.
 </Disclaimer>
 
 Now, we can use the `generateImage` function with our component to return an image from our endpoint:
