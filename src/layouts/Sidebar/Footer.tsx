@@ -4,6 +4,8 @@ import { Link } from "./Link"
 export const Footer: React.FC = () => (
   <div className="mt-auto flex flex-col gap-4">
     <CardAvailability />
-    <Link href="#">More about Chris</Link>
+    <Link href="/about">
+      More about Chris
+    </Link>
   </div>
 )

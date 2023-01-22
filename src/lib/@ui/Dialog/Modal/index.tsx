@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode, RefObject } from 'react'
+import type { HTMLAttributes, ReactNode, RefObject } from 'react'
 import { usePreventScroll, useModal } from 'react-aria'
 import { DialogModalContext, useModalDialog } from './ModalContext'
 import { Dialog, DialogProps } from '../Dialog'

@@ -1,16 +1,18 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Sidebar from "../layouts/Sidebar";
-import DotGrid from "../components/DotGrid";
-import Heading from "../components/typography/Heading";
-import Text from "../components/typography/Text";
+import DotGrid from "../lib/@ui/DotGrid";
+import Heading from "../lib/@ui/typography/Heading";
+import Text from "../lib/@ui/typography/Text";
 import ToggleFAB from "../components/ToggleFAB";
-import { Picture } from "@astrojs/image/components";
-import Icon from "../components/Icon";
+import Icon from "../lib/@ui/Icon";
 import { categories } from "../content/articles/_categories";
 import { CardArticle } from '../components/CardArticle';
 import { getArticles } from '../content/articles';
 import { generateUrl } from "./api/og.png";
+import About from "../components/About.astro";
+import Footer from "../components/Footer.astro";
+import Testimonials from "../components/Testimonials.astro";
 
 export const prerender = true
 
@@ -62,7 +64,8 @@ const articles = await getArticles({
       )
     })}
   </div>
-  <div class="w-full">
+
+  <div class="w-full flex flex-col gap-10 lg:gap-[10rem]">
     <DotGrid size="screen">
       <div class="w-full flex flex-row justify-end pb-4 -mt-10">
         <ToggleFAB client:idle />
@@ -86,7 +89,7 @@ const articles = await getArticles({
       <div />
     </DotGrid>
 
-    <div class="flex flex-col gap-4 max-w-[60rem] m-auto">
+    <div class="flex flex-col gap-4 w-full max-w-[60rem] m-auto">
       <Heading as='h2' size={4}>All Articles</Heading>
       <hr class="border-b border-slate-200 dark:border-slate-800" />
       <div class="lg:-ml-6">
@@ -96,77 +99,14 @@ const articles = await getArticles({
       </div>
     </div>
 
-    <div
-      class="m-auto max-w-[60rem] flex flex-col items-center lg:flex-row gap-6 lg:py-[7rem]"
-    >
-      <Picture
-      background="white"
-      src="/images/me.jpeg"
-      role="presentation"
-      alt=""
-      width={720}
-      widths={[400, 500, 600, 700, 800, 900, 1000]}
-      formats={['avif', 'webp', 'png']}
-      sizes="100vw, (min-width: 768px) 500px"
-      aspectRatio="3:4"
-      class="hidden lg:block lg:max-w-sm xl:max-w-md rounded-md overflow-hidden shadow-md"
-    />
-    <Picture
-      background="white"
-      src="/images/me.jpeg"
-      role="presentation"
-      alt=""
-      width={720}
-      widths={[400, 500, 600, 700, 800, 900, 1000]}
-      formats={['avif', 'webp', 'png']}
-      sizes="100vw"
-      aspectRatio="16:9"
-      position="attention"
-      class="box-content block lg:hidden w-[calc(100%+5rem)] max-w-[calc(100%+2.5rem)] -mx-5"
-    />
-      <div class="flex flex-col gap-4">
-        <Heading as="h2">
-          Learn from <em><Text gradient="warning" as="span">who</Text></em>?
-        </Heading>
-        <Text>
-          Hi again 👋. I'm Chris D. MacRae, a fullstack engineer and
-          designer whose been working with tech for over <em>10 years</em>.
-        </Text>
-        <Text>
-          <Text gradient="info" as="span">
-            <strong>Teaching and mentorship</strong>
-          </Text> has always been my passion, but doing it 1:1 doesn't scale.
-          Thus, in 2023 my goal is to use this site to start providing more mentorship,
-          training, and tutorials as possible, to as wide an audience as I possibly
-          can.
-        </Text>
-        <Text>
-          I work at <a href="https://careguide.com" rel="noopener"
-            ><Text gradient="primary" as="span">
-              <strong>Careguide</strong>
-            </Text></a
-          >
-          as Lead Engineer, where I coach a team of 8 engineers and 2 designers.
-        </Text>
-        <Text>
-          In my career I have had the privledge of working with
-          <span class="inline-block"
-            ><Icon name='brand-apple' /> Apple</span
-          >,
-          <Icon name='brand-mastercard'/> Mastercard,
-          <Icon name='building-bank' /> Scotiabank,
-          <Icon name='news' /> PostMedia, and many more.
-        </Text>
-        <Text>
-          Learn more about me, such as my <a href="/is-using">favorite tools</a>, 
-          <a href="/qualifications">my qualifications</a>, or <a href="/about">personal history</a>.
-        </Text>
-      </div>
+    <div class="max-w-[60rem] m-auto">
+      <About />
     </div>
-    <footer class="pt-8 pb-4">
-      <Text color="muted">
-        Copyleft &copy; {new Date().getFullYear()}
-      </Text>
-    </footer>
+
+    <div class="max-w-[60rem] m-auto">
+      <Testimonials />
+    </div>
+
+    <Footer />
   </div>
 </Layout>

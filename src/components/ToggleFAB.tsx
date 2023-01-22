@@ -1,11 +1,9 @@
-import FAB from './FAB'
-import { IconMoon, IconSearch, IconSun, IconVolumeOff, IconVolume } from '@tabler/icons';
-import { useState } from 'react';
-import { useButtonSound } from './hooks/useButtonSound';
-import { Theme, useTheme } from './hooks/useTheme';
-import { useVolume } from './hooks/useVolume';
+import FAB from '../lib/@ui/FAB'
+import { useButtonSound } from '../lib/hooks/useButtonSound';
+import { Theme, useTheme } from '../lib/hooks/useTheme';
+import { useVolume } from '../lib/hooks/useVolume';
 import { useSearch } from './Search';
-import Icon from './Icon';
+import Icon from '../lib/@ui/Icon';
 
 export type ToggleFABProps = {
   theme?: Theme

@@ -1,0 +1,75 @@
+---
+import { Picture } from "@astrojs/image/components";
+import Icon from "../lib/@ui/Icon";
+import Heading from "../lib/@ui/typography/Heading";
+import Text from "../lib/@ui/typography/Text";
+---
+<div
+  class="flex flex-col items-center lg:flex-row gap-6"
+>
+  <figure>
+    <Picture
+      background="white"
+      src="/images/me.jpeg"
+      role="presentation"
+      alt=""
+      width={720}
+      widths={[400, 500, 600, 700, 800, 900, 1000]}
+      formats={['avif', 'webp', 'png']}
+      sizes="100vw, (min-width: 768px) 500px"
+      aspectRatio="3:4"
+      class="hidden lg:block lg:max-w-sm xl:max-w-md rounded-md overflow-hidden shadow-md"
+    />
+    <Picture
+      background="white"
+      src="/images/me.jpeg"
+      role="presentation"
+      alt=""
+      width={720}
+      widths={[400, 500, 600, 700, 800, 900, 1000]}
+      formats={['avif', 'webp', 'png']}
+      sizes="100vw"
+      aspectRatio="16:9"
+      position="attention"
+      class="box-content block lg:hidden w-[calc(100%+5rem)] max-w-[calc(100%+2.5rem)] -mx-5"
+    />
+  </figure>
+  <div class="flex flex-col gap-4">
+    <Heading as="h2">
+      Learn from <em><Text gradient="warning" as="span">who</Text></em>?
+    </Heading>
+    <Text>
+      Hi again 👋. I'm Chris D. MacRae, a fullstack engineer and
+      designer whose been working with tech for over <em>10 years</em>.
+    </Text>
+    <Text>
+      <Text gradient="info" as="span">
+        <strong>Teaching and mentorship</strong>
+      </Text> has always been my passion, but doing it 1:1 doesn't scale.
+      Thus, in 2023 my goal is to use this site to start providing more mentorship,
+      training, and tutorials as possible, to as wide an audience as I possibly
+      can.
+    </Text>
+    <Text>
+      I work at <a href="https://careguide.com" rel="noopener"
+        ><Text gradient="primary" as="span">
+          <strong>Careguide</strong>
+        </Text></a
+      >
+      as Lead Engineer, where I coach a team of 8 engineers and 2 designers.
+    </Text>
+    <Text>
+      In my career I have had the privledge of working with
+      <span class="inline-block"
+        ><Icon name='brand-apple' /> Apple</span
+      >,
+      <Icon name='brand-mastercard'/> Mastercard,
+      <Icon name='building-bank' /> Scotiabank,
+      <Icon name='news' /> PostMedia, and many more.
+    </Text>
+    <Text>
+      Learn more about me, such as my <a href="/is-using">favorite tools</a>, 
+      <a href="/qualifications">my qualifications</a>, or <a href="/about">personal history</a>.
+    </Text>
+  </div>
+</div>

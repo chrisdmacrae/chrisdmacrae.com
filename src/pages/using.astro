@@ -1,0 +1,65 @@
+---
+import Icon from '../lib/@ui/Icon'
+import Text from '../lib/@ui/typography/Text'
+import Layout from '../layouts/Layout.astro'
+import Sidebar from '../layouts/Sidebar'
+import categories from '../content/articles/_categories'
+import Heading from '../lib/@ui/typography/Heading'
+import ToggleFAB from '../components/ToggleFAB'
+import { generateUrl } from './api/og.png'
+import Footer from '../components/Footer.astro'
+import PageHeader from '../components/PageHeader.astro'
+
+export const prerender = true
+
+const title = `Tools I'm Using`
+const description = `Learn about my favorite tools, why I use them, and how I use them`
+const ogImageUrl = generateUrl({ title })
+---
+<Layout 
+  title={title} 
+  description={description}
+  graph={{
+    og: {
+      type: 'website',
+      title: title,
+      site_name: Astro.site!.origin,
+      description: description,
+      url: Astro.url.toString(),
+      image: ogImageUrl.toString()
+    }
+  }}
+>
+  <div slot="sidebar" class="flex flex-col gap-2">
+    <Sidebar.Header>
+      <a href="/">
+        <Heading as="h1" size={3}>
+          <Text gradient="warning" as="span">Chris D. Macrae</Text>
+        </Heading>
+      </a>
+    </Sidebar.Header>
+    <Text color='muted'>
+      <strong>Featured Categories</strong>
+    </Text>
+    {categories
+      .filter(category => category?.featuredHref)
+      .map(c => {
+        return (
+        <Sidebar.Link href={c.featuredHref ? c.featuredHref : `/articles/${c.slug}`}>
+          <Icon name={c.icon} />
+          {c.name}
+        </Sidebar.Link>
+      )
+    })}
+  </div>
+
+  <PageHeader>
+    The tools I'm using
+  </PageHeader>
+
+  <div class="flex flex-col gap-4">
+
+  </div>
+
+  <Footer />
+</Layout>

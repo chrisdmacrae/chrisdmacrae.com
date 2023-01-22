@@ -84,8 +84,8 @@ declare module 'astro:content' {
   collection: "articles",
   data: InferEntrySchema<"articles">
 },
-"reading-is-neccessary-but-not-sufficient copy.mdx": {
-  id: "reading-is-neccessary-but-not-sufficient copy.mdx",
+"reading-is-neccessary-but-not-sufficient.mdx": {
+  id: "reading-is-neccessary-but-not-sufficient.mdx",
   slug: string,
   body: string,
   collection: "articles",
@@ -111,6 +111,15 @@ declare module 'astro:content' {
   body: string,
   collection: "articles",
   data: InferEntrySchema<"articles">
+},
+},
+"pages": {
+"about.mdx": {
+  id: "about.mdx",
+  slug: "about",
+  body: string,
+  collection: "pages",
+  data: any
 },
 },
 

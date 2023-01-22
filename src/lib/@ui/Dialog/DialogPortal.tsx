@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useState } from 'react'
+import { PropsWithChildren, useCallback, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-export type DialogPortalProps = {
+export type DialogPortalProps = PropsWithChildren & {
   portalId?: string
 }
 
 export const DialogPortal: React.FC<DialogPortalProps> = ({ portalId = 'dialogs', children }) => {
-  const [containerNode, setContainerNode] = useState()
+  const [containerNode, setContainerNode] = useState<HTMLElement>()
 
-  const setContainerNodeRef = useCallback((node) => {
+  const setContainerNodeRef = useCallback((node: HTMLElement) => {
     if (node !== null) {
       setContainerNode(node)
     }

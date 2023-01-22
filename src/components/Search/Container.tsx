@@ -1,5 +1,5 @@
-import type { PropsWithChildren, ReactElement } from "react"
-import { Dialog } from "../Dialog"
+import type { ReactElement } from "react"
+import { Dialog } from "../../lib/@ui/Dialog"
 
 export type ContainerProps = {
   isOpen: boolean

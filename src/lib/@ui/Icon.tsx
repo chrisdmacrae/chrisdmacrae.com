@@ -1,5 +1,3 @@
-import '@tabler/icons/iconfont/tabler-icons.min.css'
-
 export type IconName = string
 export type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 

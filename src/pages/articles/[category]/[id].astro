@@ -1,11 +1,11 @@
 ---
-import Icon from '../../../components/Icon'
-import Text from '../../../components/typography/Text'
+import Icon from '../../../lib/@ui/Icon'
+import Text from '../../../lib/@ui/typography/Text'
 import Layout from '../../../layouts/Layout.astro'
 import Sidebar from '../../../layouts/Sidebar'
-import typography from '../../../components/typography'
-import Heading from '../../../components/typography/Heading'
-import Card from '../../../components/Card'
+import typography from '../../../lib/@ui/typography'
+import Heading from '../../../lib/@ui/typography/Heading'
+import Card from '../../../lib/@ui/Card'
 import ToggleFAB from '../../../components/ToggleFAB'
 import categories from '../../../content/articles/_categories'
 import { prettyDate } from '../../../lib/prettyDate'
@@ -52,6 +52,7 @@ const { Content } = await article.render()
 <Layout 
   title={title} 
   description={description}
+  tabs={false}
   graph={{
     og: {
       type: 'website',

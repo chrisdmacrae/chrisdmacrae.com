@@ -1,0 +1,96 @@
+---
+import { Picture } from "@astrojs/image/components";
+import Card from "../lib/@ui/Card";
+import Heading from "../lib/@ui/typography/Heading";
+import Text from "../lib/@ui/typography/Text";
+
+export type Testimonial = {
+  name: string
+  role: string
+  photo: string
+  heading: string
+  text: string
+}
+
+const testimonials: Testimonial[] = [
+  {
+    name: "Alkarim Bhalesha",
+    role: "Product Designer",
+    photo: "/images/alkarim.jpeg",
+    heading: "Obsessed with building things that solve problems",
+    text: "Chris was amazing to work with and very few folks have a work ethic that matched his. Chris was great at picking up new toolkits and constantly obsessed with building things that solve problems. Chris was great at establishing relationships and reading between the lines to solve the problems today's average users faced, all the while finding ways to align business goals w/user goals. All in all a great individual to work with and for."
+  }
+]
+
+---
+<div class="flex flex-col gap-2">
+  <div class="text-center">
+    <Heading as="h2" size={4}>Trusted by others</Heading>
+  </div>
+  <div class="flex flex-col gap-2 sm:grid sm:gap-4 py-4 m-auto">
+    <div class="flex flex-col gap-2">
+      {testimonials.slice(0, 2).map(testimonial => (
+        <Card variant="bubble" active>
+          <div class="flex flex-col gap-2">
+            <Heading as="h3" size={6}>
+              {testimonial.heading}
+            </Heading>
+            <Text size="sm" color="muted">
+              "{testimonial.text}"
+            </Text>
+            <div class="flex flex-row gap-2">
+              <Picture
+                background="white"
+                src={testimonial.photo}
+                alt="Alkarim Bhalesha"
+                role="presentation"
+                width={32}
+                sizes="32px"
+                aspectRatio="1:1"
+                widths={[32, 64, 128, 256]}
+                class="rounded-full overflow-hidden"
+              />
+              <div class="flex flex-col gap-1">
+                <Text>{testimonial.name}</Text>
+                <Text color="muted">{testimonial.role}</Text>
+              </div>
+            </div>
+            </div>
+        </Card>
+        ))}
+    </div>
+    {testimonials.length > 2 && (
+      <div class="flex flex-col gap-2">
+        {testimonials.slice(2, 2).reverse().map(testimonial => (
+          <Card variant="bubble" active>
+            <div class="flex flex-col gap-2">
+              <Heading as="h3" size={6}>
+                {testimonial.heading}
+              </Heading>
+              <Text size="sm" color="muted">
+                "{testimonial.text}"
+              </Text>
+              <div class="flex flex-row gap-2">
+                <Picture
+                  background="white"
+                  src={testimonial.photo}
+                  alt="Alkarim Bhalesha"
+                  role="presentation"
+                  width={32}
+                  sizes="32px"
+                  aspectRatio="1:1"
+                  widths={[32, 64, 128, 256]}
+                  class="rounded-full overflow-hidden"
+                />
+                <div class="flex flex-col gap-1">
+                  <Text>{testimonial.name}</Text>
+                  <Text color="muted">{testimonial.role}</Text>
+                </div>
+              </div>
+            </div>
+          </Card>
+          ))}
+      </div>
+    )}
+  </div>
+</div>

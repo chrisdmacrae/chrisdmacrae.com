@@ -1,5 +1,5 @@
-import Card from "./Card";
-import Text from '../components/typography/Text'
+import Card from "../lib/@ui/Card";
+import Text from '../lib/@ui/typography/Text'
 
 export const CardAvailability = () => (
   <Card>

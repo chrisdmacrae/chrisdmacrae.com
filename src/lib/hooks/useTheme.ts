@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Cookies from 'js-cookie'
 
 export const THEME_COOKIE = 'theme'
+export const THEME_EVENT = 'theme.toggle'
 
 export type Theme = 'light' | 'dark' | 'system'
 
@@ -10,6 +11,11 @@ export const useTheme = (initialTheme: Theme) => {
   const toggleTheme = () => {
     if (theme === 'dark') setTheme('light')
     else setTheme('dark')
+  }
+  const emitThemeToggle = () => {
+    const event = new CustomEvent(THEME_EVENT)
+
+    window.dispatchEvent(event)
   }
 
   useEffect(() => {
@@ -28,6 +34,12 @@ export const useTheme = (initialTheme: Theme) => {
       Cookies.set(THEME_COOKIE, theme, { sameSite: 'strict' })
       localStorage.setItem(THEME_COOKIE, theme)
     }
+
+    window.addEventListener(THEME_EVENT, toggleTheme)
+
+    return () => {
+      window.removeEventListener(THEME_EVENT, toggleTheme)
+    }
   }, [theme])
 
   useEffect(() => {
@@ -36,5 +48,5 @@ export const useTheme = (initialTheme: Theme) => {
     if (persistedTheme) setTheme(persistedTheme)
   }, [])
 
-  return [theme, toggleTheme] as const
+  return [theme, emitThemeToggle] as const
 }

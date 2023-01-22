@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import FAB from "./FAB"
-import { useButtonSound } from "./hooks/useButtonSound"
-import Icon from "./Icon"
+import FAB from "../lib/@ui/FAB"
+import { useButtonSound } from "../lib/hooks/useButtonSound"
+import Icon from "../lib/@ui/Icon"
 
 export type BackFABProps = {
   defaultHref?: string

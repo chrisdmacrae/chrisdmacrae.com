@@ -2,18 +2,21 @@ import type { PropsWithChildren } from "react";
 
 export type TextGradient = "primary" | "success" | "info" | "warning"
 export type TextColor = "light" | "dark" | "muted" | "inherit"
+export type TextSize = 'xs' | 'sm' | 'md' | 'lg'
 
 export type TextProps = {
     as?: 'p' | 'span'
+    size?: TextSize
     gradient?: TextGradient
     color?: TextColor
     className?: string
 } & PropsWithChildren
 
-export const Text: React.FC<TextProps> = ({as = 'p', gradient, color = 'dark', children, ...props}) => {
+export const Text: React.FC<TextProps> = ({as = 'p', size, gradient, color = 'dark', children, ...props}) => {
     const El = as as any
     let classes = ['max-w-[40rem] align-top items-center']
 
+    if (size) classes.push(getSize(size))
     if (gradient) classes.push(getGradient(gradient))
     else classes.push(getColor(color))
 
@@ -22,6 +25,19 @@ export const Text: React.FC<TextProps> = ({as = 'p', gradient, color = 'dark', c
             {children}
         </El>        
     )
+}
+
+function getSize(size: TextSize) {
+  switch (size) {
+    case 'xs':
+      return 'text-xs'
+    case 'sm':
+      return 'text-sm'
+    case 'md':
+      return 'text-md'
+    case 'lg':
+      return 'text-lg'
+  }
 }
 
 function getGradient(gradient: TextGradient) {

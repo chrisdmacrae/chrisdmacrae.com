@@ -1,0 +1,14 @@
+---
+import {Picture} from '@astrojs/image/components'
+
+const props = Astro.props as any
+---
+<Picture
+  background="white"
+  role="presentation"
+  alt=""
+  width={640}
+  widths={[320, 640, 1280, 1920]}
+  {...props}
+  class="w-full h-auto rounded-lg overflow-hidden"
+/>

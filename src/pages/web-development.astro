@@ -16,7 +16,7 @@ import Testimonials from "../components/Testimonials.astro";
 
 export const prerender = true
 
-const category = categories.find(category => category.slug === 'engineering-management')!
+const category = categories.find(category => category.slug === 'web-development')!
 const title = `Learn about ${category!.name}`
 const description = ""
 const ogImageUrl = generateUrl({ title, color: category!.color })
@@ -24,6 +24,7 @@ const articles = await getArticles({
   category: category.slug,
   drafts: import.meta.env.DEV
 })
+
 ---
 <Layout 
   title={title} 
@@ -63,8 +64,8 @@ const articles = await getArticles({
       )
     })}
   </div>
-  
-  <div class="w-full flex flex-col gap-6 lg:gap-[10rem]">
+
+  <div class="w-full flex flex-col gap-10 lg:gap-[10rem]">
     <DotGrid size="screen">
       <div class="w-full flex flex-row justify-end pb-4 -mt-10">
         <ToggleFAB client:idle />
@@ -74,12 +75,12 @@ const articles = await getArticles({
       >
         <div class="flex flex-col items-center text-center gap-2 lg:gap-6">
           <Heading as="h1">
-            Learn about <Text as="span" gradient="primary">engineering management</Text>.
+            Learn about <Text as="span" gradient="info">web development</Text>.
           </Heading>
           <div class="flex flex-col items-center gap-2">
             <Text color="muted">
               Hi 👋, my name is Chris and I'm a fullstack engineer and
-              designer. This site is all about sharing what I've learned about engineering management.
+              designer. This site is all about sharing what I've learned about web development.
             </Text>
           </div>
         </div>
@@ -89,11 +90,9 @@ const articles = await getArticles({
     </DotGrid>
 
     <div class="flex flex-col gap-4 w-full max-w-[60rem] m-auto">
-      <div class="px-4 lg:px-0">
-        <Heading as='h2' size={4}>All Articles</Heading>
-        <hr class="border-b border-slate-200 dark:border-slate-800" />
-      </div>
-      <div class="-mx-2 lg:-mx-6">
+      <Heading as='h2' size={4}>All Articles</Heading>
+      <hr class="border-b border-slate-200 dark:border-slate-800" />
+      <div class="lg:-ml-6">
         {articles.map(article => (
           <CardArticle article={article} readingTime={article.readingTime} />
         ))}

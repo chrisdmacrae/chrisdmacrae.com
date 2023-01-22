@@ -1,15 +1,17 @@
 ---
-import Icon from '../../../components/Icon'
-import Text from '../../../components/typography/Text'
+import Icon from '../../../lib/@ui/Icon'
+import Text from '../../../lib/@ui/typography/Text'
 import Layout from '../../../layouts/Layout.astro'
 import Sidebar from '../../../layouts/Sidebar'
 import categories from '../../../content/articles/_categories'
-import Heading from '../../../components/typography/Heading'
-import FAB from '../../../components/FAB'
+import Heading from '../../../lib/@ui/typography/Heading'
+import FAB from '../../../lib/@ui/FAB'
 import ToggleFAB from '../../../components/ToggleFAB'
 import { CardArticle } from '../../../components/CardArticle'
 import { getArticles } from '../../../content/articles'
 import { generateUrl } from '../../api/og.png'
+import Footer from '../../../components/Footer.astro'
+import PageHeader from '../../../components/PageHeader.astro'
 
 export const prerender = true
 export const getStaticPaths = async () => categories.map(category => ({
@@ -18,7 +20,7 @@ export const getStaticPaths = async () => categories.map(category => ({
 }))
 
 const {category} = Astro.props
-const title = `${category!.name} Articles`
+const title = category.slug === 'all' ? category.name : `${category!.name} Articles`
 const description = `Learn about ${category!.name} from Chris D. MacRae`
 const ogImageUrl = generateUrl({ title, color: category!.color })
 const isAll = category?.slug === 'all'
@@ -75,11 +77,12 @@ const articles = await getArticles({
       )
     })}
   </div>
-  <div class="sticky top-0 flex flex-row justify-between pb-4 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
-    <Heading as='h2' size={4}>Browse</Heading>
-    <ToggleFAB client:idle />
-  </div>
-  <div class="relative flex flex-row overflow-scroll w-[100vw] -mx-5 pr-4 md:max-w-[calc(100vw-19rem)]">
+
+  <PageHeader>
+    Browse
+  </PageHeader>
+
+  <div class="relative flex flex-row overflow-scroll w-[100vw] -mx-4 pr-4 md:max-w-[calc(100vw-19rem)]">
     <div class="w-full flex flex-row gap-2 p-4">
       {categories.map(c => {
         const isCurrent = c.slug === category?.slug
@@ -96,6 +99,7 @@ const articles = await getArticles({
       })}
     </div>
   </div>
+
   <div class="flex flex-col gap-4">
     {articles.map(article => (
       <CardArticle article={article} readingTime={article.readingTime} />
@@ -107,4 +111,6 @@ const articles = await getArticles({
       </div>
     )}
   </div>
+
+  <Footer />
 </Layout>

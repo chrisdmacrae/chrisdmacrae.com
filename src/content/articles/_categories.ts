@@ -13,7 +13,6 @@ export const categories: Category[] = [
     slug: "engineering-management",
     icon: "code",
     color: 'primary',
-    featuredHref: "/engineering-management",
     homepage: true
   },
   {
@@ -21,7 +20,6 @@ export const categories: Category[] = [
     slug: "design-management",
     icon: "box-align-bottom-left",
     color: 'success',
-    featuredHref: "/design-management",
     homepage: true
 
   },
@@ -30,6 +28,7 @@ export const categories: Category[] = [
     slug: "web-development",
     icon: "box-model-2",
     color: 'info',
+    featuredHref: "/web-development",
     homepage: true
 
   },
@@ -41,10 +40,11 @@ export const categories: Category[] = [
     homepage: true
   },
   {
-    name: "All",
+    name: "All Articles",
     slug: "all",
     icon: "article",
-    color: "warning"
+    color: "warning",
+    featuredHref: "/articles/all"
   }
 ]
 

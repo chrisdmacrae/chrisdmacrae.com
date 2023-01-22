@@ -6,7 +6,8 @@ description: |
 pubDate: 2021-06-18
 category: systems-thinking
 ---
-import causalLadder from './_reading-is-neccessary-but-not-sufficient/causal-ladder.png';
+import causalLadder from './reading-is-neccessary-but-not-sufficient/causal-ladder.png';
+import Picture from '../../components/ArticlePicture.astro'
 
 In 2017, I took on the personal challenge of **reading fifty-two books  with at least of 200 pages  in the
 year**, making for 10,400 pages to cover in 8700
@@ -88,7 +89,11 @@ causal ladder, or the steps to wisdom.
 
 ## The Causal Ladder
 
-<img {...causalLadder} role="presentation" />
+<Picture
+  src={causalLadder}
+  role="presentation"
+  widths={[320, 640]}
+/>
 
 Our ability to interact with the world to gain knowledge and remember what
 caused it is not unique -- most developed forms of life can do this -- and

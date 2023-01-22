@@ -1,11 +1,12 @@
 ---
-import WebVitals from '../components/vitals.astro'
-import Search from "../components/Search";
+import '@tabler/icons/iconfont/tabler-icons.min.css'
 import "./Layout.css"
-import Sidebar from "./Sidebar";
-import TabBar from "./Tabbar";
-import { THEME_COOKIE } from "../components/hooks/useTheme";
-import Seo from '../components/seo.astro';
+import WebVitals from '../components/Vitals.astro'
+import Seo from '../components/Seo.astro'
+import Search, { SearchResult } from "../components/Search"
+import Sidebar from "./Sidebar"
+import TabBar from "./Tabbar"
+import { THEME_EVENT, THEME_COOKIE } from "../lib/hooks/useTheme"
 
 export interface Props {
 	title: string
@@ -15,6 +16,11 @@ export interface Props {
 }
 
 const { title, description, tabs = true, graph } = Astro.props;
+const searchResults: SearchResult[] = [{
+  title: 'Toggle theme',
+  description: "Switch between the light and dark theme",
+  event: THEME_EVENT
+}]
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +54,7 @@ const { title, description, tabs = true, graph } = Astro.props;
 	</head>
 	<body class="antialiased">
     <TabBar.Layout sm={tabs} noBottomSpace={!tabs}>
-      <Search client:idle />
+      <Search results={searchResults} client:idle />
       {tabs && <TabBar client:load />}
       <Sidebar.Layout>
         <Sidebar>

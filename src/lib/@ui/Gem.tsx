@@ -32,7 +32,7 @@ export const Gem: React.FC<GemProps> = ({ label, icon, color = 'primary' }) => {
 function getGradient(color: GemColor) {
   switch(color) {
     case 'primary':
-      return 'ring-purple-300 dark:ring-transparent border-purple-200 dark:border-transparent bg-gradient-to-br from-purple-400 to-pink-600'
+      return 'ring-purple-300 dark:ring-transparent border-purple-200 dark:border-transparent bg-gradient-to-br from-purple-400 hover:from-purple-500 to-pink-600 hover:to-pink-700 transition-all'
     case 'success':
       return 'ring-green-300 dark:ring-transparent border-green-200 dark:border-transparent bg-gradient-to-br from-green-400 to-cyan-600'
     case 'warning':
