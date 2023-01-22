@@ -18,6 +18,11 @@ export const TabBar: React.FC = () => {
           Articles
         </Button>
       </a>
+      <a href="/about">
+        <Button icon='user-circle'>
+          About
+        </Button>
+      </a>
       <Button icon='search' onClick={toggleSearch}>
         Search
       </Button>
