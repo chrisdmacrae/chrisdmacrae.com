@@ -2,10 +2,19 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-a:link {
+a:link, a:visited {
   color: var(--tw-color-blue-600);
 }
 
-.dark a:link {
+a:hover {
+  color: var(--tw-color-blue-500);
+}
+
+.dark a:link, 
+.dark a:visited {
   color: var(--tw-color-sky-500);
+}
+
+.dark a:hover {
+  color: var(--tw-color-blue-400);
 }
