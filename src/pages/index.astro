@@ -5,13 +5,13 @@ import DotGrid from "../lib/@ui/DotGrid";
 import Heading from "../lib/@ui/typography/Heading";
 import Text from "../lib/@ui/typography/Text";
 import ToggleFAB from "../components/ToggleFAB";
-import Icon from "../lib/@ui/Icon";
 import categories from "../content/articles/_categories";
 import Gem from "../lib/@ui/Gem";
 import { generateUrl } from "./api/og.png";
 import About from "../components/About.astro";
 import Footer from "../components/Footer.astro";
 import Testimonials from "../components/Testimonials.astro";
+import BaseNav from "../components/BaseNav.astro";
 
 const title = "Home"
 const description = "Learn about engineering , design, web development, and much more."
@@ -36,21 +36,12 @@ export const prerender = true
   <div slot="sidebar" class="flex flex-col gap-2">
     <Sidebar.Header>
       <a href="/">
-        <Heading as="h1" size={3}>
+        <Heading as="h1" size={4}>
           <Text gradient="warning" as="span">Chris D. Macrae</Text>
         </Heading>
       </a>
     </Sidebar.Header>
-    <Text color='muted'>
-      <strong>Categories</strong>
-    </Text>
-    {categories
-      .map(category => (
-        <Sidebar.Link href={category.featuredHref ? category.featuredHref : `/articles/${category.slug}`}>
-          <Icon name={category.icon} />
-          {category.name}
-        </Sidebar.Link>
-    ))}
+    <BaseNav />
   </div>
 
   <div class="w-full flex flex-col gap-12 lg:gap-[10rem]">

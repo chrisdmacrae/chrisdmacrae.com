@@ -65,19 +65,17 @@ const { Content } = await article.render()
   }}
 >
   <div slot="sidebar" class="flex flex-col gap-2">
-    {category && (
-      <Sidebar.Header>
-        <a href={`/articles/${category.slug}`}>
-          <Text>
-            <Icon name="chevron-left" size='sm' />
-            {category.name}
-          </Text>
-        </a>
-      </Sidebar.Header>
-    )}
-    <div class="h-[calc(100vh-16rem)] overflow-scroll w-full">
+    <Sidebar.Header>
+      <a href={`/articles/${category.slug}`} class="py-1">
+        <Text>
+          <Icon name="chevron-left" size='sm' />
+          {category.name}
+        </Text>
+      </a>
+    </Sidebar.Header>
+    <div class="flex flex-col gap-2 h-[calc(100vh-13rem)] overflow-y-scroll overflow-x-scroll -mx-2 px-2 pt-2">
       {articles.map(article => (
-        <Sidebar.Link href={article.slug}>
+        <Sidebar.Link href={article.slug} active={Astro.url.pathname === article.slug}>
           <Icon name='article' />
           {article.data.title}
         </Sidebar.Link>

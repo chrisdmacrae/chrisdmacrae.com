@@ -12,6 +12,7 @@ import { getArticles } from '../../../content/articles'
 import { generateUrl } from '../../api/og.png'
 import Footer from '../../../components/Footer.astro'
 import PageHeader from '../../../components/PageHeader.astro'
+import BaseNav from '../../../components/BaseNav.astro'
 
 export const prerender = true
 export const getStaticPaths = async () => categories.map(category => ({
@@ -45,37 +46,32 @@ const articles = await getArticles({
 >
   <div slot="sidebar" class="flex flex-col gap-2">
     <Sidebar.Header>
-      {isAll && (
-        <a href="/">
-          <Heading as="h1" size={3}>
-            <Text gradient="warning" as="span">Chris D. Macrae</Text>
-          </Heading>
-        </a>
-      )}
-      {!isAll && (
-        <a href={`/articles/all`}>
-          <Text>
-            <Icon name="chevron-left" size='sm' />
-            All articles
-          </Text>
-        </a>
-      )}
+      <a href={`/`} class="py-1">
+        <Text>
+          <Icon name="chevron-left" size='sm' />
+          Home
+        </Text>
+      </a>
     </Sidebar.Header>
-    <Text color='muted'>
-      <strong>Featured Categories</strong>
-    </Text>
-    {categories
-      .filter(category => category?.featuredHref)
-      .map(c => {
-        const active = c.slug === category!.slug
+    <BaseNav>
+      <Text color='muted'>
+        <strong>Featured Categories</strong>
+      </Text>
+      <div class="flex flex-col gap-2">
+        {categories
+          .filter(category => category?.featuredHref)
+          .map(c => {
+            const active = c.slug === category!.slug
 
-        return (
-        <Sidebar.Link href={c.featuredHref ? c.featuredHref : `/articles/${c.slug}`} active={active}>
-          <Icon name={c.icon} />
-          {c.name}
-        </Sidebar.Link>
-      )
-    })}
+            return (
+            <Sidebar.Link href={c.featuredHref ? c.featuredHref : `/articles/${c.slug}`} active={active}>
+              <Icon name={c.icon} />
+              {c.name}
+            </Sidebar.Link>
+          )
+        })}
+      </div>
+    </BaseNav>
   </div>
 
   <PageHeader>

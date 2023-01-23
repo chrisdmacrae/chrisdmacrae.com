@@ -1,0 +1,35 @@
+---
+import categories from "../content/articles/_categories";
+import Sidebar from "../layouts/Sidebar";
+import Icon from "../lib/@ui/Icon";
+import Text from "../lib/@ui/typography/Text";
+---
+<div class="flex flex-col gap-4 overflow-y-scroll overflow-x-hidden h-[calc(100vh-16rem)] -mx-4 px-4">
+  <div class="flex flex-col gap-2">
+    <slot>
+      <Text color='muted'>
+        <strong>Categories</strong>
+      </Text>
+      {categories
+        .map(category => (
+          <Sidebar.Link href={category.featuredHref ? category.featuredHref : `/articles/${category.slug}`}>
+            <Icon name={category.icon} />
+            {category.name}
+          </Sidebar.Link>
+      ))}
+    </slot>
+  </div>
+  <div class="flex flex-col gap-2">
+    <Text color='muted'>
+      <strong>Links</strong>
+    </Text>
+    <Sidebar.Link href="/about" active={Astro.url.pathname === "/about"}>
+      <Icon name='user-circle' />
+      About me
+    </Sidebar.Link>
+    <Sidebar.Link href="/using" active={Astro.url.pathname === "/using"}>
+      <Icon name='tool' />
+      My tools
+    </Sidebar.Link>
+  </div>
+</div>

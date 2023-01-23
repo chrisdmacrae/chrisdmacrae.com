@@ -50,18 +50,20 @@ const articles = await getArticles({
     <Text color='muted'>
       <strong>Featured Categories</strong>
     </Text>
-    {categories
-      .filter(category => category?.featuredHref)
-      .map(c => {
-        const active = c.slug === category.slug
+    <div class="flex flex-col gap-1">
+      {categories
+        .filter(category => category?.featuredHref)
+        .map(c => {
+          const active = c.slug === category.slug
 
-        return (
-        <Sidebar.Link href={c.featuredHref ? c.featuredHref : `/articles/${c.slug}`} active={active}>
-          <Icon name={c.icon} />
-          {c.name}
-        </Sidebar.Link>
-      )
-    })}
+          return (
+          <Sidebar.Link href={c.featuredHref ? c.featuredHref : `/articles/${c.slug}`} active={active}>
+            <Icon name={c.icon} />
+            {c.name}
+          </Sidebar.Link>
+        )
+      })}
+    </div>
   </div>
   
   <div class="w-full flex flex-col gap-6 lg:gap-[10rem]">
