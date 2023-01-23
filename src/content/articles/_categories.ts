@@ -40,6 +40,12 @@ export const categories: Category[] = [
     homepage: true
   },
   {
+    name: "Writing",
+    slug: "writing",
+    icon: "pencil",
+    color: "warning"
+  },
+  {
     name: "All Articles",
     slug: "all",
     icon: "article",

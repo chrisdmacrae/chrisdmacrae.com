@@ -91,13 +91,6 @@ declare module 'astro:content' {
   collection: "articles",
   data: InferEntrySchema<"articles">
 },
-"test.mdx": {
-  id: "test.mdx",
-  slug: string,
-  body: string,
-  collection: "articles",
-  data: InferEntrySchema<"articles">
-},
 "the-myth-of-the-story-point.mdx": {
   id: "the-myth-of-the-story-point.mdx",
   slug: string,
@@ -107,6 +100,13 @@ declare module 'astro:content' {
 },
 "why-interface-designers-should-pair-by-default.mdx": {
   id: "why-interface-designers-should-pair-by-default.mdx",
+  slug: string,
+  body: string,
+  collection: "articles",
+  data: InferEntrySchema<"articles">
+},
+"write-a-winning-article-in-less-than-10-steps.mdx": {
+  id: "write-a-winning-article-in-less-than-10-steps.mdx",
   slug: string,
   body: string,
   collection: "articles",
