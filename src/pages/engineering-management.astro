@@ -13,6 +13,7 @@ import { generateUrl } from "./api/og.png";
 import About from "../components/About.astro";
 import Footer from "../components/Footer.astro";
 import Testimonials from "../components/Testimonials.astro";
+import FAB from '../components/FAB';
 
 export const prerender = true
 
@@ -87,7 +88,13 @@ const articles = await getArticles({
         </div>
         <div />
       </div>
-      <div />
+      <div class="animate animate-bounce mx-auto">
+        <FAB>
+          <FAB.Button>
+            <Icon name="arrow-down" />
+          </FAB.Button>
+        </FAB>
+      </div>
     </DotGrid>
 
     <div class="flex flex-col gap-4 w-full max-w-[60rem] m-auto">

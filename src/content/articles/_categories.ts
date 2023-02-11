@@ -9,6 +9,13 @@ export type Category = {
 
 export const categories: Category[] = [
   {
+    name: "All Articles",
+    slug: "all",
+    icon: "article",
+    color: "warning",
+    featuredHref: "/articles/all"
+  },
+  {
     name: "Engineering Management",
     slug: "engineering-management",
     icon: "code",
@@ -44,13 +51,6 @@ export const categories: Category[] = [
     slug: "writing",
     icon: "pencil",
     color: "warning"
-  },
-  {
-    name: "All Articles",
-    slug: "all",
-    icon: "article",
-    color: "warning",
-    featuredHref: "/articles/all"
   }
 ]
 

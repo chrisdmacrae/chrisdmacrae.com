@@ -17,8 +17,7 @@ export const CardAvailability = () => (
       <strong>I'm available</strong>
     </Text>
     <Text>
-      I'm currently available for freelance work. <a href="/contact"
-        >Get in touch</a>
+      I'm currently available for freelance work. <a href="https://parachute.agency" target="_blank" rel="noopener">Get in touch</a>
     </Text>
   </Card>
 )
