@@ -5,14 +5,14 @@
 version: 1
 contentModels:
   - name: pages
-    path: "content/pages/**/*.mdx"
+    path: "src/content/pages/**/*.mdx"
     format: markdown
     fields:
       - name: title
         type: string
         entry_title: true
   - name: articles
-    path: "content/articles/*.mdx"
+    path: "src/content/articles/*.mdx"
     format: markdown
     fields:
       - name: title
@@ -35,3 +35,5 @@ contentModels:
         display:
           hidden: false
           component: select
+      - name: draft
+        type: boolean
