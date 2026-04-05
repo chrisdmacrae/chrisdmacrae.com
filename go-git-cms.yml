@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://api-dev.gogitcms.com/schemas/go-git-cms.json
+# GoGitCMS schema configuration
+# See: https://docs.gogitcms.com/schema
+
+version: 1
+contentModels:
+  - name: pages
+    path: "content/pages/**/*.mdx"
+    format: markdown
+    fields:
+      - name: title
+        type: string
+        entry_title: true
+  - name: articles
+    path: "content/articles/*.mdx"
+    format: markdown
+    fields:
+      - name: title
+        type: string
+        entry_title: true
+        required: true
+      - name: description
+        type: string
+      - name: pubDate
+        type: string
+      - name: category
+        type: string
+        enum:
+          - all
+          - design-management
+          - engineering-management
+          - web-development
+          - systems-thinking
+          - writing
+        display:
+          hidden: false
+          component: select
