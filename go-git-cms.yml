@@ -1,18 +1,20 @@
-# yaml-language-server: $schema=https://api-dev.gogitcms.com/schemas/go-git-cms.json
+# yaml-language-server: $schema=https://app.gogitcms.com/schemas/go-git-cms.json
 # GoGitCMS schema configuration
 # See: https://docs.gogitcms.com/schema
 
 version: 1
 contentModels:
   - name: pages
-    path: "src/content/pages/**/*.mdx"
+    path: "src/content/pages/*.mdx"
     format: markdown
+    previewUrl: "{{Filename}}"
     fields:
       - name: title
         type: string
         entry_title: true
   - name: articles
     path: "src/content/articles/*.mdx"
+    previewUrl: /articles/{{Filename}}
     format: markdown
     fields:
       - name: title
@@ -23,6 +25,8 @@ contentModels:
         type: string
       - name: pubDate
         type: string
+        display:
+          component: date
       - name: category
         type: string
         enum:
@@ -33,7 +37,6 @@ contentModels:
           - systems-thinking
           - writing
         display:
-          hidden: false
           component: select
       - name: draft
         type: boolean
