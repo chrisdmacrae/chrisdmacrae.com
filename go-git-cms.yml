@@ -20,6 +20,8 @@ contentModels:
     previewUrl: /articles/{{Filename}}
     format: markdown
     markdown_flavor: mdx
+    jsCollections:
+      - mdx-components
     fields:
       - name: title
         type: string
