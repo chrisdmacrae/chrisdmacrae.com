@@ -8,9 +8,8 @@ contentModels:
     path: "src/content/pages/*.mdx"
     format: markdown
     markdown_flavor: mdx
-    mdx_sources:
-      - path: src/components/**/*.tsx
-        exports: named
+    js_collections:
+      - mdx-components
     previewUrl: "{{Filename}}"
     fields:
       - name: title
@@ -48,3 +47,8 @@ contentModels:
           component: select
       - name: draft
         type: boolean
+
+jsCollections:
+  - name: mdx-components
+    entries:
+      - path: src/components/**/*.tsx
