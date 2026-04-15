@@ -8,7 +8,7 @@ contentModels:
     path: "src/content/pages/*.mdx"
     format: markdown
     markdown_flavor: mdx
-    js_collections:
+    jsCollections:
       - mdx-components
     previewUrl: "{{Filename}}"
     fields:
@@ -20,9 +20,6 @@ contentModels:
     previewUrl: /articles/{{Filename}}
     format: markdown
     markdown_flavor: mdx
-    mdx_sources:
-      - path: src/components/**/*.tsx
-        exports: named
     fields:
       - name: title
         type: string
