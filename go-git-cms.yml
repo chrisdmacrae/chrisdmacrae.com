@@ -51,3 +51,4 @@ jsCollections:
   - name: mdx-components
     entries:
       - path: src/components/**/*.tsx
+      - path: src/lib/@ui/**/*.tsx
