@@ -108,15 +108,15 @@ const dotGrid = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABLAAAAJ2CAYAAABPQ
 <Disclaimer type="primary">
   **Note**
 
-  : 
+  :
 
   `dotGrid`
 
-   is a variable holding 
+  is a variable holding
 
   `base64`
 
-   encoded image for the background pattern
+  encoded image for the background pattern
 </Disclaimer>
 
 ## Enabling SSR
@@ -219,12 +219,11 @@ To generate a component with Astro, we're going to need to install the dependenc
 </Code>
 
 <Disclaimer>
-  This package takes an HTML template and prepares it for image generation by the library 
+  This package takes an HTML template and prepares it for image generation by the library
 
   `satori`
 
-  ,
-  which we'll install later.
+  , which we'll install later.
 </Disclaimer>
 
 Now, we create the component. We'll create a simple component that renders a white background with your page's title:
@@ -262,15 +261,15 @@ Now, we create the component. We'll create a simple component that renders a whi
 <Disclaimer>
   **Note:**
 
-   the 
+  the
 
   `display: flex;`
 
-   is 
+  is
 
   *extremely*
 
-   important. The library we use to convert HTML to an image only supports flexbox display. For a full list of CSS supported, 
+  important. The library we use to convert HTML to an image only supports flexbox display. For a full list of CSS supported,
 
   [see the documentation](https://github.com/vercel/satori#css)
 
@@ -694,11 +693,11 @@ In the `<head>` of your page, add the following meta tags:
 ```
 
 <Disclaimer>
-  The variable 
+  The variable
 
   `title`
 
-   should store the title of your page, or whatever text you wish to inject into your
+  should store the title of your page, or whatever text you wish to inject into your
   social image.
 </Disclaimer>
 
