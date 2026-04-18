@@ -3,18 +3,18 @@
 # See: https://docs.gogitcms.com/schema
 
 version: 1
-contentModels:
+content_models:
   - name: pages
     path: "src/content/pages/*.mdx"
     format: markdown
-    previewUrl: "{{Filename}}"
+    previewUrl: "{{.Filename}}"
     fields:
       - name: title
         type: string
         entry_title: true
   - name: articles
     path: "src/content/articles/*.mdx"
-    previewUrl: /articles/{{Filename}}
+    previewUrl: /articles/{{.Filename}}
     format: markdown
     fields:
       - name: title
