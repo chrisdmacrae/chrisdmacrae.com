@@ -7,14 +7,14 @@ content_models:
   - name: pages
     path: "src/content/pages/*.mdx"
     format: markdown
-    previewUrl: "{{.Filename}}"
+    preview_url: "{{.Filename}}"
     fields:
       - name: title
         type: string
         entry_title: true
   - name: articles
     path: "src/content/articles/*.mdx"
-    previewUrl: /articles/{{.Filename}}
+    preview_url: /articles/{{.Filename}}
     format: markdown
     fields:
       - name: title
