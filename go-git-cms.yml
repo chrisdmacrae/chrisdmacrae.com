@@ -3,24 +3,24 @@
 # See: https://docs.gogitcms.com/schema
 
 version: 1
-contentModels:
+content_models:
   - name: pages
     path: "src/content/pages/*.mdx"
     format: markdown
     markdown_flavor: mdx
-    jsCollections:
+    js_collections:
       - mdx-components
-    previewUrl: "{{Filename}}"
+    preview_url: "{{.Filename}}"
     fields:
       - name: title
         type: string
         entry_title: true
   - name: articles
     path: "src/content/articles/*.mdx"
-    previewUrl: /articles/{{Filename}}
+    preview_url: /articles/{{.Filename}}
     format: markdown
     markdown_flavor: mdx
-    jsCollections:
+    js_collections:
       - mdx-components
     fields:
       - name: title
@@ -47,7 +47,7 @@ contentModels:
       - name: draft
         type: boolean
 
-jsCollections:
+js_collections:
   - name: mdx-components
     entries:
       - path: src/components/**/*.tsx
