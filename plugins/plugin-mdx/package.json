@@ -1,0 +1,28 @@
+{
+  "name": "@go-git-cms/plugin-mdx",
+  "version": "0.5.0",
+  "description": "Example CMS plugin: a route + sidebar link, a user-menu link, and a plugin:shout field component. Plain ESM with no build step, so both hosts (SPA bundling and desktop runtime import) load it as-is.",
+  "type": "module",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/go-git-cms/gogitcms.git",
+    "directory": "examples/plugin-hello"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "peerDependencies": {
+    "@go-git-cms/design-system": "*",
+    "@go-git-cms/plugin-sdk": "*",
+    "react": "*"
+  },
+  "peerDependenciesMeta": {
+    "@go-git-cms/design-system": {
+      "optional": true
+    },
+    "@go-git-cms/plugin-sdk": {
+      "optional": true
+    }
+  }
+}

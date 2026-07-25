@@ -32,3 +32,10 @@ content_models:
           component: select
       - name: draft
         type: boolean
+      - name: body
+        label: body
+        display:
+          component: 'plugin:mdx'
+          source: body
+
+
