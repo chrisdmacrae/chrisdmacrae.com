@@ -1,31 +1,17 @@
-# yaml-language-server: $schema=https://api-dev.gogitcms.com/schemas/go-git-cms.json
-# GoGitCMS schema configuration
-# See: https://docs.gogitcms.com/schema
-
 version: 1
 content_models:
   - name: pages
     path: "src/content/pages/*.mdx"
-    format: markdown
-    markdown_flavor: mdx
-    js_collections:
-      - mdx-components
-    preview_url: "{{.Filename}}"
+    label: "{{ title }}"
     fields:
       - name: title
         type: string
-        entry_title: true
   - name: articles
     path: "src/content/articles/*.mdx"
-    preview_url: /articles/{{.Filename}}
-    format: markdown
-    markdown_flavor: mdx
-    js_collections:
-      - mdx-components
+    label: "{{ title }}"
     fields:
       - name: title
         type: string
-        entry_title: true
         required: true
       - name: description
         type: string
@@ -46,9 +32,3 @@ content_models:
           component: select
       - name: draft
         type: boolean
-
-js_collections:
-  - name: mdx-components
-    entries:
-      - path: src/components/**/*.tsx
-      - path: src/lib/@ui/**/*.tsx
