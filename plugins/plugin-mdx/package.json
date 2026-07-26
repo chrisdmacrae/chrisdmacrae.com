@@ -1,16 +1,33 @@
 {
   "name": "@go-git-cms/plugin-mdx",
   "version": "0.5.0",
-  "description": "Example CMS plugin: a route + sidebar link, a user-menu link, and a plugin:shout field component. Plain ESM with no build step, so both hosts (SPA bundling and desktop runtime import) load it as-is.",
+  "description": "An MDX body editor for Go·Git CMS: ProseMirror prose, imports and exports in a footer, and live rendering of the project's own React components with inline prop editing.",
   "type": "module",
   "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/go-git-cms/gogitcms.git",
-    "directory": "examples/plugin-hello"
+    "directory": "plugins/plugin-mdx"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "@handlewithcare/react-prosemirror": "^3.2.7",
+    "mdast-util-from-markdown": "^2.0.3",
+    "mdast-util-gfm": "^3.1.0",
+    "mdast-util-mdx": "^3.0.0",
+    "mdast-util-to-markdown": "^2.1.2",
+    "micromark-extension-gfm": "^3.0.0",
+    "micromark-extension-mdxjs": "^3.0.0",
+    "prosemirror-commands": "^1.7.1",
+    "prosemirror-history": "^1.5.0",
+    "prosemirror-keymap": "^1.2.3",
+    "prosemirror-model": "^1.25.11",
+    "prosemirror-schema-basic": "^1.2.4",
+    "prosemirror-schema-list": "^1.5.1",
+    "prosemirror-state": "^1.4.4",
+    "prosemirror-view": "^1.42.0"
   },
   "peerDependencies": {
     "@go-git-cms/design-system": "*",

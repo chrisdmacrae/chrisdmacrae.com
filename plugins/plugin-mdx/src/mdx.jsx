@@ -1,28 +1,34 @@
-import React, { useEffect } from "react";
-import { Tree, Input } from "@go-git-cms/design-system";
-import { fromMarkdown } from 'mdast-util-from-markdown'
-import { mdxFromMarkdown, mdxToMarkdown } from 'mdast-util-mdx'
-import { mdxjs } from 'micromark-extension-mdxjs'
-import { gfm } from 'micromark-extension-gfm'
-import { gfmFromMarkdown, gfmToMarkdown } from 'mdast-util-gfm'
+import React, { useCallback } from "react";
 
+import { MdxEditor } from "./MdxEditor";
+import { getPluginOptions } from "./options.js";
 
-// A plugin field component receives the field's data as one object
-// (PluginFieldProps): the full schema field plus value/onChange/readOnly.
-// This one stores its text uppercased.
-export default function MDXField({ field, value, onChange, readOnly }) {
-  const tree = parseMDX(value)
-  
+/**
+ * The `plugin:mdx` field component. A plugin field receives the field's data as
+ * one object (PluginFieldProps): the schema field plus value/onChange/readOnly.
+ *
+ * Everything about how the document is rendered lives in MdxEditor; this is the
+ * seam that hands it the field's value and the plugin's options.
+ */
+export default function MDXField({ value, onChange, readOnly }) {
+  const { components, styles, scripts } = getPluginOptions();
+
+  // The editor emits markdown; the field stores it verbatim.
+  const handleChange = useCallback(
+    (markdown) => {
+      if (onChange) onChange(markdown);
+    },
+    [onChange],
+  );
+
   return (
-    <Input value={JSON.stringify(mdxTree)} />
-  )
-}
-
-function parseMDX(markdown) {
-  const tree = fromMarkdown(src, {
-    extensions: [mdxjs(), gfm()],
-    mdastExtensions: [mdxFromMarkdown(), gfmFromMarkdown()],
-  })
-
-  return tree;
+    <MdxEditor
+      value={typeof value === "string" ? value : ""}
+      onChange={handleChange}
+      readOnly={!!readOnly}
+      components={components}
+      styles={styles}
+      scripts={scripts}
+    />
+  );
 }
