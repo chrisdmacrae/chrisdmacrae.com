@@ -2,49 +2,48 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 
 // https://astro.build/config
-import vercel from "@astrojs/vercel/serverless";
-
-// https://astro.build/config
-import image from "@astrojs/image";
+import vercel from "@astrojs/vercel";
 
 // https://astro.build/config
 import mdx from "@astrojs/mdx";
+import { unified } from "@astrojs/markdown-remark";
 import readingTime from "remark-reading-time";
 import readingMdxTime from "remark-reading-time/mdx";
 import headingSlugs from 'rehype-slug';
 import autolinkHeadings from 'rehype-autolink-headings';
 
 // https://astro.build/config
-import prefetch from "@astrojs/prefetch";
-
-// https://astro.build/config
 import sitemap from "@astrojs/sitemap";
+
+const rehypePlugins = [headingSlugs, autolinkHeadings];
 
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
   adapter: vercel(),
   site: import.meta.env.DEV ? 'http://localhost:3000' : 'https://chrisdmacrae.com',
-  integrations: [react(), image({
-    serviceEntryPoint: '@astrojs/image/sharp'
-  }), mdx({
-    remarkPlugins: [readingTime, readingMdxTime],
-    extendMarkdownConfig: true
-  }), prefetch(), sitemap()],
+  // Keep the pre-v3 dev port, which `site` above and the README expect.
+  server: {
+    port: 3000
+  },
+  // Collapse whitespace the way HTML does (Astro 7's default of 'jsx' drops it
+  // between inline elements written on separate lines).
+  compressHTML: true,
+  prefetch: true,
+  integrations: [react(), mdx({
+    processor: unified({
+      remarkPlugins: [readingTime, readingMdxTime],
+      rehypePlugins
+    })
+  }), sitemap({
+    // /articles only redirects to /articles/all
+    filter: (page) => new URL(page).pathname !== '/articles/'
+  })],
   markdown: {
     syntaxHighlight: 'prism',
-    rehypePlugins: [headingSlugs, autolinkHeadings]
-  },
-  vite: {
-    build: {
-      // workaround bug "index" file
-      // @link https://github.com/withastro/astro/issues/3805
-      rollupOptions: {
-        output: {
-          entryFileNames: "entry.[hash].js",
-          chunkFileNames: "chunks/chunk.[hash].js"
-        }
-      }
-    }
+    // The remark/rehype plugins need the unified pipeline, not the default Sätteri one.
+    processor: unified({
+      rehypePlugins
+    })
   }
 });

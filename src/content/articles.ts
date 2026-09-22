@@ -1,12 +1,6 @@
 import { getCollection } from 'astro:content';
 
-export type Article = {
-  title: string
-  description: string
-  created: string
-  category: string
-  draft: boolean
-}
+export type Article = Awaited<ReturnType<typeof getArticles>>[number]
 
 export type getArticlesOptions = {
   category?: string
@@ -26,11 +20,16 @@ export const getArticles = async (options?: getArticlesOptions) => {
 
     return true
   })
+  // getCollection() has no guaranteed order, so keep articles sorted by filename.
+  articlesCollection.sort((a, b) => a.id.localeCompare(b.id))
+
   let articles = await Promise.all(articlesCollection.map(async (article) => {
-    const importedArticle = await importedArticles[`./articles/${article.id}`]()
+    const importedArticle = await importedArticles[`./articles/${article.filePath!.split('/').pop()}`]()
 
     return {
       ...article,
+      // The article's URL, served by src/pages/articles/[category]/[id].astro
+      slug: `/articles/${article.data.category}/${article.id}`,
       readingTime: importedArticle.readingTime
     } as const
   }))

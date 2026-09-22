@@ -1,7 +1,7 @@
 import type { HTMLAttributes, ReactNode, RefObject } from 'react'
 import { usePreventScroll, useModal } from 'react-aria'
 import { DialogModalContext, useModalDialog } from './ModalContext'
-import { Dialog, DialogProps } from '../Dialog'
+import { Dialog, type DialogProps } from '../Dialog'
 
 export type ModalProps = Omit<DialogProps, 'children'> & {
   children: (props: ModalRenderChildrenProps) => ReactNode

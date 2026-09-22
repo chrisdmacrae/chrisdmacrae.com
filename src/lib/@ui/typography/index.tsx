@@ -2,9 +2,14 @@ import Code from "../Code";
 import Heading from "./Heading";
 import Text from "./Text";
 
+// Astro's React renderer drops the `class` MDX passes to these components, so
+// elements whose Markdown classes matter (like Prism's `pre`) aren't overridden.
 export const components = {
   h1: (props: any) => <span className="pt-6"><Heading as='h2' size={2} {...props} /></span>,
-  h2: (props: any) => <span className="pt-4"><Heading as='h3' size={3} {...props} /></span>,
+  // GFM's footnotes label, which Markdown gives an `sr-only` class
+  h2: (props: any) => props.id === 'footnote-label'
+    ? <h3 {...props} className="sr-only" />
+    : <span className="pt-4"><Heading as='h3' size={3} {...props} /></span>,
   h3: (props: any) => <span className="pt-2"><Heading as='h4' size={4} {...props} /></span>,
   h4: (props: any) => <span className="pt-2"><Heading as='h5' size={4} {...props} /></span>,
   h5: (props: any) => <span className="pt-2"><Heading as='h6' size={4} {...props} /></span>,
@@ -22,8 +27,7 @@ export const components = {
         <strong>{children}</strong>
       </Text>
     </div>
-  ),
-  pre: (props: any) => <pre {...props} />
+  )
 }
 
 export default components

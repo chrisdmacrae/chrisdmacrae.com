@@ -1,14 +1,26 @@
 ---
-import {Picture} from '@astrojs/image/components'
+import {Picture} from 'astro:assets'
+import type {ImageMetadata} from 'astro'
 
-const props = Astro.props as any
+const {src, aspectRatio, width = 640, height, ...props} = Astro.props as any
+
+// MDX passes either an imported image or an `import()` of one
+const resolved = await src
+const image: ImageMetadata = resolved.default ?? resolved
+
+// `aspectRatio` ("width:height") crops the image, which astro:assets does given both dimensions
+const [ratioWidth, ratioHeight] = aspectRatio ? aspectRatio.split(':').map(Number) : []
 ---
 <Picture
+  src={image}
   background="white"
   role="presentation"
   alt=""
-  width={640}
+  width={width}
+  height={aspectRatio ? Math.round(width * ratioHeight / ratioWidth) : height}
   widths={[320, 640, 1280, 1920]}
+  formats={['avif', 'webp']}
+  fallbackFormat={image.format}
   {...props}
   class="w-full h-auto rounded-lg overflow-hidden"
 />

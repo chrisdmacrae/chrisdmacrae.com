@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode, RefObject, useRef } from 'react'
+import React, { type HTMLAttributes, type ReactNode, type RefObject, useRef } from 'react'
 import { useDialog, useOverlay, FocusScope, useId } from 'react-aria'
 import { DialogPortal } from './DialogPortal'
 

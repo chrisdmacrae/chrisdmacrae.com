@@ -1,5 +1,7 @@
 ---
-import { Picture } from "@astrojs/image/components";
+import { Picture } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import alkarim from "../assets/images/alkarim.jpeg";
 import Card from "../lib/@ui/Card";
 import Heading from "../lib/@ui/typography/Heading";
 import Text from "../lib/@ui/typography/Text";
@@ -7,7 +9,7 @@ import Text from "../lib/@ui/typography/Text";
 export type Testimonial = {
   name: string
   role: string
-  photo: string
+  photo: ImageMetadata
   heading: string
   text: string
 }
@@ -16,7 +18,7 @@ const testimonials: Testimonial[] = [
   {
     name: "Alkarim Bhalesha",
     role: "Product Designer",
-    photo: "/images/alkarim.jpeg",
+    photo: alkarim,
     heading: "Obsessed with building things that solve problems",
     text: "Chris was amazing to work with and very few folks have a work ethic that matched his. Chris was great at picking up new toolkits and constantly obsessed with building things that solve problems. Chris was great at establishing relationships and reading between the lines to solve the problems today's average users faced, all the while finding ways to align business goals w/user goals. All in all a great individual to work with and for."
   }
@@ -45,9 +47,10 @@ const testimonials: Testimonial[] = [
                 alt="Alkarim Bhalesha"
                 role="presentation"
                 width={32}
+                height={32}
                 sizes="32px"
-                aspectRatio="1:1"
                 widths={[32, 64, 128, 256]}
+                formats={['avif', 'webp']}
                 class="rounded-full overflow-hidden"
               />
               <div class="flex flex-col gap-1">
@@ -77,9 +80,10 @@ const testimonials: Testimonial[] = [
                   alt="Alkarim Bhalesha"
                   role="presentation"
                   width={32}
+                  height={32}
                   sizes="32px"
-                  aspectRatio="1:1"
                   widths={[32, 64, 128, 256]}
+                  formats={['avif', 'webp']}
                   class="rounded-full overflow-hidden"
                 />
                 <div class="flex flex-col gap-1">

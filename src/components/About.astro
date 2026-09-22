@@ -1,5 +1,6 @@
 ---
-import { Picture } from "@astrojs/image/components";
+import { Picture } from "astro:assets";
+import me from "../assets/images/me.jpeg";
 import Icon from "../lib/@ui/Icon";
 import Heading from "../lib/@ui/typography/Heading";
 import Text from "../lib/@ui/typography/Text";
@@ -10,26 +11,26 @@ import Text from "../lib/@ui/typography/Text";
   <figure>
     <Picture
       background="white"
-      src="/images/me.jpeg"
+      src={me}
       role="presentation"
       alt=""
       width={720}
+      height={960}
       widths={[400, 500, 600, 700, 800, 900, 1000]}
       formats={['avif', 'webp', 'png']}
       sizes="100vw, (min-width: 768px) 500px"
-      aspectRatio="3:4"
       class="hidden lg:block lg:max-w-sm xl:max-w-md rounded-md overflow-hidden shadow-md"
     />
     <Picture
       background="white"
-      src="/images/me.jpeg"
+      src={me}
       role="presentation"
       alt=""
       width={720}
+      height={405}
       widths={[400, 500, 600, 700, 800, 900, 1000]}
       formats={['avif', 'webp', 'png']}
       sizes="100vw"
-      aspectRatio="16:9"
       position="attention"
       class="box-content block lg:hidden w-[calc(100%+5rem)] max-w-[calc(100%+2.5rem)] -mx-5"
     />

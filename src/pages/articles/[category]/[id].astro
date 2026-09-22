@@ -11,8 +11,8 @@ import categories from '../../../content/articles/_categories'
 import { prettyDate } from '../../../lib/prettyDate'
 import { BackFAB } from '../../../components/BackFAB'
 import { Pagination } from '../../../components/Pagination'
-import { getArticles } from '../../../content/articles'
-import type { CollectionEntry } from "astro:content"
+import { getArticles, type Article } from '../../../content/articles'
+import { render } from "astro:content"
 import { generateUrl } from '../../api/og.png'
 
 export const prerender = true
@@ -24,7 +24,7 @@ export const getStaticPaths = async () => {
   return allArticles.map((article, index) => {
     const prevArticle = allArticles[index - 1]
     const nextArticle = allArticles[index + 1]
-    const id = article.slug.split("/").pop()
+    const id = article.id
     const category = article.data.category
     const articles = allArticles.filter(article => article.data.category === category)
 
@@ -37,17 +37,17 @@ export const getStaticPaths = async () => {
 
 export interface Props {
   category: string
-  article: CollectionEntry<"articles">
-  prevArticle: CollectionEntry<"articles">
-  nextArticle: CollectionEntry<"articles">
-  articles: CollectionEntry<"articles">[]
+  article: Article
+  prevArticle: Article
+  nextArticle: Article
+  articles: Article[]
 }
 
 const { article, prevArticle, nextArticle, articles } = Astro.props
 const category = categories.find(category => category.slug === article.data.category)!
 const { title, description, pubDate } = article!.data
 const ogImageUrl = generateUrl({ title, category: category.name, color: category!.color })
-const { Content } = await article.render()
+const { Content } = await render(article)
 ---
 <Layout 
   title={title} 

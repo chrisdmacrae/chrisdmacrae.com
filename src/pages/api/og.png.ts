@@ -18,7 +18,7 @@ export const generateUrl = ({ title, ...args }: generateUrlOptions) => {
   return url.pathname + url.search
 }
 
-export const get: APIRoute = async ({ url, site }) => {
+export const GET: APIRoute = async ({ url, site }) => {
   const debug = Boolean(url.searchParams.get('debug'))
   const title = url.searchParams.get('title')
   const rawWidth = url.searchParams.get('w')

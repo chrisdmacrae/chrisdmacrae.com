@@ -79,7 +79,7 @@ export const prerender = true
               {categories
                 .filter(category => category.homepage)
                 .map(category => (
-                  <a href={category.featuredHref ? category.featuredHref : `/articles/${category.slug}`} rel="prefetch">
+                  <a href={category.featuredHref ? category.featuredHref : `/articles/${category.slug}`} data-astro-prefetch="viewport">
                     <Gem
                       icon={category.icon}
                       label={category.name}

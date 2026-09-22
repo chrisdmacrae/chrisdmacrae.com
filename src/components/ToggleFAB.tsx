@@ -1,6 +1,6 @@
 import FAB from '../lib/@ui/FAB'
 import { useButtonSound } from '../lib/hooks/useButtonSound';
-import { Theme, useTheme } from '../lib/hooks/useTheme';
+import { type Theme, useTheme } from '../lib/hooks/useTheme';
 import { useVolume } from '../lib/hooks/useVolume';
 import { useSearch } from './Search';
 import Icon from '../lib/@ui/Icon';

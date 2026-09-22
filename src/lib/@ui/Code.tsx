@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode, useEffect, useRef, useState } from "react"
+import { type PropsWithChildren, type ReactNode, useEffect, useRef, useState } from "react"
 
 export type CodeProps = PropsWithChildren & {
   id: string

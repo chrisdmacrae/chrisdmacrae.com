@@ -1,4 +1,4 @@
-import { PropsWithChildren, useCallback, useEffect, useState } from 'react'
+import { type PropsWithChildren, useCallback, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 export type DialogPortalProps = PropsWithChildren & {

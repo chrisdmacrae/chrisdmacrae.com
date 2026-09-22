@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react"
+import { type ChangeEvent, useCallback, useEffect, useMemo, useState } from "react"
 import { Container } from "./Container"
 import { Input } from "./Input"
 import Icon from "../../lib/@ui/Icon"

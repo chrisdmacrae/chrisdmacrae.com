@@ -10,7 +10,7 @@ export const getStaticPaths = async () => categories.map(category => ({
   props: { category }
 }))
 
-export const get: APIRoute = async ({ params }) => {
+export const GET: APIRoute = async ({ params }) => {
   const category = categories.find(category => category.slug === params.category)
 
   if (!category) {

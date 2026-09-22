@@ -1,5 +1,5 @@
 import type { ReactElement, ReactNode } from "react"
-import { Icon, IconName } from "./Icon"
+import { Icon, type IconName } from "./Icon"
 import Text from './typography/Text'
 
 export type GemColor = 'primary' | 'success' | 'warning' | 'info'

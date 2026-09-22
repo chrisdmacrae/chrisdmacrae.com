@@ -61,7 +61,7 @@ export default {
         // Each collection's path on that dev server, repeating the site's own
         // routing:
         //
-        // - articles: src/content/config.ts slugs them as
+        // - articles: src/content/articles.ts builds their URLs as
         //   /articles/<category>/<filename>, which [category]/[id].astro
         //   serves — drafts included, since that is what it does under
         //   `astro dev`. An article without a category has no page, so it
