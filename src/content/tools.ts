@@ -1,6 +1,7 @@
 import type { ImageMetadata } from 'astro'
 import claude from '../assets/images/logos/claude.svg'
 import ghostty from '../assets/images/logos/ghostty.svg'
+import astro from '../assets/images/logos/astro.svg'
 import proxmox from '../assets/images/logos/proxmox.svg'
 import railway from '../assets/images/logos/railway.svg'
 import fly from '../assets/images/logos/fly.svg'
@@ -26,6 +27,12 @@ export const tools: Tool[] = [
     description: "A fast, feature-rich terminal emulator with platform-native UI and GPU acceleration.",
     link: "https://ghostty.org",
     logo: ghostty
+  },
+  {
+    title: "Astro",
+    description: "A web framework for content-driven sites that ships zero JavaScript by default. This site is built with it.",
+    link: "https://astro.build",
+    logo: astro
   },
   {
     title: "Proxmox",
