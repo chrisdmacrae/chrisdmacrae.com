@@ -1,6 +1,6 @@
 /*
- * Source for the stylesheet the MDX editor loads so the project's components
- * look like themselves inside the CMS.
+ * Source for cms-components/site.css, the stylesheet the MDX editor loads so
+ * the project's components look like themselves inside the CMS.
  *
  * `@tailwind base` is deliberately absent. Preflight is a global reset — it
  * would restyle the CMS's own chrome, not just the components. Utilities and

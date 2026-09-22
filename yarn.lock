@@ -347,6 +347,27 @@
   resolved "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.28.2.tgz"
   integrity sha512-n4KqkOQrraxHJcgjM1RvwbigfQKIKJVpM7xp+KsxiyUSrRdIXnt73VhrPAx0fV44hgfmIVKjxMN9J1t5jySVkw==
 
+"@gogitcms/plugin-mdx@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.npmjs.org/@gogitcms/plugin-mdx/-/plugin-mdx-0.7.0.tgz"
+  integrity sha512-6JIhVvO+Uj/I1EZBmeKLVvwVaQ0A3XrvHZVsLMYYHRk7jZ3pOSJgGEcvWKLPJHF5S/284RZnTxUN3KLAZ6iBGA==
+  dependencies:
+    "@handlewithcare/react-prosemirror" "^3.2.7"
+    mdast-util-from-markdown "^2.0.3"
+    mdast-util-gfm "^3.1.0"
+    mdast-util-mdx "^3.0.0"
+    mdast-util-to-markdown "^2.1.2"
+    micromark-extension-gfm "^3.0.0"
+    micromark-extension-mdxjs "^3.0.0"
+    prosemirror-commands "^1.7.1"
+    prosemirror-history "^1.5.0"
+    prosemirror-keymap "^1.2.3"
+    prosemirror-model "^1.25.11"
+    prosemirror-schema-basic "^1.2.4"
+    prosemirror-schema-list "^1.5.1"
+    prosemirror-state "^1.4.4"
+    prosemirror-view "^1.42.0"
+
 "@gogitcms/plugin-sdk@*":
   version "0.7.0"
   resolved "https://registry.npmjs.org/@gogitcms/plugin-sdk/-/plugin-sdk-0.7.0.tgz"

@@ -1,7 +1,8 @@
-# components/
+# cms-components/
 
-Everything the MDX editor loads from the project lives here: one file per
-component it should render live, plus any CSS or JS those components need.
+Everything the MDX editor (`@gogitcms/plugin-mdx`) loads from the project lives
+here: one file per component it should render live, plus any CSS or JS those
+components need. The CMS points its `@cms-components` alias at this directory.
 
 ## Components
 
@@ -9,7 +10,7 @@ One file, re-exporting the real thing:
 
 ```tsx
 // Canvas.tsx
-export { default } from "../../../src/lib/@ui/Canvas";
+export { default } from "../src/lib/@ui/Canvas";
 ```
 
 Then name it in `cms.config.mjs`:
@@ -32,7 +33,9 @@ An absolute URL is injected as a `<link>` or `<script>` tag. Anything else is a
 file in this directory and is imported, so the bundler processes it.
 
 `site.css` here is Tailwind's utilities and components, generated from the
-project's own `tailwind.config.cjs`:
+project's own `tailwind.config.cjs`. Its source is `cms.css` at the project
+root, not in here, because the editor bundles every stylesheet in this
+directory:
 
 ```bash
 npm run cms:styles
@@ -51,4 +54,4 @@ globbed the project's `src/` directly, which quietly made every `.tsx` in the
 project a dependency of the editor: one file importing `astro:content`, or a
 package that isn't installed, broke the dev server on its own.
 
-A directory the plugin owns bounds that to files someone deliberately put here.
+One dedicated directory bounds that to files someone deliberately put here.

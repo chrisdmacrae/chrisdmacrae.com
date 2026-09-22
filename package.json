@@ -9,7 +9,7 @@
     "build": "npx @gogitcms/editor build --out public/admin && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "cms:styles": "tailwindcss -c tailwind.config.cjs -i plugins/plugin-mdx/styles/input.css -o plugins/plugin-mdx/components/site.css --minify"
+    "cms:styles": "tailwindcss -c tailwind.config.cjs -i cms.css -o cms-components/site.css --minify"
   },
   "husky": {
     "hooks": {
@@ -31,7 +31,6 @@
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
     "@astrojs/vercel": "^11.0.10",
-    "@handlewithcare/react-prosemirror": "^3.2.7",
     "@resvg/resvg-js": "^2.2.0",
     "@resvg/resvg-wasm": "^2.2.0",
     "@tabler/icons": "^1.119.0",
@@ -43,22 +42,8 @@
     "autoprefixer": "^10.4.13",
     "htm": "^3.1.1",
     "js-cookie": "^3.0.1",
-    "mdast-util-from-markdown": "^2.0.3",
-    "mdast-util-gfm": "^3.1.0",
-    "mdast-util-mdx": "^3.0.0",
-    "mdast-util-to-markdown": "^2.1.2",
-    "micromark-extension-gfm": "^3.0.0",
-    "micromark-extension-mdxjs": "^3.0.0",
     "mime": "^3.0.0",
     "mini-svg-data-uri": "^1.4.4",
-    "prosemirror-commands": "^1.7.1",
-    "prosemirror-history": "^1.5.0",
-    "prosemirror-keymap": "^1.2.3",
-    "prosemirror-model": "^1.25.11",
-    "prosemirror-schema-basic": "^1.2.4",
-    "prosemirror-schema-list": "^1.5.1",
-    "prosemirror-state": "^1.4.4",
-    "prosemirror-view": "^1.42.0",
     "react": "^18.2.0",
     "react-aria": "^3.22.0",
     "react-dom": "^18.2.0",
@@ -75,16 +60,21 @@
     "web-vitals": "^3.1.1"
   },
   "devDependencies": {
+    "@gogitcms/plugin-mdx": "^0.7.0",
     "@gogitcms/preview-sidecar": "^0.3.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.3",
     "prettier-plugin-astro": "^0.7.2"
   },
-  "// overrides": "react-reconciler is only loaded by the CMS editor, for plugins/plugin-mdx's @handlewithcare/react-prosemirror, and the editor always resolves React to its own 19.x copy. So it stays the React 19 build, and its react peer is pointed at this site's React 18 (what @astrojs/react renders with) to let npm install the two side by side.",
+  "// overrides": "react-reconciler is only loaded by the CMS editor, for @gogitcms/plugin-mdx's @handlewithcare/react-prosemirror, and the editor always resolves React to its own 19.x copy. So it stays the React 19 build, and its react peer is pointed at this site's React 18 (what @astrojs/react renders with) to let npm install the two side by side. react-native is never installed (it's an optional peer of @gogitcms/design-system, which the editor also supplies itself), but npm still checks the optional peers of @gogitcms/plugin-mdx and fails on react-native's React 19 peers, so those are pointed at this site's React too.",
   "overrides": {
     "react-reconciler": {
       "react": "$react"
+    },
+    "react-native": {
+      "react": "$react",
+      "@types/react": "$@types/react"
     }
   }
 }
