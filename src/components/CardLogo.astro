@@ -1,0 +1,53 @@
+---
+import type { ImageMetadata } from 'astro'
+import { Image } from 'astro:assets'
+import Card from '../lib/@ui/Card'
+import Icon from '../lib/@ui/Icon'
+import Heading from '../lib/@ui/typography/Heading'
+import Text from '../lib/@ui/typography/Text'
+
+export interface Props {
+  href: string
+  title: string
+  description: string
+  logo?: ImageMetadata
+  // Opens the link in a new tab and shows its domain, for links off this site
+  external?: boolean
+}
+
+const { href, title, description, logo, external = false } = Astro.props
+const host = external ? new URL(href).host.replace(/^www\./, '') : undefined
+---
+<a
+  href={href}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener' : undefined}
+  data-astro-prefetch={external ? undefined : 'viewport'}
+>
+  <Card variant="bubble">
+    <div class="flex flex-row items-start gap-4">
+      {logo && (
+        <Image
+          src={logo}
+          alt=""
+          width={48}
+          height={48}
+          class="shrink-0 w-12 h-12 rounded-xl ring-1 ring-slate-200 dark:ring-slate-700"
+        />
+      )}
+      <div class="flex flex-col gap-1">
+        <Heading as="h3" size={6}>
+          {title}
+        </Heading>
+        <Text>
+          {description}
+        </Text>
+        {host && (
+          <Text size="sm" color="muted">
+            {host} <Icon name="arrow-up-right" />
+          </Text>
+        )}
+      </div>
+    </div>
+  </Card>
+</a>

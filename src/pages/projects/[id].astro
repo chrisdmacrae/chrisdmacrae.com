@@ -1,0 +1,102 @@
+---
+import { Image } from 'astro:assets'
+import { render } from 'astro:content'
+import Icon from '../../lib/@ui/Icon'
+import Text from '../../lib/@ui/typography/Text'
+import Layout from '../../layouts/Layout.astro'
+import Sidebar from '../../layouts/Sidebar'
+import typography from '../../lib/@ui/typography'
+import Heading from '../../lib/@ui/typography/Heading'
+import { generateUrl } from '../api/og.png'
+import Footer from '../../components/Footer.astro'
+import PageHeader from '../../components/PageHeader.astro'
+import { getProjects, type Project } from '../../content/projects'
+
+export const prerender = true
+export const getStaticPaths = async () => {
+  const projects = await getProjects({
+    drafts: import.meta.env.DEV
+  })
+
+  return projects.map(project => ({
+    params: { id: project.id },
+    props: { project, projects }
+  }))
+}
+
+export interface Props {
+  project: Project
+  projects: Project[]
+}
+
+const { project, projects } = Astro.props
+const { title, description, link, logo } = project.data
+const host = new URL(link).host.replace(/^www\./, '')
+const ogImageUrl = generateUrl({ title })
+const { Content } = await render(project)
+---
+<Layout
+  title={title}
+  description={description}
+  graph={{
+    og: {
+      type: 'website',
+      title: title,
+      site_name: Astro.site!.origin,
+      description: description,
+      url: Astro.url.toString(),
+      image: ogImageUrl.toString()
+    }
+  }}
+>
+  <div slot="sidebar" class="flex flex-col gap-2">
+    <Sidebar.Header>
+      <a href="/projects" class="py-1">
+        <Text>
+          <Icon name="chevron-left" size='sm' />
+          Projects
+        </Text>
+      </a>
+    </Sidebar.Header>
+    <div class="flex flex-col gap-2">
+      {projects.map(p => (
+        <Sidebar.Link href={p.slug} active={p.id === project.id}>
+          <Icon name='box' />
+          {p.data.title}
+        </Sidebar.Link>
+      ))}
+    </div>
+  </div>
+
+  <PageHeader>
+    Projects
+  </PageHeader>
+
+  <article class="flex flex-col gap-4 py-10 md:py-20 m-auto w-full max-w-prose">
+    <header class="flex flex-col gap-4 pb-8">
+      {logo && (
+        <Image
+          src={logo}
+          alt=""
+          width={64}
+          height={64}
+          class="w-16 h-16 rounded-2xl ring-1 ring-slate-200 dark:ring-slate-700"
+        />
+      )}
+      <Heading as='h1' size={1}>
+        {title}
+      </Heading>
+      <Text color='muted'>
+        <strong>{description}</strong>
+      </Text>
+      <Text>
+        <a href={link} target="_blank" rel="noopener">
+          Visit {host} <Icon name="arrow-up-right" />
+        </a>
+      </Text>
+    </header>
+    <Content components={typography} />
+  </article>
+
+  <Footer />
+</Layout>

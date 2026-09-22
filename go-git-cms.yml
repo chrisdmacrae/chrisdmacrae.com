@@ -38,5 +38,29 @@ content_models:
         display:
           component: 'plugin:mdx'
           source: body
+  - name: projects
+    path: "src/content/projects/*.mdx"
+    label: "{{ title }}"
+    fields:
+      - name: title
+        type: string
+        required: true
+      - name: description
+        type: string
+        required: true
+      - name: link
+        type: string
+        required: true
+      # A path relative to the project's file, e.g. ../../assets/images/logos/companion.svg
+      - name: logo
+        type: string
+      - name: draft
+        type: boolean
+      - name: body
+        label: body
+        type: string
+        display:
+          component: 'plugin:mdx'
+          source: body
 
 

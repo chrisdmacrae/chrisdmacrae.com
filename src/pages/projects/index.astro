@@ -1,0 +1,69 @@
+---
+import Text from '../../lib/@ui/typography/Text'
+import Layout from '../../layouts/Layout.astro'
+import Sidebar from '../../layouts/Sidebar'
+import Heading from '../../lib/@ui/typography/Heading'
+import { generateUrl } from '../api/og.png'
+import Footer from '../../components/Footer.astro'
+import PageHeader from '../../components/PageHeader.astro'
+import BaseNav from '../../components/BaseNav.astro'
+import CardLogo from '../../components/CardLogo.astro'
+import { getProjects } from '../../content/projects'
+
+export const prerender = true
+
+const title = `Projects I'm Building`
+const description = `Learn about the products and projects I'm building`
+const ogImageUrl = generateUrl({ title })
+const projects = await getProjects({
+  drafts: import.meta.env.DEV
+})
+---
+<Layout
+  title={title}
+  description={description}
+  graph={{
+    og: {
+      type: 'website',
+      title: title,
+      site_name: Astro.site!.origin,
+      description: description,
+      url: Astro.url.toString(),
+      image: ogImageUrl.toString()
+    }
+  }}
+>
+  <div slot="sidebar" class="flex flex-col gap-2">
+    <Sidebar.Header>
+      <a href="/">
+        <Heading as="h1" size={4}>
+          <Text gradient="warning" as="span">Chris D. Macrae</Text>
+        </Heading>
+      </a>
+    </Sidebar.Header>
+    <BaseNav />
+  </div>
+
+  <PageHeader>
+    The projects I'm building
+  </PageHeader>
+
+  <div class="flex flex-col gap-2 py-4">
+    {projects.map(project => (
+      <CardLogo
+        href={project.slug}
+        title={project.data.title}
+        description={project.data.description}
+        logo={project.data.logo}
+      />
+    ))}
+    {projects.length === 0 && (
+      <div class="p-6">
+        <Heading as='h2' size={4}>I'm still working on this content</Heading>
+        <Text>Check back soon!</Text>
+      </div>
+    )}
+  </div>
+
+  <Footer />
+</Layout>

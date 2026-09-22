@@ -1,0 +1,32 @@
+---
+description: A productivity app for privacy-minded developers, with end-to-end encryption and your own AI agents.
+link: https://companionapp.cloud
+logo: ../../assets/images/logos/companion.svg
+title: Companion
+---
+
+Companion is the app for flexible thoughts, for privacy-minded developers. It's one calm workspace
+where your notes, tasks, and habits live together, and AI is always a message away.
+
+## What it does
+
+- **Notes, tasks, and habits**, linked together into a graph you can explore
+- **Your calendars beside your work**, with two-way sync for iCloud, Google, Fastmail, or any CalDAV server
+- **Chat with your own AI agent**, like Claude Code, Codex, or Ollama, and have it turn a conversation into real notes and tasks. There's no AI subscription, and nothing is inferred on Companion's servers.
+- **Offline-first**, with no account needed until you want your work on more than one device
+- **End-to-end encrypted sync**, through Companion Cloud or a sync server you host yourself
+
+## How it's built
+
+Companion's business logic is written once, in Go, and shared by every client: it's compiled to
+WebAssembly for the web, and runs natively on desktop and mobile. The interface is written once
+too, in React Native, and runs on the web with React Native Web.
+
+The sync server is a single Go binary, so hosting your own is as simple as running one container.
+
+## Where to get it
+
+Companion runs in any browser at [web.companionapp.cloud](https://web.companionapp.cloud), and as a
+desktop app on the Mac. Windows, Linux, iOS, and Android apps are on the way.
+
+It's open source, too. [Browse the code on GitHub](https://github.com/chrisdmacrae/companion).

@@ -67,9 +67,13 @@ export default {
         //   gets no Preview button either.
         // - pages: only about.mdx has a route (src/pages/about.astro). A new
         //   page previews as a 404 until it gets an .astro file of its own.
+        // - projects: src/content/projects.ts builds their URLs as
+        //   /projects/<filename>, which projects/[id].astro serves — drafts
+        //   included under `astro dev`, as with articles.
         collections: {
           articles: "/articles/{{fields.category}}/{{basename path}}",
           pages: "/{{basename path}}",
+          projects: "/projects/{{basename path}}",
         },
 
         label: "Preview",

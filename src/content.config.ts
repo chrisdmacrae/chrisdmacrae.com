@@ -18,7 +18,20 @@ const pages = defineCollection({
   loader: glob({ pattern: '*.mdx', base: './src/content/pages' }),
 })
 
+const projects = defineCollection({
+  loader: glob({ pattern: '*.mdx', base: './src/content/projects' }),
+  schema: ({ image }) => z.object({
+    title: z.string(),
+    description: z.string(),
+    link: z.url(),
+    // A path relative to the project's file, e.g. ../../assets/images/logos/companion.svg
+    logo: image().optional(),
+    draft: z.boolean().optional(),
+  }),
+})
+
 export const collections = {
   'articles': articles,
   'pages': pages,
+  'projects': projects,
 }

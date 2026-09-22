@@ -27,6 +27,10 @@ import Text from "../lib/@ui/typography/Text";
       <Icon name='user-circle' />
       About me
     </Sidebar.Link>
+    <Sidebar.Link href="/projects" active={Astro.url.pathname.startsWith("/projects")}>
+      <Icon name='box' />
+      My projects
+    </Sidebar.Link>
     <Sidebar.Link href="/using" active={Astro.url.pathname === "/using"}>
       <Icon name='tool' />
       My tools

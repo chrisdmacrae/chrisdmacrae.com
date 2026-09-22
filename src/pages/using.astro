@@ -1,15 +1,14 @@
 ---
-import Icon from '../lib/@ui/Icon'
 import Text from '../lib/@ui/typography/Text'
 import Layout from '../layouts/Layout.astro'
 import Sidebar from '../layouts/Sidebar'
-import categories from '../content/articles/_categories'
 import Heading from '../lib/@ui/typography/Heading'
-import ToggleFAB from '../components/ToggleFAB'
 import { generateUrl } from './api/og.png'
 import Footer from '../components/Footer.astro'
 import PageHeader from '../components/PageHeader.astro'
 import BaseNav from '../components/BaseNav.astro'
+import CardLogo from '../components/CardLogo.astro'
+import tools from '../content/tools'
 
 export const prerender = true
 
@@ -46,8 +45,16 @@ const ogImageUrl = generateUrl({ title })
     The tools I'm using
   </PageHeader>
 
-  <div class="flex flex-col gap-4">
-
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-2 py-4">
+    {tools.map(tool => (
+      <CardLogo
+        href={tool.link}
+        title={tool.title}
+        description={tool.description}
+        logo={tool.logo}
+        external
+      />
+    ))}
   </div>
 
   <Footer />
