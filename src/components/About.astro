@@ -1,6 +1,6 @@
 ---
 import { Picture } from "astro:assets";
-import me from "../assets/images/me.jpeg";
+import me from "../assets/images/me.png";
 import Icon from "../lib/@ui/Icon";
 import Heading from "../lib/@ui/typography/Heading";
 import Text from "../lib/@ui/typography/Text";
@@ -14,25 +14,12 @@ import Text from "../lib/@ui/typography/Text";
       src={me}
       role="presentation"
       alt=""
-      width={720}
-      height={960}
+      width={400}
+      height={400}
       widths={[400, 500, 600, 700, 800, 900, 1000]}
       formats={['avif', 'webp', 'png']}
-      sizes="100vw, (min-width: 768px) 500px"
-      class="hidden lg:block lg:max-w-sm xl:max-w-md rounded-md overflow-hidden shadow-md"
-    />
-    <Picture
-      background="white"
-      src={me}
-      role="presentation"
-      alt=""
-      width={720}
-      height={405}
-      widths={[400, 500, 600, 700, 800, 900, 1000]}
-      formats={['avif', 'webp', 'png']}
-      sizes="100vw"
-      position="attention"
-      class="box-content block lg:hidden w-[calc(100%+5rem)] max-w-[calc(100%+2.5rem)] -mx-5"
+      sizes="400px"
+      class="lg:max-w-sm xl:max-w-md rounded-md overflow-hidden shadow-md"
     />
   </figure>
   <div class="flex flex-col gap-4">
