@@ -25,7 +25,7 @@
     "@astrojs/image": "^0.12.2-beta.0",
     "@astrojs/mdx": "^1.0.0-beta.2",
     "@astrojs/prefetch": "^0.1.1",
-    "@astrojs/react": "^6.0.1",
+    "@astrojs/react": "^2.0.0-beta.0",
     "@astrojs/rss": "^2.1.0-beta.0",
     "@astrojs/sitemap": "^1.0.0",
     "@astrojs/tailwind": "^2.1.3",
@@ -33,7 +33,7 @@
     "@handlewithcare/react-prosemirror": "^3.2.7",
     "@resvg/resvg-js": "^2.2.0",
     "@resvg/resvg-wasm": "^2.2.0",
-    "@tabler/icons": "^3.45.0",
+    "@tabler/icons": "^1.119.0",
     "@types/js-cookie": "^3.0.2",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
@@ -59,9 +59,9 @@
     "prosemirror-schema-list": "^1.5.1",
     "prosemirror-state": "^1.4.4",
     "prosemirror-view": "^1.42.0",
-    "react": "^19.2.8",
+    "react": "^18.2.0",
     "react-aria": "^3.22.0",
-    "react-dom": "^19.2.8",
+    "react-dom": "^18.2.0",
     "react-reconciler": "^0.32.0",
     "rehype-autolink-headings": "^6.1.1",
     "rehype-slug": "^5.1.0",
@@ -75,9 +75,16 @@
     "web-vitals": "^3.1.1"
   },
   "devDependencies": {
+    "@gogitcms/preview-sidecar": "^0.3.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.3",
     "prettier-plugin-astro": "^0.7.2"
+  },
+  "// overrides": "react-reconciler is only loaded by the CMS editor, for plugins/plugin-mdx's @handlewithcare/react-prosemirror, and the editor always resolves React to its own 19.x copy. So it stays the React 19 build, and its react peer is pointed at this site's React 18 (what @astrojs/react 2 renders with) to let npm install the two side by side.",
+  "overrides": {
+    "react-reconciler": {
+      "react": "$react"
+    }
   }
 }

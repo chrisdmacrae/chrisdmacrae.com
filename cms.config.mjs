@@ -1,5 +1,6 @@
 // Go·Git CMS editor configuration, written by `gitcms-ide init`.
 export default {
+  API_URL: "https://app.gogitcms.com",
   // Path this editor is served from. Use a subpath (e.g. "/cms/") when it
   // is mounted under one — assets and in-app URLs are both built from it.
   BASE_PATH: "/",
@@ -44,6 +45,35 @@ export default {
             ],
           },
         },
+      },
+    ],
+    [
+      "@gogitcms/preview-sidecar",
+      {
+        // The hosted preview service. Pressing Preview has it clone the branch
+        // being edited, install from the lockfile and run this site's own
+        // `astro dev`, writing unsaved edits into that checkout as you type —
+        // the site itself carries no preview code. It needs a paid workspace,
+        // and an editor served from anywhere but localhost has to be
+        // registered under Settings → Editors in the dashboard.
+        server: "https://previews.gogitcms.com",
+
+        // Each collection's path on that dev server, repeating the site's own
+        // routing:
+        //
+        // - articles: src/content/config.ts slugs them as
+        //   /articles/<category>/<filename>, which [category]/[id].astro
+        //   serves — drafts included, since that is what it does under
+        //   `astro dev`. An article without a category has no page, so it
+        //   gets no Preview button either.
+        // - pages: only about.mdx has a route (src/pages/about.astro). A new
+        //   page previews as a 404 until it gets an .astro file of its own.
+        collections: {
+          articles: "/articles/{{fields.category}}/{{basename path}}",
+          pages: "/{{basename path}}",
+        },
+
+        label: "Preview",
       },
     ],
   ],

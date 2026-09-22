@@ -36,9 +36,6 @@ export default defineConfig({
     rehypePlugins: [headingSlugs, autolinkHeadings]
   },
   vite: {
-    ssr: {
-      noExternal: ['@react-aria/overlays']
-    },
     build: {
       // workaround bug "index" file
       // @link https://github.com/withastro/astro/issues/3805

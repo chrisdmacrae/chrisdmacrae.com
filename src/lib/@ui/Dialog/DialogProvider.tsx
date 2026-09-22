@@ -1,6 +1,5 @@
 import React from 'react'
-import { SSRProvider } from 'react-aria'
-import { ModalProviderProps, OverlayProvider } from '@react-aria/overlays'
+import { ModalProviderProps, OverlayProvider, SSRProvider } from 'react-aria'
 
 export const DialogProvider: React.FC<ModalProviderProps> = ({ children, ...props }) => {
   return (
