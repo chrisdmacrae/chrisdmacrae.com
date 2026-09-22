@@ -1,0 +1,37 @@
+---
+export interface Props {
+  name: string
+  label: string
+  value?: string
+  error?: string
+  type?: 'text' | 'email' | 'textarea'
+  autocomplete?: string
+  required?: boolean
+}
+
+const { name, label, value = '', error, type = 'text', autocomplete, required = false } = Astro.props
+const id = `field-${name}`
+const errorId = `${id}-error`
+
+const control = {
+  id,
+  name,
+  autocomplete,
+  required,
+  'aria-invalid': error ? 'true' : undefined,
+  'aria-describedby': error ? errorId : undefined,
+  class: [
+    'w-full rounded-md px-3 py-2 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-50 shadow-sm outline-none ring-1 focus:ring-2 focus:ring-purple-500 transition-shadow',
+    error ? 'ring-red-500 dark:ring-red-400' : 'ring-slate-200 dark:ring-slate-700'
+  ].join(' ')
+}
+---
+<div class="flex flex-col gap-2">
+  <label for={id} class="font-bold text-slate-900 dark:text-slate-50">{label}</label>
+  {type === 'textarea'
+    ? <textarea {...control} rows={8}>{value}</textarea>
+    : <input {...control} type={type} value={value} />}
+  {error && (
+    <p id={errorId} class="text-sm text-red-700 dark:text-red-400">{error}</p>
+  )}
+</div>

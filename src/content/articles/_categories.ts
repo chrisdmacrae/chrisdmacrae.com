@@ -16,15 +16,15 @@ export const categories: Category[] = [
     featuredHref: "/articles/all"
   },
   {
-    name: "Engineering Management",
-    slug: "engineering-management",
+    name: "Software Engineering",
+    slug: "software-engineering",
     icon: "code",
     color: 'primary',
     homepage: true
   },
   {
-    name: "Design Management",
-    slug: "design-management",
+    name: "Software Design",
+    slug: "software-design",
     icon: "box-align-bottom-left",
     color: 'success',
     homepage: true

@@ -1,0 +1,156 @@
+---
+import Text from '../lib/@ui/typography/Text'
+import Layout from '../layouts/Layout.astro'
+import Sidebar from '../layouts/Sidebar'
+import Heading from '../lib/@ui/typography/Heading'
+import Disclaimer from '../lib/@ui/Disclaimer'
+import FAB from '../lib/@ui/FAB'
+import Icon from '../lib/@ui/Icon'
+import { generateUrl } from './api/og.png'
+import Footer from '../components/Footer.astro'
+import PageHeader from '../components/PageHeader.astro'
+import BaseNav from '../components/BaseNav.astro'
+import FormField from '../components/FormField.astro'
+import { submitForm } from '../lib/gogitcms'
+
+// The form posts back to this page, so it renders on demand
+export const prerender = false
+
+const title = `Get in touch`
+const description = `Send me a message about freelance work, or just say hi`
+const ogImageUrl = generateUrl({ title })
+
+// The fields of the contact form in go-git-cms.yml
+const labels = { name: 'Name', email: 'Email', message: 'Message' }
+type Field = keyof typeof labels
+
+const values: Record<Field, string> = { name: '', email: '', message: '' }
+const errors: Partial<Record<Field, string>> = {}
+let problem: string | undefined
+
+if (Astro.request.method === 'POST') {
+  const data = await Astro.request.formData()
+  for (const field of Object.keys(values) as Field[]) {
+    values[field] = String(data.get(field) ?? '').trim()
+  }
+
+  // Leave blank fields out, so the CMS's `required` catches them. It only
+  // checks that a field was sent, and an empty one still was.
+  const filled = Object.fromEntries(Object.entries(values).filter(([, value]) => value))
+
+  const result = await submitForm(
+    'contact',
+    // `website` is the form's honeypot. It's passed along so the CMS can file
+    // whatever filled it in under Spam.
+    { ...filled, website: data.get('website') ?? '' },
+    { ip: getClientAddress(), userAgent: Astro.request.headers.get('user-agent') }
+  )
+
+  if (result.status === 'sent') {
+    // Redirect, so reloading the thank-you can't send the message twice
+    return Astro.redirect('/contact?sent', 303)
+  }
+  if (result.status === 'invalid') {
+    for (const { path, message } of result.errors) {
+      if (Object.hasOwn(labels, path)) errors[path as Field] = sentence(labels[path as Field], message)
+    }
+  }
+  if (result.status === 'rate-limited') {
+    problem = `You've sent a few messages in a row. Give it a minute, then try again.`
+  }
+  else if (Object.keys(errors).length === 0) {
+    // It failed, or failed on something none of the fields can show
+    problem = `Sorry, your message didn't send. Please try again in a moment.`
+  }
+}
+
+const sent = Astro.url.searchParams.has('sent')
+
+// Astro.clientAddress throws when the host doesn't say who's asking
+function getClientAddress() {
+  try {
+    return Astro.clientAddress
+  } catch {
+    return undefined
+  }
+}
+
+// The CMS's own messages are fragments, like "is required", but a `message`
+// given in go-git-cms.yml is a whole sentence
+function sentence(label: string, message: string) {
+  return /^[a-z]/.test(message) ? `${label} ${message}.` : message
+}
+---
+<Layout
+  title={title}
+  description={description}
+  graph={{
+    og: {
+      type: 'website',
+      title: title,
+      site_name: Astro.site!.origin,
+      description: description,
+      url: Astro.url.toString(),
+      image: ogImageUrl.toString()
+    }
+  }}
+>
+  <div slot="sidebar" class="flex flex-col gap-2">
+    <Sidebar.Header>
+      <a href="/">
+        <Heading as="h1" size={4}>
+          <Text gradient="warning" as="span">Chris D. Macrae</Text>
+        </Heading>
+      </a>
+    </Sidebar.Header>
+    <BaseNav />
+  </div>
+
+  <PageHeader>
+    Get in touch
+  </PageHeader>
+
+  <div class="flex flex-col gap-6 py-10 md:py-20 m-auto w-full max-w-prose">
+    {sent ? (
+      <Disclaimer type="success">
+        <Text><strong>Thanks for getting in touch!</strong></Text>
+        <Text>Your message is on its way, and I'll get back to you by email soon.</Text>
+      </Disclaimer>
+    ) : (
+      <>
+        <Text>
+          I'm currently available for freelance work. Tell me a little about your project, or just say hi, and I'll get back to you by email.
+        </Text>
+
+        {problem && (
+          <div role="alert">
+            <Disclaimer type="warning">
+              <Text>{problem}</Text>
+            </Disclaimer>
+          </div>
+        )}
+
+        <form method="post" class="flex flex-col gap-6">
+          <FormField name="name" label={labels.name} value={values.name} error={errors.name} autocomplete="name" required />
+          <FormField name="email" label={labels.email} value={values.email} error={errors.email} type="email" autocomplete="email" required />
+          <FormField name="message" label={labels.message} value={values.message} error={errors.message} type="textarea" required />
+
+          {/* The honeypot: off screen, so people never fill it in, but bots do */}
+          <div class="absolute -left-[10000px] w-px h-px overflow-hidden" aria-hidden="true">
+            <label for="field-website">Leave this empty</label>
+            <input id="field-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="flex flex-row">
+            <FAB.Button color="primary" fluid>
+              Send message
+              <Icon name="send" />
+            </FAB.Button>
+          </div>
+        </form>
+      </>
+    )}
+  </div>
+
+  <Footer />
+</Layout>

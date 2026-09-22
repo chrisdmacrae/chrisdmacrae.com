@@ -2,7 +2,37 @@
   "redirects": [
     { 
       "source": "/articles",
-      "destination": "/articles/all", 
+      "destination": "/articles/all",
+      "permanent": true
+    },
+    {
+      "source": "/engineering-management{/}?",
+      "destination": "/software-engineering",
+      "permanent": true
+    },
+    {
+      "source": "/design-management{/}?",
+      "destination": "/software-design",
+      "permanent": true
+    },
+    {
+      "source": "/articles/engineering-management{/}?",
+      "destination": "/articles/software-engineering",
+      "permanent": true
+    },
+    {
+      "source": "/articles/engineering-management/feed.xml",
+      "destination": "/articles/software-engineering/feed.xml",
+      "permanent": true
+    },
+    {
+      "source": "/articles/design-management{/}?",
+      "destination": "/articles/software-design",
+      "permanent": true
+    },
+    {
+      "source": "/articles/design-management/feed.xml",
+      "destination": "/articles/software-design/feed.xml",
       "permanent": true
     }
   ]

@@ -23,8 +23,8 @@ content_models:
         type: string
         enum:
           - all
-          - design-management
-          - engineering-management
+          - software-design
+          - software-engineering
           - web-development
           - systems-thinking
           - writing
@@ -62,5 +62,42 @@ content_models:
         display:
           component: 'plugin:mdx'
           source: body
+forms:
+  # The "Get in touch" form at /contact (src/pages/contact.astro). It has no
+  # `store:` on purpose: this repository is public, and submissions carry
+  # people's names and email addresses, so they stay in the CMS's inbox.
+  - name: contact
+    label: Contact
+    description: Messages sent from the Get in touch form at /contact.
+    # A decoy input the page renders but visitors never see. Bots fill it in,
+    # and the CMS files those submissions under Spam.
+    honeypot: website
+    rate_limit:
+      per_minute: 5
+    fields:
+      - name: name
+        label: Name
+        type: string
+        required: true
+        validate:
+          - rule: maxLength
+            value: 200
+      - name: email
+        label: Email
+        type: string
+        required: true
+        display:
+          component: email
+        validate:
+          - rule: email
+      - name: message
+        label: Message
+        type: string
+        required: true
+        display:
+          component: textarea
+        validate:
+          - rule: maxLength
+            value: 5000
 
 

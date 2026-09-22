@@ -17,7 +17,7 @@ import Testimonials from "../components/Testimonials.astro";
 
 export const prerender = true
 
-const category = categories.find(category => category.slug === 'engineering-management')!
+const category = categories.find(category => category.slug === 'software-engineering')!
 const title = `Learn about ${category!.name}`
 const description = ""
 const ogImageUrl = generateUrl({ title, color: category!.color })
@@ -77,12 +77,12 @@ const articles = await getArticles({
       >
         <div class="flex flex-col items-center text-center gap-2 lg:gap-6">
           <Heading as="h1">
-            Learn about <Text as="span" gradient="primary">engineering management</Text>.
+            Learn about <Text as="span" gradient="primary">software engineering</Text>.
           </Heading>
           <div class="flex flex-col items-center gap-2">
             <Text color="muted">
               Hi 👋, my name is Chris and I'm a fullstack engineer and
-              designer. This site is all about sharing what I've learned about engineering management.
+              designer. This site is all about sharing what I've learned about software engineering.
             </Text>
           </div>
         </div>
