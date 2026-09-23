@@ -1,0 +1,144 @@
+---
+category: software-design
+description: |
+  How I use Claude Design, Claude Code, React Native and React Native Web to get
+  one design language across phones, desktops, web apps and marketing sites.
+draft: false
+pubDate: "2026-09-23T00:00:00Z"
+title: Building One Design Language for Every Screen
+---
+
+import Canvas from '../../lib/@ui/Canvas'
+import {
+  Drift,
+  DesignInputs,
+  AestheticPicker,
+  Rounds,
+  ExportZip,
+  OneLibrary,
+  RoundTrip,
+  PlatformProjects,
+  AlreadyDecided,
+  RealerEachStep,
+} from '../../components/articles/one-design-language'
+
+I build apps that run everywhere. Phones. Desktops. Web apps. Marketing websites. For a long time, that meant four different looks that sort of matched, but not really. Buttons were a little off. Spacing drifted. Colors got "close enough."
+
+<Canvas>
+  <Drift />
+</Canvas>
+
+Now I use Claude Design plus React Native and React Native Web, and I get one design language that works across all of them. Here's exactly how I do it.
+
+## Step 1: Build the design system in Claude Design
+
+This is the biggest step, so I take my time here.
+
+I start by giving Claude three things:
+
+<Canvas>
+  <DesignInputs />
+</Canvas>
+
+**References.** I name the competing products and services I want to match or beat. Real names, real products. If I'm building a note app, I'll say "I want the calm feeling of Bear, but with the density of Notion." Claude needs something to aim at.
+
+**The aesthetic.** I describe the look I want in plain words. Some examples I've used:
+
+- **Warm and paper-like** — soft off-white backgrounds, serif headings, gentle shadows
+- **Sharp and technical** — high contrast, monospace labels, thin lines, lots of grid
+- **Soft and playful** — rounded corners, bright accent colors, chunky buttons
+- **Quiet and premium** — mostly grayscale, one accent color, generous white space
+
+<Canvas>
+  <AestheticPicker client:visible />
+</Canvas>
+
+Pick one. Describe it. Don't be vague.
+
+**A prototype outline.** This is the trick that makes everything else work. I ask Claude to build a small prototype while it creates the design system. Not a mood board — a real screen flow. A sign-up page, a list view, a detail view, a settings panel.
+
+Why? Because it's hard to give good feedback on a color swatch. It's easy to give good feedback on a button that looks wrong next to a heading. The prototype turns abstract choices into something I can actually react to.
+
+### A few habits that help
+
+**Always ask Claude to ask me questions first.** Before it builds anything, I say: "What questions do you have about the design system and the prototype?" It almost always comes back with things I forgot to mention — dark mode, density, how much motion I want, what devices matter most. Answering those up front saves hours.
+
+**Use the edit function in the spec to iterate.** Don't start over. Don't re-explain everything. Claude Design lets you edit the produced spec directly, and that keeps all the context you already built up.
+
+**Expect 3 to 10 rounds.** This is normal. The first version is never it. The third version is usually decent. Somewhere around five or six, it clicks. If you're on round two and frustrated, you're just early.
+
+<Canvas>
+  <Rounds />
+</Canvas>
+
+## Step 2: Export the prototype
+
+Once the design system feels right, I export the prototype as a project export — a zip file.
+
+<Canvas>
+  <ExportZip />
+</Canvas>
+
+That zip is the bridge. It holds the real structure, the real tokens, the real components. Not a description of the design, but the design itself.
+
+## Step 3: Hand the zip to Claude Code
+
+Now I open Claude Code and give it the export. I ask it to turn the prototype into a React Native and React Native Web design system.
+
+This is where the magic happens for multiplatform. React Native gives me iOS and Android. React Native Web gives me the browser — which covers both my web app and my marketing site. Desktop comes along too.
+
+<Canvas>
+  <OneLibrary />
+</Canvas>
+
+One component library. Every platform.
+
+Claude Code takes the design tokens, the spacing scale, the type ramp, the color system, and the components, and rebuilds them as real, shippable code.
+
+## Step 4: Feed the real code back into Claude Design
+
+This step is easy to skip. Don't skip it.
+
+I take the code Claude Code produced and give it back to the design system in Claude Design. Now the design system isn't working from an imagined version of my product — it's working from the actual code I'm going to ship.
+
+<Canvas>
+  <RoundTrip />
+</Canvas>
+
+From this point on, when I ask for a new component or a new screen, what comes back fits my real codebase. The gap between "the design" and "the app" basically closes.
+
+## Step 5: Make an isolated design project per platform
+
+Each platform has its own personality. A phone screen is not a desktop window. A marketing site is not a settings panel.
+
+So I create separate design projects in Claude Code — one for mobile, one for desktop, one for web app, one for the website. Each one starts from the same shared design system, then adapts.
+
+<Canvas>
+  <PlatformProjects />
+</Canvas>
+
+Mobile gets bigger tap targets and bottom navigation. Desktop gets keyboard shortcuts, denser lists, and side panels. The website gets bolder type and more space to breathe.
+
+Then I iterate inside each project. Because they're isolated, I can push mobile hard without accidentally breaking the desktop layout.
+
+## Step 6: Build the actual product
+
+Now the fun part. I use those platform design projects with Claude Code to build real features.
+
+By this point I'm not making design decisions anymore. The button already exists. The spacing is already decided. The dark mode already works. I just build the thing I set out to build, and it looks right on every screen without me thinking about it.
+
+<Canvas>
+  <AlreadyDecided />
+</Canvas>
+
+## Why this works
+
+The whole approach comes down to one idea: **make the design real as early as possible.**
+
+The prototype in step 1 makes the design real enough to critique. The export in step 2 makes it real enough to code. The round-trip in step 4 makes it real enough to trust. And React Native Web makes it real on every platform without four separate rewrites.
+
+<Canvas>
+  <RealerEachStep />
+</Canvas>
+
+It takes a few hours up front. It saves weeks later.
