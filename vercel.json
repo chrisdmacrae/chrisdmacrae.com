@@ -1,6 +1,6 @@
 {
   "redirects": [
-    { 
+    {
       "source": "/articles",
       "destination": "/articles/all",
       "permanent": true
@@ -34,6 +34,12 @@
       "source": "/articles/design-management/feed.xml",
       "destination": "/articles/software-design/feed.xml",
       "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/admin/:path*",
+      "destination": "/admin/index.html"
     }
   ]
 }

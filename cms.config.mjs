@@ -3,7 +3,7 @@ export default {
   API_URL: "https://app.gogitcms.com",
   // Path this editor is served from. Use a subpath (e.g. "/cms/") when it
   // is mounted under one — assets and in-app URLs are both built from it.
-  BASE_PATH: "/",
+  BASE_PATH: "/admin/",
   plugins: [
     [
       "@gogitcms/plugin-mdx",

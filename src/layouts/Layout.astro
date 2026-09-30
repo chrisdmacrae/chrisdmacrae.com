@@ -9,6 +9,7 @@ import TabBar from "./Tabbar"
 import { THEME_EVENT, THEME_COOKIE } from "../lib/hooks/useTheme"
 import CodeBlocks from '../components/CodeBlocks.astro'
 import { CardAvailability } from '../components/CardAvailability'
+import { CardNowPlaying } from '../components/CardNowPlaying'
 
 export interface Props {
 	title: string
@@ -60,8 +61,12 @@ const searchResults: SearchResult[] = [{
       {tabs && <TabBar client:load />}
       <Sidebar.Layout>
         <Sidebar>
-          <slot name="sidebar" />
-          <div class="mt-auto">
+          {/* The nav takes whatever height the widgets below leave it */}
+          <div class="flex flex-col flex-1 min-h-0 [&>*]:flex-1 [&>*]:min-h-0">
+            <slot name="sidebar" />
+          </div>
+          <div class="shrink-0 flex flex-col gap-4">
+            <CardNowPlaying client:idle />
             <CardAvailability />
           </div>
         </Sidebar>
