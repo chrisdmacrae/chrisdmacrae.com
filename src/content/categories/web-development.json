@@ -1,9 +1,9 @@
 {
-  "name": "Web Development",
-  "slug": "web-development",
-  "icon": "box-model-2",
   "color": "info",
   "featuredHref": "/web-development",
   "homepage": true,
-  "order": 4
+  "icon": "box-model-2",
+  "name": "Web Development",
+  "order": 4,
+  "slug": "web-development"
 }

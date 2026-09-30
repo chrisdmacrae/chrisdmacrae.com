@@ -1,8 +1,8 @@
 {
-  "name": "Writing",
-  "slug": "writing",
-  "icon": "pencil",
   "color": "warning",
   "homepage": false,
-  "order": 6
+  "icon": "pencil",
+  "name": "Writing",
+  "order": 6,
+  "slug": "writing"
 }

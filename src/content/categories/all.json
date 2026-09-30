@@ -1,9 +1,9 @@
 {
-  "name": "All Articles",
-  "slug": "all",
-  "icon": "article",
   "color": "warning",
   "featuredHref": "/articles/all",
   "homepage": false,
-  "order": 1
+  "icon": "article",
+  "name": "All Articles",
+  "order": 1,
+  "slug": "all"
 }
