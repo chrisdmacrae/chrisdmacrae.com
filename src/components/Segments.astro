@@ -1,0 +1,25 @@
+---
+import Text from "../lib/@ui/typography/Text";
+import type { TextGradient } from "../lib/@ui/typography/Text";
+
+// A heading's text as the CMS stores it: runs of text, some in a gradient.
+export type Segment = {
+  text: string
+  gradient?: TextGradient
+  italic?: boolean
+  line_break?: boolean
+}
+
+const { segments = [] } = Astro.props as { segments?: Segment[] }
+---
+{segments.map(segment => {
+  const text = segment.gradient
+    ? <Text as="span" gradient={segment.gradient}>{segment.text}</Text>
+    : segment.text
+  return (
+    <Fragment>
+      {segment.italic ? <em>{text}</em> : text}
+      {segment.line_break && <br />}
+    </Fragment>
+  )
+})}

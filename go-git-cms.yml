@@ -1,4 +1,10 @@
 version: 1
+media:
+  # Images the site imports through Astro, so it can optimize them. Fields
+  # store the repository path; src/lib/images.ts resolves it.
+  - name: images
+    path: "src/assets/images/**/*.{png,jpg,jpeg,webp,avif,gif,svg}"
+    mime_types: ["image/*"]
 content_models:
   - name: pages
     path: "src/content/pages/*.mdx"
@@ -6,6 +12,71 @@ content_models:
     fields:
       - name: title
         type: string
+        required: true
+      - name: description
+        type: string
+      # The rest are only used by the homepage (index.mdx).
+      - name: intro
+        label: Intro (under the headline)
+        type: string
+        display:
+          component: textarea
+      # A heading is a list of runs of text, so single words can take a gradient.
+      - name: headline
+        type: array
+        of: object
+        fields:
+          - name: text
+            type: string
+            required: true
+          - name: gradient
+            type: string
+            enum: [primary, success, info, warning]
+            display:
+              component: select
+          - name: italic
+            type: boolean
+          - name: line_break
+            label: Line break after
+            type: boolean
+      - name: learn_prompt
+        label: Prompt above the categories
+        type: string
+      - name: about_heading
+        label: About heading
+        type: array
+        of: object
+        fields:
+          - name: text
+            type: string
+            required: true
+          - name: gradient
+            type: string
+            enum: [primary, success, info, warning]
+            display:
+              component: select
+          - name: italic
+            type: boolean
+          - name: line_break
+            label: Line break after
+            type: boolean
+      - name: about_photo
+        label: About photo
+        type: string
+        display:
+          component: media
+        media:
+          set: images
+          store_as: repo
+      - name: testimonials_heading
+        label: Testimonials heading
+        type: string
+      - name: body
+        label: body
+        type: string
+        display:
+          component: 'plugin:mdx'
+          source: body
   - name: articles
     path: "src/content/articles/*.mdx"
     label: "{{ title }}"
@@ -21,15 +92,11 @@ content_models:
           component: date
       - name: category
         type: string
-        enum:
-          - all
-          - software-design
-          - software-engineering
-          - web-development
-          - systems-thinking
-          - writing
         display:
-          component: select
+          component: reference
+        reference:
+          collection: categories
+          key: slug
       - name: draft
         type: boolean
       - name: body
@@ -62,6 +129,70 @@ content_models:
         display:
           component: 'plugin:mdx'
           source: body
+  # Article categories. Each needs a matching src/pages route only if it sets
+  # featuredHref; otherwise /articles/<slug> is generated for it.
+  - name: categories
+    path: "src/content/categories/*.json"
+    label: "{{ name }}"
+    filename: "{{ slug }}"
+    fields:
+      - name: name
+        type: string
+        required: true
+      - name: slug
+        type: string
+        required: true
+        pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+        display:
+          component: slug
+      # A Tabler icon name, e.g. code or pencil: https://tabler.io/icons
+      - name: icon
+        type: string
+        required: true
+      - name: color
+        type: string
+        required: true
+        enum: [primary, success, info, warning]
+        display:
+          component: select
+      # Where the category links to, when not /articles/<slug>
+      - name: featuredHref
+        label: Link
+        type: string
+      - name: homepage
+        label: Show on the homepage
+        type: boolean
+      - name: order
+        type: integer
+  - name: testimonials
+    path: "src/content/testimonials/*.json"
+    label: "{{ name }}"
+    filename: "{{slugify name}}"
+    fields:
+      - name: name
+        type: string
+        required: true
+      - name: role
+        type: string
+        required: true
+      - name: photo
+        type: string
+        required: true
+        display:
+          component: media
+        media:
+          set: images
+          store_as: repo
+      - name: heading
+        type: string
+        required: true
+      - name: text
+        type: string
+        required: true
+        display:
+          component: textarea
+      - name: order
+        type: integer
 forms:
   # The "Get in touch" form at /contact (src/pages/contact.astro). It has no
   # `store:` on purpose: this repository is public, and submissions carry

@@ -15,11 +15,11 @@ import BaseNav from '../components/BaseNav.astro'
 
 export const prerender = true
 
-const title = `A little about me`
-const description = `My bio, some handy links, work history, and more`
-const ogImageUrl = generateUrl({ title })
 const about = await getEntry('pages', 'about')
 if (!about) throw new Error('Missing src/content/pages/about.mdx')
+const title = about.data.title
+const description = about.data.description ?? ''
+const ogImageUrl = generateUrl({ title })
 const {Content} = await render(about)
 ---
 <Layout 
@@ -48,7 +48,7 @@ const {Content} = await render(about)
   </div>
 
   <PageHeader>
-    A little about me
+    {title}
   </PageHeader>
 
   <div class="flex flex-col gap-4 py-10 md:py-20 m-auto max-w-prose">

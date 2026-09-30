@@ -1,0 +1,8 @@
+{
+  "name": "Writing",
+  "slug": "writing",
+  "icon": "pencil",
+  "color": "warning",
+  "homepage": false,
+  "order": 6
+}

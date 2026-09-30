@@ -1,17 +1,24 @@
 ---
 import { Picture } from "astro:assets";
-import me from "../assets/images/me.png";
 import Icon from "../lib/@ui/Icon";
+import { getEntry, render } from "astro:content";
 import Heading from "../lib/@ui/typography/Heading";
-import Text from "../lib/@ui/typography/Text";
+import typography from "../lib/@ui/typography";
+import Segments from "./Segments.astro";
+import { resolveImage } from "../lib/images";
+
+const home = await getEntry("pages", "index");
+if (!home) throw new Error("Missing src/content/pages/index.mdx");
+const { Content } = await render(home);
+const photo = home.data.about_photo ? resolveImage(home.data.about_photo) : undefined;
 ---
 <div
   class="flex flex-col items-center lg:flex-row gap-6"
 >
-  <figure>
+  {photo && <figure>
     <Picture
       background="white"
-      src={me}
+      src={photo}
       role="presentation"
       alt=""
       width={400}
@@ -21,34 +28,11 @@ import Text from "../lib/@ui/typography/Text";
       sizes="400px"
       class="lg:max-w-sm xl:max-w-md rounded-md overflow-hidden shadow-md"
     />
-  </figure>
+  </figure>}
   <div class="flex flex-col gap-4">
     <Heading as="h2">
-      Learn from <em><Text gradient="warning" as="span">who</Text></em>?
+      <Segments segments={home.data.about_heading} />
     </Heading>
-    <Text>
-      Hi again 👋. I'm Chris D. MacRae, a fullstack engineer and
-      designer whose been working with tech for over <em>10 years</em>.
-    </Text>
-    <Text>
-      <Text gradient="info" as="span">
-        <strong>Teaching and mentorship</strong>
-      </Text> has always been my passion, but doing it 1:1 doesn't scale.
-      Thus, in 2026 my goal is to use this site to start providing more mentorship,
-      training, and tutorials as possible, to as wide an audience as I possibly
-      can.
-    </Text>
-    <Text>
-      I work at <a href="https://careguide.com" rel="noopener"
-        ><Text gradient="primary" as="span">
-          <strong>Careguide</strong>
-        </Text></a
-      >
-      as a Senior Engineer, where I work a team of 8 engineers and 2 designers.
-    </Text>
-    <Text>
-      Learn more about me, such as my <a href="/using">favorite tools</a>,
-      <a href="/projects">projects</a>, or <a href="/about">personal history</a>.
-    </Text>
+    <Content components={typography} />
   </div>
 </div>

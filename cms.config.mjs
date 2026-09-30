@@ -30,6 +30,15 @@ export default {
 
           // `props` is optional — it gives the edit form typed inputs and
           // one-click chips for props the component actually takes.
+          Text: {
+            path: "Text",
+            props: [
+              { name: "as", type: "string", options: ["p", "span"] },
+              { name: "gradient", type: "string", options: ["primary", "success", "info", "warning"] },
+              { name: "color", type: "string", options: ["light", "dark", "muted", "inherit"] },
+              { name: "size", type: "string", options: ["xs", "sm", "md", "lg"] },
+            ],
+          },
           Disclaimer: {
             path: "Disclaimer",
             props: [{ name: "type", type: "string", options: ["primary", "success", "warning", "info"] }],
@@ -65,14 +74,15 @@ export default {
         //   serves — drafts included, since that is what it does under
         //   `astro dev`. An article without a category has no page, so it
         //   gets no Preview button either.
-        // - pages: only about.mdx has a route (src/pages/about.astro). A new
-        //   page previews as a 404 until it gets an .astro file of its own.
+        // - pages: index.mdx is the homepage (src/pages/index.astro) and
+        //   about.mdx is /about (src/pages/about.astro). A new page previews
+        //   as a 404 until it gets an .astro file of its own.
         // - projects: src/content/projects.ts builds their URLs as
         //   /projects/<filename>, which projects/[id].astro serves — drafts
         //   included under `astro dev`, as with articles.
         collections: {
           articles: "/articles/{{fields.category}}/{{basename path}}",
-          pages: "/{{basename path}}",
+          pages: '/{{{route path "src/content/pages"}}}',
           projects: "/projects/{{basename path}}",
         },
 

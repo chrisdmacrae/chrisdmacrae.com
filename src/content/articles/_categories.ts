@@ -1,3 +1,7 @@
+// The categories themselves live in src/content/categories/*.json, where the
+// CMS edits them. They're read with an eager glob rather than getCollection so
+// this module stays synchronous: React components and getStaticPaths import it
+// directly.
 export type Category = {
   name: string
   slug: string
@@ -5,53 +9,12 @@ export type Category = {
   color: 'primary' | 'success' | 'warning' | 'info'
   featuredHref?: string
   homepage?: boolean
+  order?: number
 }
 
-export const categories: Category[] = [
-  {
-    name: "All Articles",
-    slug: "all",
-    icon: "article",
-    color: "warning",
-    featuredHref: "/articles/all"
-  },
-  {
-    name: "Software Engineering",
-    slug: "software-engineering",
-    icon: "code",
-    color: 'primary',
-    homepage: true
-  },
-  {
-    name: "Software Design",
-    slug: "software-design",
-    icon: "box-align-bottom-left",
-    color: 'success',
-    homepage: true
+const files = import.meta.glob<Category>('../categories/*.json', { eager: true, import: 'default' })
 
-  },
-  {
-    name: "Web Development",
-    slug: "web-development",
-    icon: "box-model-2",
-    color: 'info',
-    featuredHref: "/web-development",
-    homepage: true
-
-  },
-  {
-    name: "Systems Thinking",
-    slug: "systems-thinking",
-    icon: "schema",
-    color: 'warning',
-    homepage: true
-  },
-  {
-    name: "Writing",
-    slug: "writing",
-    icon: "pencil",
-    color: "warning"
-  }
-]
+export const categories: Category[] = Object.values(files)
+  .sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity))
 
 export default categories

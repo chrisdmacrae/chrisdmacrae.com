@@ -1,0 +1,8 @@
+{
+  "name": "Software Engineering",
+  "slug": "software-engineering",
+  "icon": "code",
+  "color": "primary",
+  "homepage": true,
+  "order": 2
+}

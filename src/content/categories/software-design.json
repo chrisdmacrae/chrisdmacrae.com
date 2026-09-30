@@ -1,0 +1,8 @@
+{
+  "name": "Software Design",
+  "slug": "software-design",
+  "icon": "box-align-bottom-left",
+  "color": "success",
+  "homepage": true,
+  "order": 3
+}

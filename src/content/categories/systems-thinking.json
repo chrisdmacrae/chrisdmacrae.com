@@ -1,0 +1,8 @@
+{
+  "name": "Systems Thinking",
+  "slug": "systems-thinking",
+  "icon": "schema",
+  "color": "warning",
+  "homepage": true,
+  "order": 5
+}
