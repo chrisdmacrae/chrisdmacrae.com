@@ -1,0 +1,36 @@
+---
+description: A home for the things you host at home. Toss in a static site, a PWA, or a small server app, and it's live.
+link: https://pail.chrisdmacrae.com
+logo: ../../assets/images/logos/pail.svg
+title: Pail
+---
+
+Pail is where you toss the things you host at home: static sites, PWAs, and small server apps,
+each with one name, one URL, and one status. Toss it in the pail. It's live.
+
+## What it does
+
+- **Deploys what you hand it**: a folder, a zip, or a repo. Pail works out what's inside, builds it if it needs building, and puts it live.
+- **Functions**: small programs that run once for each request. There's no server to write and no Dockerfile, and they cost nothing while nobody is asking.
+- **Containers**: give Pail a Dockerfile, or the name of an image, and a port. It keeps the container running and sends requests to it.
+- **Deploys on push**: connect GitHub, GitLab, Bitbucket, Gitea, or Forgejo, and a pail redeploys every time you push
+- **Custom domains**: put Pail on a domain you own, with certificates every device already trusts
+- **Reachable from anywhere**: open a Pail on your home network to the internet through a Cloudflare Tunnel, with no ports forwarded
+- **An Astro adapter**: prerendered pages are served as files, and on-demand pages and API routes are answered by a function
+
+## How it runs
+
+Pail runs on a server of your own. On Proxmox, one script makes a container with everything in it,
+and each build, function, and container you deploy gets a small virtual machine of its own. To try
+it out, it also runs as a single container on Docker or Podman.
+
+From there, `pail-cli` puts a folder live with one command:
+
+```bash
+pail up
+```
+
+## Where to get it
+
+Pail is open source. [Read the quickstart](https://pail.chrisdmacrae.com), or
+[browse the code on GitHub](https://github.com/chrisdmacrae/pail).

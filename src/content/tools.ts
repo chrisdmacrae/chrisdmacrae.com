@@ -7,6 +7,7 @@ import railway from '../assets/images/logos/railway.svg'
 import fly from '../assets/images/logos/fly.svg'
 import companion from '../assets/images/logos/companion.svg'
 import gogitcms from '../assets/images/logos/gogitcms.svg'
+import pail from '../assets/images/logos/pail.svg'
 
 export type Tool = {
   title: string
@@ -63,6 +64,12 @@ export const tools: Tool[] = [
     description: "A Git-backed CMS: writers get a friendly editor, developers get plain files, and every save is a commit.",
     link: "https://gogitcms.com",
     logo: gogitcms
+  },
+  {
+    title: "Pail",
+    description: "A home for the things I host at home: static sites, PWAs, and small server apps, each live at its own URL.",
+    link: "https://pail.chrisdmacrae.com",
+    logo: pail
   }
 ]
 
