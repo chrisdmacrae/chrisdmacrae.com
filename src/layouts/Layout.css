@@ -7,7 +7,7 @@ a:link, a:visited {
 }
 
 a:hover {
-  color: var(--tw-color-blue-500);
+  color: var(--tw-color-blue-700);
 }
 
 .dark a:link, 

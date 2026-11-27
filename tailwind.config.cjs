@@ -9,7 +9,30 @@ module.exports = {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   darkMode: 'class',
 	theme: {
-		extend: {},
+		extend: {
+			colors: {
+				// Warm goldenrod-tinted neutrals (replaces blue-grey slate)
+				slate: {
+					50: '#FEFDF0', 100: '#FAFAD2', 200: '#F0E7A8', 300: '#DFD08A', 400: '#B5A25A',
+					500: '#8A7A3E', 600: '#6B5C2B', 700: '#4F4320', 800: '#383017', 900: '#271F0E', 950: '#17120A',
+				},
+				// Goldenrod accent (#DAA520 at 500)
+				blue: {
+					50: '#FFF9E0', 100: '#FEF0B3', 200: '#F9E083', 300: '#F0CB4F', 400: '#E6B730',
+					500: '#DAA520', 600: '#8F6508', 700: '#765206', 800: '#5C4005', 900: '#432E04', 950: '#2A1C02',
+				},
+				// Light gold
+				sky: {
+					50: '#FFFBE6', 100: '#FFF3BD', 200: '#FDE68A', 300: '#FADB5F', 400: '#F2CB3D',
+					500: '#E8B923', 600: '#8F6508', 700: '#7F5A08', 800: '#654506', 900: '#4B3305', 950: '#2E1F02',
+				},
+				// Amber / ochre
+				indigo: {
+					50: '#FDF6E3', 100: '#F9E8BD', 200: '#F2D38B', 300: '#E8BA55', 400: '#D9A12F',
+					500: '#C48A1A', 600: '#8A5A0A', 700: '#704808', 800: '#573706', 900: '#3E2704', 950: '#261602',
+				},
+			},
+		},
 	},
 	plugins: [
 		function ({ addBase, addVariant, matchUtilities, theme }) {
